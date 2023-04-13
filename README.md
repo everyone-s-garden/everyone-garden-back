@@ -3,7 +3,7 @@
 1. 해당 저장소를 clone 합니다.
 
 ```
-$ git clone https://github.com/ItSum-back/ITsum_BackEnd.git
+$ git clone https://github.com/everyone-s-garden/back_end.git
 ```
             
 2. clone 한 디렉터리로 이동 후 본인 이름(github id)의 브랜치로 체크아웃 합니다.
