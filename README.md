@@ -27,7 +27,7 @@ $ git push origin {본인 브랜치 명}
   6-3) base 브랜치는 `master`, compare 브랜치를 `{본인 브랜츠 명}`으로 설정
   6-4) 제목과 내용을 작성하고 `Create pull request` 를 클릭하여 PR 등록
 
-5. 온라인 및 오프라인 만남 후에 본인의 PR을 `Merge pull request` 버튼을 눌러 반영(merge)합니다.
+5. 온라인 및 오프라인를 통해 코드 리뷰 후 본인의 PR을 `Merge pull request` 버튼을 눌러 반영(merge)합니다.
 
 
 # commit 양식
