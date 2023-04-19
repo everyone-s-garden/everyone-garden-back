@@ -22,8 +22,8 @@ public class GardenPicture {
 
     //연관관계 주인
     @ManyToOne
-    @JoinColumn(name="garden_id")
-    private Garden garden;
+    @JoinColumn(name="post_id")
+    private Post post;
 
 
 

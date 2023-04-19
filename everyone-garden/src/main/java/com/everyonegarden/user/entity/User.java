@@ -1,6 +1,7 @@
 package com.everyonegarden.user.entity;
 
 import com.everyonegarden.garden.entity.Garden;
+import com.everyonegarden.garden.entity.Post;
 import com.everyonegarden.user.enunerate.UserProvider;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -32,10 +33,11 @@ public class User {
 
     private String roleType;
 
+    private int reportScore;
+
 
     @OneToMany(mappedBy = "user")
-    private List<Garden> gardens = new ArrayList<>();
-
+    private List<Post> posts = new ArrayList<>();
 
 
     public void updateNickname(String nickname){
