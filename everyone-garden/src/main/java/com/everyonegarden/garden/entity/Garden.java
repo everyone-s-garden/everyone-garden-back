@@ -33,7 +33,8 @@ public class Garden {
     private String contact;
     private String size;
 
-
+    //작성자ID?도 없습니다.
+    //Post와 오픈API를 분리하는 것은 어떤지?
     //생각해보니 사진이 없네요?
 
     //recruite_period어떻게 ?
