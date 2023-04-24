@@ -14,6 +14,7 @@ import java.util.Map;
 public class JwtCreateController {
 
     private final UserRepository userRepository;
+    private final BCrytPasswordEncoder bCrytPasswordEncoder;
 
     @PostMapping("/oauth/jwt/google")
     public String jwtCreate(@RequestBody Map<String, Object> data){
