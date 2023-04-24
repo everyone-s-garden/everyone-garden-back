@@ -1,11 +1,10 @@
-package com.everyonegarden.auth.config.jwt;
+package com.everyonegarden.auth.jwt;
 
 import com.auth0.jwt.algorithms.Algorithm;
 import com.everyonegarden.auth.config.PrincipalDetails;
 import com.everyonegarden.auth.dto.LoginRequestDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.method.P;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;

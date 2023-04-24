@@ -1,7 +1,7 @@
 package com.everyonegarden.auth.config;
 
-import com.everyonegarden.auth.config.jwt.JwtAuthenticationFilter;
-import com.everyonegarden.auth.config.jwt.JwtAuthorizationFilter;
+import com.everyonegarden.auth.jwt.JwtAuthenticationFilter;
+import com.everyonegarden.auth.jwt.JwtAuthorizationFilter;
 import com.everyonegarden.user.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,6 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 

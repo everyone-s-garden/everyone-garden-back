@@ -1,4 +1,4 @@
-package com.everyonegarden.auth.config.jwt;
+package com.everyonegarden.auth.jwt;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
