@@ -24,6 +24,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     // Spring Security 추가
     implementation 'org.springframework.boot:spring-boot-starter-security'
+    //JWT 토큰 생성
+    implementation group: 'com.auth0' , name: 'java-jwt', version: '3.14.0'
 
 
 
