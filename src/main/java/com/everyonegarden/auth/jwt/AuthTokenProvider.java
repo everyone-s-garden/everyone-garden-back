@@ -1,5 +1,6 @@
 package com.everyonegarden.auth.jwt;
 
+import com.everyonegarden.auth.exception.TokenValidFailedException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.security.Keys;
 import lombok.Value;
