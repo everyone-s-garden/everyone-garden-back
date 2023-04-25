@@ -18,7 +18,7 @@ public class ClientKakao implements ClientProxy{
     private final WebClient webClient;
 
     @Override
-    public User getUserDate(String accessToken) {
+    public User getUserData(String accessToken) {
 
         KakaoUserResponse kakaoUserResponse = webClient.get()
                 .uri("https://kapi.kakao.com/v2/user/me")
@@ -36,8 +36,5 @@ public class ClientKakao implements ClientProxy{
                 .userProvider(UserProvider.KAKAO)
                 .roleType("ROLE_USER")
                 .build();
-
     }
-
-
 }

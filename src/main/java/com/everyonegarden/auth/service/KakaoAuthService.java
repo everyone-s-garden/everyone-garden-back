@@ -1,5 +1,6 @@
 package com.everyonegarden.auth.service;
 
+
 import com.everyonegarden.auth.client.ClientKakao;
 import com.everyonegarden.auth.dto.AuthRequest;
 import com.everyonegarden.auth.dto.AuthResponse;

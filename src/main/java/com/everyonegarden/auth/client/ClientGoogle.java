@@ -17,7 +17,7 @@ public class ClientGoogle implements ClientProxy{
     private final WebClient webClient;
 
     @Override
-    public User getUserDate(String accessToken) {
+    public User getUserData(String accessToken) {
 
         GoogleUserResponse googleUserResponse = webClient.get()
                 .uri("https://oauth2.googleapis.com/tokeninfo", builder -> builder.queryParam("id_token", accessToken).build())

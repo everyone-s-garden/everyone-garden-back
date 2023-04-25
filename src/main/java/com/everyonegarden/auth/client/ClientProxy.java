@@ -4,6 +4,5 @@ import com.everyonegarden.user.entity.User;
 
 public interface ClientProxy {
 
-    User getUserDate(String accessToken);
-
+    User getUserData(String accessToken);
 }
