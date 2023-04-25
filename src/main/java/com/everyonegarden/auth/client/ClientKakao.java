@@ -1,7 +1,10 @@
 package com.everyonegarden.auth.client;
 
+import com.everyonegarden.auth.dto.KakaoUserResponse;
+import com.everyonegarden.auth.exception.TokenValidFailedException;
 import com.everyonegarden.user.entity.User;
 import com.everyonegarden.user.enunerate.UserProvider;
+import org.springframework.http.HttpStatus;
 
 public class ClientKakao implements ClientProxy{
 
@@ -23,9 +26,8 @@ public class ClientKakao implements ClientProxy{
                 .socialId(String.valueOf(kakaoUserResponse.getId()))
                 .name(kakaoUserResponse.getProperties().getNickname())
                 .email(kakaoUserResponse.getKakaoAccount().getEmail())
-                .gender(kakaoUserResponse.getKakaoAccount().getGender())
-                .memberProvider(UserProvider.KAKAO)
-                .roleType(RoleType.USER)
+                .userProvider(UserProvider.KAKAO)
+                .roleType("ROLE_USER")
                 .build();
     }
 }

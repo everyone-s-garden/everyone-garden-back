@@ -1,6 +1,8 @@
 package com.everyonegarden.auth.client;
 
+import com.everyonegarden.auth.dto.GoogleUserResponse;
 import com.everyonegarden.user.entity.User;
+import com.everyonegarden.user.enunerate.UserProvider;
 import org.springframework.http.HttpStatus;
 
 public class ClientGoogle implements ClientProxy{
@@ -22,8 +24,8 @@ public class ClientGoogle implements ClientProxy{
                 .socialId(googleUserResponse.getSub())
                 .name(googleUserResponse.getName())
                 .email(googleUserResponse.getEmail())
-                .memberProvider(UserProvider.GOOGLE)
-                .roleType(RoleType.USER)
+                .userProvider(UserProvider.GOOGLE)
+                .roleType("ROLE_USER")
                 .build();
     }
 }

@@ -3,6 +3,8 @@ package com.everyonegarden.user.entity;
 import com.everyonegarden.garden.entity.Garden;
 import com.everyonegarden.garden.entity.Post;
 import com.everyonegarden.user.enunerate.UserProvider;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,6 +15,8 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @Data
+@Builder
+@AllArgsConstructor
 public class User {
 
     @Id
@@ -26,7 +30,7 @@ public class User {
     @Column(nullable = false)
     private UserProvider userProvider;
 
-    //private String name;
+    private String name;
     private String profileImagePath;//path
     private String socialId;
     private String nickname;
