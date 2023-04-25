@@ -1,4 +1,4 @@
-package com.everyonegarden.auth.config;
+package com.everyonegarden.auth.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
