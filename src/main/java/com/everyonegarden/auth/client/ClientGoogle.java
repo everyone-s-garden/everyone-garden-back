@@ -1,10 +1,17 @@
 package com.everyonegarden.auth.client;
 
 import com.everyonegarden.auth.dto.GoogleUserResponse;
+import com.everyonegarden.auth.exception.TokenValidFailedException;
 import com.everyonegarden.user.entity.User;
 import com.everyonegarden.user.enunerate.UserProvider;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
+@Component
+@RequiredArgsConstructor
 public class ClientGoogle implements ClientProxy{
 
     private final WebClient webClient;

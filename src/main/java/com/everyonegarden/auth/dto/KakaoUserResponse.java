@@ -33,6 +33,6 @@ public class KakaoUserResponse {
     @AllArgsConstructor
     public static class KakaoAccount {
         private String email;
-        private String gender;
+       // private String gender;
     }
 }

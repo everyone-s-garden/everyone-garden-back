@@ -1,18 +1,25 @@
 package com.everyonegarden.auth.client;
 
+
 import com.everyonegarden.auth.dto.KakaoUserResponse;
 import com.everyonegarden.auth.exception.TokenValidFailedException;
 import com.everyonegarden.user.entity.User;
 import com.everyonegarden.user.enunerate.UserProvider;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
+@Component
+@RequiredArgsConstructor
 public class ClientKakao implements ClientProxy{
 
     private final WebClient webClient;
 
-    // TODO ADMIN 유저 생성 시 getAdminUserData 메소드 생성 필요
     @Override
-    public User getUserData(String accessToken) {
+    public User getUserDate(String accessToken) {
+
         KakaoUserResponse kakaoUserResponse = webClient.get()
                 .uri("https://kapi.kakao.com/v2/user/me")
                 .headers(h -> h.setBearerAuth(accessToken))
@@ -29,5 +36,8 @@ public class ClientKakao implements ClientProxy{
                 .userProvider(UserProvider.KAKAO)
                 .roleType("ROLE_USER")
                 .build();
+
     }
+
+
 }
