@@ -1,10 +1,11 @@
 package com.everyonegarden.auth.config;
 
+
 import com.everyonegarden.auth.jwt.JwtAuthenticationFilter;
 import com.everyonegarden.auth.jwt.JwtAuthorizationFilter;
 import com.everyonegarden.user.repository.UserRepository;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,14 +16,16 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+
+@RequiredArgsConstructor
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @Autowired
+
     private UserRepository userRepository;
 
-    @Autowired
+
     private CorsConfig corsConfig ;
 
     @Bean
@@ -45,7 +48,6 @@ public class SecurityConfig {
                 .and()
                 .formLogin().disable()
                 .httpBasic().disable()
-
                 .addFilter(new JwtAuthenticationFilter(authenticationManager(http.getSharedObject(AuthenticationConfiguration.class))))
                 .addFilter(new JwtAuthorizationFilter(
                         authenticationManager(http.getSharedObject(AuthenticationConfiguration.class))
@@ -63,7 +65,6 @@ public class SecurityConfig {
 
 
     }
-
 
 
 
