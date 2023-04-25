@@ -15,8 +15,8 @@ public class GardenResponse {
     private GardenType type;
 
     private String address;
-    private String longitude;
-    private String latitude;
+    private double longitude;
+    private double latitude;
 
     private String link;
     private Integer price;

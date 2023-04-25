@@ -24,10 +24,10 @@ public class GardenControllerV1 {
     @GetMapping("public/by-coordinate")
     public List<GardenResponse> getPublicGardenByCoordinate(@RequestParam("x") String xCoordinate,
                                                             @RequestParam("y") String yCoordinate) {
-        String xStart = xCoordinate.split(",")[0];
-        String xEnd = xCoordinate.split(",")[1];
-        String yStart = yCoordinate.split(",")[0];
-        String yEnd = yCoordinate.split(",")[1];
+        double xStart = Double.parseDouble(xCoordinate.split(",")[0]);
+        double xEnd = Double.parseDouble(xCoordinate.split(",")[1]);
+        double yStart = Double.parseDouble(yCoordinate.split(",")[0]);
+        double yEnd = Double.parseDouble(yCoordinate.split(",")[1]);
 
         return gardenService.getPublicGardenByCoordinate(xStart, xEnd, yStart, yEnd);
     }
@@ -40,10 +40,10 @@ public class GardenControllerV1 {
     @GetMapping("private/by-coordionate")
     public List<GardenResponse> getPrivateGardenByCoordinate(@RequestParam("x") String xCoordinate,
                                                              @RequestParam("y") String yCoordinate) {
-        String xStart = xCoordinate.split(",")[0];
-        String xEnd = xCoordinate.split(",")[1];
-        String yStart = yCoordinate.split(",")[0];
-        String yEnd = yCoordinate.split(",")[1];
+        double xStart = Double.parseDouble(xCoordinate.split(",")[0]);
+        double xEnd = Double.parseDouble(xCoordinate.split(",")[1]);
+        double yStart = Double.parseDouble(yCoordinate.split(",")[0]);
+        double yEnd = Double.parseDouble(yCoordinate.split(",")[1]);
 
         return gardenService.getPublicGardenByCoordinate(xStart, xEnd, yStart, yEnd);
     }

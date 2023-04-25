@@ -21,8 +21,8 @@ public class Garden {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Integer latitude;
-    private Integer longitude;
+    private double latitude;
+    private double longitude;
     private String address;
 
     @Column(nullable = false) @NotBlank
