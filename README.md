@@ -1,35 +1,10 @@
-# manual
+## v1 로그인 설계 (현재 폴터)
 
-1. 해당 저장소를 clone 합니다.
+프런트에서 리소스 서버에 access token과 id token을 가지고 접근해서 유저 정보를 받아서 백엔드에 전달하는 방법-> 이를 DB에 저장하고 JWT 토큰 반환
 
-```
-$ git clone https://github.com/everyone-s-garden/back_end.git
-```
-            
-2. clone 한 디렉터리로 이동 후 본인 이름(github id)의 브랜치로 체크아웃 합니다.
+## v2 로그인 설계 (auth_v2_byeol)
+프런트에서 access token과 id token 백엔드에 전달, 백엔드가 이 두가지를 가지고 리소스 서버에 접근하여 유저 정보를 받고 DB에 저장, JWT 토큰 반환
+(프런트분들 궁금하신 사항 있으시면 슬랙으로 말씀 부탁드립니다.)
 
-``` 
-$ git checkout -b {github_id}
-ex) git checkout -b jeon-cj
-```    
+![image](https://user-images.githubusercontent.com/108210958/235381155-e39fd5c6-124f-4eac-9f0b-fdab67ee659b.png)
 
-3. 변경 사항을 add/commit/push 합니다.
-
-``` 
-$ git add .
-$ git commit -m " 정하기 "
-$ git push origin {본인 브랜치 명}
-```
-      
-4. Github에서 Pull Request를 등록합니다.
-  6-1) 저장소 내 `Pull requests` 메뉴로 이동
-  6-2) `New pull request` 버튼 클릭
-  6-3) base 브랜치는 `master`, compare 브랜치를 `{본인 브랜츠 명}`으로 설정
-  6-4) 제목과 내용을 작성하고 `Create pull request` 를 클릭하여 PR 등록
-
-5. 온라인 및 오프라인를 통해 코드 리뷰 후 본인의 PR을 `Merge pull request` 버튼을 눌러 반영(merge)합니다.
-
-
-# commit 양식
-
-정하기
