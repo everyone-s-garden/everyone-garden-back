@@ -1,0 +1,65 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/garden?serverTimezone=Asia/Seoul
+    username: cos
+    password: 7351
+
+  main:
+    allow-circular-references: true
+
+
+  jpa:
+    hibernate:
+      ddl-auto: update #create update none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    open-in-view: false
+    show-sql: true
+
+    properties:
+      hibernate:
+        format_sql: true #To beautify or pretty print the SQL
+        show_sql: true #show sql
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            clientId: 999513273898-9fa6iu0cm3jbeancg8f82mjs53trr355.apps.googleusercontent.com
+            clientSecret: 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
+            redirectUri: http://localhost:8080/login/oauth2/code/google
+            scope:
+              - email
+              - profile
+          kakao:
+            client-id: 79b34d0643a36e279a14a5281e4d90dd
+            client-secret: DyYVeTmjemqauNn4OWNPgNyfXdnbFvc5
+            scope:
+              - name
+              - email
+            client-name: Kakao
+            authorization-grant-type: authorization_code
+            redirect-uri: http://localhost:8080/login/oauth2/code/kakao
+
+        provider:
+          kakao:
+            authorization-uri: https://kauth.kakao.com/oauth/authorize
+            token-uri:  https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v2/user/me
+            user-name-attribute: id # ????? json? response ???? ????
+
+app:
+  auth:
+    tokenSecret: 04ca023b39512e46d0c2cf4b48d5aac61d34302994c87ed4eff225dcf3b0a218739f3897051a057f9b846a69ea2927a587044164b7bae5e1306219d50b588cb1
+    tokenExpiry: 3600000
