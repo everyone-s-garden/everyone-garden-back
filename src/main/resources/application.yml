@@ -10,7 +10,7 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/security?serverTimezone=Asia/Seoul
+    url: jdbc:mysql://localhost:3306/garden?serverTimezone=Asia/Seoul
     username: cos
     password: 7351
 
@@ -26,20 +26,25 @@ spring:
     open-in-view: false
     show-sql: true
 
+    properties:
+      hibernate:
+        format_sql: true #To beautify or pretty print the SQL
+        show_sql: true #show sql
+
   security:
     oauth2:
       client:
         registration:
           google:
-            clientId: 5014057553-8gm9um6vnli3cle5rgigcdjpdrid14m9.apps.googleusercontent.com
-            clientSecret: tWZKVLxaD_ARWsriiiUFYoIk
+            clientId: 999513273898-9fa6iu0cm3jbeancg8f82mjs53trr355.apps.googleusercontent.com
+            clientSecret: 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
             redirectUri: http://localhost:8080/login/oauth2/code/google
             scope:
               - email
               - profile
           kakao:
-            client-id: d8d915e9e6ed130eabbd2389f9383ddc
-            client-secret: oAt7Z3evmK2H8RcBpYCWJx9DaARedN5q
+            client-id: 79b34d0643a36e279a14a5281e4d90dd
+            client-secret: DyYVeTmjemqauNn4OWNPgNyfXdnbFvc5
             scope:
               - name
               - email
