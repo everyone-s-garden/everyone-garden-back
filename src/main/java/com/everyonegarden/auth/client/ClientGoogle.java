@@ -27,9 +27,13 @@ public class ClientGoogle implements ClientProxy{
                 .bodyToMono(GoogleUserResponse.class)
                 .block();
 
+
+        System.out.println("googleUserResponse:"+googleUserResponse);
+
+
         return User.builder()
                 .socialId(googleUserResponse.getSub())
-                .name(googleUserResponse.getName())
+                .name(googleUserResponse.getFullname())
                 .email(googleUserResponse.getEmail())
                 .userProvider(UserProvider.GOOGLE)
                 .roleType("ROLE_USER")

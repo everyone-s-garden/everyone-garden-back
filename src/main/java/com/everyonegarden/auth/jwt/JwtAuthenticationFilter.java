@@ -22,8 +22,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             HttpServletResponse response,
             FilterChain filterChain)  throws ServletException, IOException {
 
+        // 로그인 시도
         if (request.getServletPath().startsWith("/auth")) {
             filterChain.doFilter(request, response);
+
+        // 로그인 유지 상태이거나 혹은 로그인 시도 않은 모든 사용자
         } else {
             final String authorizationHeader = request.getHeader("Authorization");
             if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
@@ -37,6 +40,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
                 filterChain.doFilter(request, response);
             }
+
+
+
+
+
         }
     }
 }

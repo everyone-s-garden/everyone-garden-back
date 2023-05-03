@@ -47,15 +47,5 @@ public class User {
     private List<Post> posts = new ArrayList<>();
 
 
-    public void updateNickname(String name){
-        this.name=name;
-    }
-
-
-
-
-
-
-
 
 }

@@ -60,7 +60,10 @@ public class AuthController {
     //@ApiOperation(value = "appToken 갱신", notes = "appToken 갱신")
     @GetMapping("/refresh")
     public ResponseEntity<AuthResponse> refreshToken (HttpServletRequest request) {
+
+        // appToken 분리
         String appToken = JwtHeaderUtil.getAccessToken(request);
+        // 이 appToken으로
         AuthToken authToken = authTokenProvider.convertAuthToken(appToken);
         if (!authToken.validate()) { // 형식에 맞지 않는 token
             return ApiResponse.forbidden(null);

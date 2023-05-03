@@ -20,7 +20,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: update #create update none
+      ddl-auto: create #create update none
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     open-in-view: false
@@ -42,6 +42,8 @@ spring:
             scope:
               - email
               - profile
+              - name
+              - openid
           kakao:
             client-id: 79b34d0643a36e279a14a5281e4d90dd
             client-secret: DyYVeTmjemqauNn4OWNPgNyfXdnbFvc5
