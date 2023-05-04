@@ -34,7 +34,7 @@ public class ClientGoogle implements ClientProxy{
 
         return User.builder()
                 .socialId(googleUserResponse.getSub())
-                .name(googleUserResponse.getFullname())
+                .name(googleUserResponse.getName())
                 .email(googleUserResponse.getEmail())
                 .userProvider(UserProvider.GOOGLE)
                 .roleType("ROLE_USER")

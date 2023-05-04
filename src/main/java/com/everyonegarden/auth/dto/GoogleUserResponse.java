@@ -17,7 +17,7 @@ public class GoogleUserResponse {
 
         private String sub;
         private String email;
-        private String fullname;
+        private String name;
        // private String picture;
 
     }

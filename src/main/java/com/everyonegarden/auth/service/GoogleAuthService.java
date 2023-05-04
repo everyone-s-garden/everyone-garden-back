@@ -21,8 +21,8 @@ public class GoogleAuthService {
     private final UserRepository userRepository;
 
     @Transactional
-    public AuthResponse login(AuthRequest authRequest) {
-        User googleMember = clientGoogle.getUserData(authRequest.getAccessToken());
+    public AuthResponse login(String accessToken) {
+        User googleMember = clientGoogle.getUserData(accessToken);
         String socialId = googleMember.getSocialId();
         User user = userRepository.findBySocialId(socialId);
 
