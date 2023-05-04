@@ -10,5 +10,5 @@ spring:
   jpa:
     showSql: true
     hibernate:
-      ddlAuto: update
+      ddlAuto: create
       format-sql: true
