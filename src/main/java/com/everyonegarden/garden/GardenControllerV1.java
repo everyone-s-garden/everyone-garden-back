@@ -1,10 +1,10 @@
 package com.everyonegarden.garden;
 
+import com.everyonegarden.garden.api.mafra.fetch.MafraFetchService;
+import com.everyonegarden.garden.dto.GardenResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -14,9 +14,12 @@ import java.util.List;
 public class GardenControllerV1 {
 
     private final GardenService gardenService;
+    private final MafraFetchService mafraFetchService;
 
     @GetMapping("public/by-region")
     public List<GardenResponse> getPublicGardenByRegion(@RequestParam("region") String region) {
+        mafraFetchService.getMafraApiResponse(0, 10);
+
         return gardenService.getPublicGardenByRegion(region);
     }
 
@@ -45,6 +48,36 @@ public class GardenControllerV1 {
         double yEnd = Double.parseDouble(yCoordinate.split(",")[1]);
 
         return gardenService.getPublicGardenByCoordinate(xStart, xEnd, yStart, yEnd);
+    }
+
+    @GetMapping("recent")
+    public List<GardenResponse> getRecentlyViewdGarden() {
+        return List.of();
+    }
+
+    @GetMapping("mine")
+    public List<GardenResponse> getMyGarden() {
+        return List.of();
+    }
+
+    @GetMapping("{gardenId}")
+    public GardenResponse getGardenDetail(@PathVariable("gardenId") Long gardenId) {
+        return null;
+    }
+
+    @PostMapping
+    public ResponseEntity<Long> addGarden() {
+        return null;
+    }
+
+    @PutMapping("{gardenId}")
+    public ResponseEntity<GardenResponse> editGarden(@PathVariable("gardenId") Long gardenId) {
+        return null;
+    }
+
+    @DeleteMapping("{gardenId}")
+    public ResponseEntity<String> deleteGarden(@PathVariable("gardenId") Long gardenId) {
+        return null;
     }
 
 }

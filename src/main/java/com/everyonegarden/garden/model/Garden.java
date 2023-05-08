@@ -1,5 +1,6 @@
-package com.everyonegarden.garden;
+package com.everyonegarden.garden.model;
 
+import com.everyonegarden.garden.model.GardenType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -47,7 +48,6 @@ public class Garden {
 
     @CreatedDate
     private LocalDateTime createdDate;
-
     @LastModifiedDate
     private LocalDateTime lastModifiedDate;
 

@@ -1,4 +1,4 @@
-package com.everyonegarden.garden;
+package com.everyonegarden.garden.model;
 
 public enum
 GardenType {

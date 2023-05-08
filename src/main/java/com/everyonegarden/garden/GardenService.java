@@ -1,5 +1,6 @@
 package com.everyonegarden.garden;
 
+import com.everyonegarden.garden.dto.GardenResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
