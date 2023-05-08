@@ -1,4 +1,4 @@
-package com.everyonegarden.garden.response;
+package com.everyonegarden.garden;
 
 import com.everyonegarden.garden.GardenType;
 import lombok.AllArgsConstructor;

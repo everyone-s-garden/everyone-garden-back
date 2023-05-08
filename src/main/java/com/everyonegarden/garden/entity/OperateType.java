@@ -1,4 +1,4 @@
-package com.everyonegarden.garden.enumerate;
+package com.everyonegarden.garden.entity;
 
 public enum OperateType {
 

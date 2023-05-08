@@ -8,6 +8,7 @@ import java.util.List;
 
 @Repository
 public interface GardenRepository extends JpaRepository<Garden, Long> {
+
     @Query("select g from Garden g where g.type = 'PUBLIC' and " +
             "g.latitude between :xStart and :xEnd and " +
             "g.longitude between :yStart and :yEnd"
@@ -16,4 +17,8 @@ public interface GardenRepository extends JpaRepository<Garden, Long> {
             double xStart, double xEnd,
             double yStart, double yEnd
     );
+
+    @Query("select g from Garden g where g.address like %:region% or g.name like %:region%")
+    List<Garden> getPublicGardenByRegion(String region);
+
 }

@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -14,6 +15,7 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor @AllArgsConstructor @Builder
 
+@EntityListeners(AuditingEntityListener.class)
 @Entity
 @Table(name = "garden")
 public class Garden {
@@ -44,9 +46,9 @@ public class Garden {
     private LocalDateTime useEndDate;
 
     @CreatedDate
-    private LocalDateTime addDate;
+    private LocalDateTime createdDate;
 
     @LastModifiedDate
-    private LocalDateTime editDate;
+    private LocalDateTime lastModifiedDate;
 
 }

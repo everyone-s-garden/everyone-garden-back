@@ -1,6 +1,5 @@
 package com.everyonegarden.garden.entity;
 
-import com.everyonegarden.garden.enumerate.OperateType;
 import com.everyonegarden.user.entity.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;
