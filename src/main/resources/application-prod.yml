@@ -4,4 +4,4 @@ server:
 spring:
   jpa:
     hibernate:
-      ddlAuto: validate
+      ddlAuto: update
