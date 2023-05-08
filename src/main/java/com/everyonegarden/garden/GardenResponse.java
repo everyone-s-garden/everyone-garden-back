@@ -1,6 +1,5 @@
 package com.everyonegarden.garden;
 
-import com.everyonegarden.garden.GardenType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,4 +19,18 @@ public class GardenResponse {
 
     private String link;
     private Integer price;
+
+    public static GardenResponse of(Garden garden) {
+        return GardenResponse.builder()
+                .id(garden.getId())
+                .name(garden.getName())
+                .type(garden.getType())
+                .address(garden.getAddress())
+                .longitude(garden.getLongitude())
+                .latitude(garden.getLatitude())
+                .link(garden.getLink())
+                .price(garden.getPrice())
+                .build();
+    }
+
 }
