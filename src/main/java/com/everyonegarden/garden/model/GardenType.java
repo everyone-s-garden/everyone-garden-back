@@ -2,6 +2,6 @@ package com.everyonegarden.garden.model;
 
 public enum
 GardenType {
-    GOVERNMENT, PUBLIC, PRIVATE, UNKNOWN
+    GOVERNMENT, PUBLIC, PRIVATE, UNKNOWN, MANUAL
 }
 

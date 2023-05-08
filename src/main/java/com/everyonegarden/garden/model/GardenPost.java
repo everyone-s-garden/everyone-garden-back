@@ -25,6 +25,6 @@ public class GardenPost {
     private User user;
 
     @OneToMany(mappedBy = "gardenPost")
-    private List<GardenPicture> gardenPicture = new ArrayList<>();
+    private List<GardenImage> gardenImage = new ArrayList<>();
 
 }

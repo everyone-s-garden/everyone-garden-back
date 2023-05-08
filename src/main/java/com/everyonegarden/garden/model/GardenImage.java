@@ -10,12 +10,12 @@ import javax.persistence.*;
 
 @Table
 @Entity
-public class GardenPicture {
+public class GardenImage {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long gardenPictureId;
 
-    private String gardenPicturePath;
+    private String url;
 
     @ManyToOne
     @JoinColumn(name="garden_post_id")

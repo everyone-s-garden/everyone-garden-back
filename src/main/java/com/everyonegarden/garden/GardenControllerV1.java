@@ -1,11 +1,14 @@
 package com.everyonegarden.garden;
 
 import com.everyonegarden.garden.api.mafra.fetch.MafraFetchService;
+import com.everyonegarden.garden.dto.GardenAddSuccessResponse;
+import com.everyonegarden.garden.dto.GardenPostAddRequest;
 import com.everyonegarden.garden.dto.GardenResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -66,8 +69,12 @@ public class GardenControllerV1 {
     }
 
     @PostMapping
-    public ResponseEntity<Long> addGarden() {
-        return null;
+    public GardenAddSuccessResponse addGarden(@RequestBody @Valid GardenPostAddRequest gardenAddRequest) {
+        Long gardenId = gardenService.addGarden(gardenAddRequest);
+
+        return GardenAddSuccessResponse.builder()
+                .gardenId(gardenId)
+                .build();
     }
 
     @PutMapping("{gardenId}")

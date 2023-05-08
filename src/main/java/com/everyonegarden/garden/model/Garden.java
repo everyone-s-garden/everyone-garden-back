@@ -1,6 +1,5 @@
 package com.everyonegarden.garden.model;
 
-import com.everyonegarden.garden.model.GardenType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,7 +21,7 @@ import java.time.LocalDateTime;
 public class Garden {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long gardenId;
 
     private double latitude;
     private double longitude;
