@@ -4,12 +4,17 @@ import com.everyonegarden.garden.api.mafra.fetch.MafraFetchService;
 import com.everyonegarden.garden.dto.GardenAddSuccessResponse;
 import com.everyonegarden.garden.dto.GardenPostAddRequest;
 import com.everyonegarden.garden.dto.GardenResponse;
+import com.everyonegarden.garden.dto.ImageUploadSuccessResponse;
+import com.everyonegarden.garden.s3.S3Service;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @RestController
@@ -18,6 +23,7 @@ public class GardenControllerV1 {
 
     private final GardenService gardenService;
     private final MafraFetchService mafraFetchService;
+    private final S3Service s3Service;
 
     @GetMapping("public/by-region")
     public List<GardenResponse> getPublicGardenByRegion(@RequestParam("region") String region) {
@@ -74,6 +80,20 @@ public class GardenControllerV1 {
 
         return GardenAddSuccessResponse.builder()
                 .gardenId(gardenId)
+                .build();
+    }
+
+    @SneakyThrows
+    @PostMapping("images")
+    public ImageUploadSuccessResponse uploadImage(@RequestParam("file") MultipartFile file) {
+        String fileName = UUID.randomUUID().toString().substring(0, 5) + (file.getOriginalFilename() == null ? "" : file.getOriginalFilename().replaceAll(" ", ""));
+        byte[] fileBytes = file.getInputStream().readAllBytes();
+
+        String imageUrl = s3Service.putObject(fileName, fileBytes);
+
+        return ImageUploadSuccessResponse.builder()
+                .id(UUID.randomUUID())
+                .imageUrl(imageUrl)
                 .build();
     }
 
