@@ -14,7 +14,7 @@ public class WeatherController {
 
     @GetMapping("/weather")
     public String weatherRequest(@RequestParam("x") String xCoordinate,
-                                                            @RequestParam("y") String yCoordinate){
+                                 @RequestParam("y") String yCoordinate){
 
 
 
