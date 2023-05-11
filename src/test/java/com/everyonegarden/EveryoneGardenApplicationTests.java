@@ -1,29 +1,24 @@
 package com.everyonegarden;
 
+import com.everyonegarden.weather.api.WeatherApi;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ContextConfiguration;
 
+
+import java.io.IOException;
+import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 @SpringBootTest
-@ContextConfiguration(classes = EveryoneGardenApplication.class)
 class EveryoneGardenApplicationTests {
 
     @Test
-    void contextLoads() {
+    void contextLoads() throws IOException, ParseException {
 
-        LocalDate now = LocalDate.now();
+        WeatherApi wa = new WeatherApi();
 
-        // 포맷 정의
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
-
-        // 포맷 적용
-        String formatedNow = now.format(formatter);
-
-        // 결과 출력
-        System.out.println(formatedNow);
+        String result = wa.getWeather("60","125");
 
     }
 

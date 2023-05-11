@@ -35,6 +35,13 @@ logging:
     org.hibernate:
       type.descriptor.sql: trace #show parameter binding
       SQL: DEBUG
+
 api:
+  weather:
     url: http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst
-    secret:  ${API_WEATHER_SECRET}
+    secret:  Wom3o6rUTrWsbJCTIyw5CZVEiXfr67Zl9u7L8d9XVbdaGqmssQdl2IjMkWSIDjZeP0JCUY%2BHi4sIrLoqqQVvrA%3D%3D
+
+app:
+  auth:
+    tokenSecret: 04ca023b39512e46d0c2cf4b48d5aac61d34302994c87ed4eff225dcf3b0a218739f3897051a057f9b846a69ea2927a587044164b7bae5e1306219d50b588cb1
+    tokenExpiry: 3600000
