@@ -36,6 +36,6 @@ logging:
       type.descriptor.sql: trace #show parameter binding
       SQL: DEBUG
 api:
-  weather:
+  weather:Mo
     url: http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst
     secret:  ${API_WEATHER_SECRET}
