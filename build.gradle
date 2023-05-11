@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '2.7.10'
     id 'io.spring.dependency-management' version '1.1.0'
+
 }
 
 group = 'com.everyonegarden'
@@ -12,6 +13,7 @@ configurations {
     compileOnly {
         extendsFrom annotationProcessor
     }
+
 }
 
 repositories {
@@ -49,8 +51,19 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
 
+    //junit
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+
+
     runtimeOnly 'com.mysql:mysql-connector-j'
+
+
+
 }
+
+
+
 
 tasks.named('test') {
     useJUnitPlatform()

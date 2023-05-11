@@ -1,4 +1,4 @@
-package com.everyonegarden.garden;
+package com.everyonegarden.garden.repository;
 
 import com.everyonegarden.garden.model.GardenPost;
 import org.springframework.data.jpa.repository.JpaRepository;

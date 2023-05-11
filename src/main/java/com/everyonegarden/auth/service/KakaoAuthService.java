@@ -2,12 +2,11 @@ package com.everyonegarden.auth.service;
 
 
 import com.everyonegarden.auth.client.ClientKakao;
-import com.everyonegarden.auth.dto.AuthRequest;
 import com.everyonegarden.auth.dto.AuthResponse;
 import com.everyonegarden.auth.jwt.AuthToken;
 import com.everyonegarden.auth.jwt.AuthTokenProvider;
-import com.everyonegarden.user.entity.User;
-import com.everyonegarden.user.repository.UserRepository;
+import com.everyonegarden.member.entity.Member;
+import com.everyonegarden.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,17 +18,17 @@ public class KakaoAuthService {
 
     private final ClientKakao clientKakao;
     private final AuthTokenProvider authTokenProvider;
-    private final UserRepository userRepository;
+    private final MemberRepository userRepository;
 
     @Transactional
     public AuthResponse login(String accessToken) {
-        User kakaoMember = clientKakao.getUserData(accessToken);
+        Member kakaoMember = clientKakao.getUserData(accessToken);
         String socialId = kakaoMember.getSocialId();
-        User user = userRepository.findBySocialId(socialId);
+        Member member = userRepository.findBySocialId(socialId);
 
         AuthToken appToken = authTokenProvider.createUserAppToken(socialId);
 
-        if (user == null) {
+        if (member == null) {
             userRepository.save(kakaoMember);
             return AuthResponse.builder()
                     .appToken(appToken.getToken())

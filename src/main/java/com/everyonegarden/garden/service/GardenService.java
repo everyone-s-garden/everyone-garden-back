@@ -1,8 +1,10 @@
-package com.everyonegarden.garden;
+package com.everyonegarden.garden.service;
 
 import com.everyonegarden.garden.dto.GardenPostAddRequest;
 import com.everyonegarden.garden.dto.GardenResponse;
-import com.everyonegarden.garden.model.GardenPost;
+import com.everyonegarden.garden.repository.GardenImageRepository;
+import com.everyonegarden.garden.repository.GardenPostRepository;
+import com.everyonegarden.garden.repository.GardenRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;

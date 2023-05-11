@@ -17,6 +17,6 @@ public class Crop {
     private Long id;
 
     private String name;
-    private String description;
+    private String howto;
 
 }

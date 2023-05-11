@@ -1,5 +1,6 @@
-package com.everyonegarden.garden;
+package com.everyonegarden.garden.controller;
 
+import com.everyonegarden.garden.service.GardenService;
 import com.everyonegarden.garden.api.mafra.fetch.MafraFetchService;
 import com.everyonegarden.garden.dto.GardenAddSuccessResponse;
 import com.everyonegarden.garden.dto.GardenPostAddRequest;

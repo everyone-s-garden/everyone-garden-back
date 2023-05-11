@@ -1,8 +1,8 @@
 package com.everyonegarden.auth.client;
 
-import com.everyonegarden.user.entity.User;
+import com.everyonegarden.member.entity.Member;
 
 public interface ClientProxy {
 
-    User getUserData(String accessToken);
+    Member getUserData(String accessToken);
 }
