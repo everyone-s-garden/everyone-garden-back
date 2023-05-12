@@ -21,6 +21,7 @@ import java.time.LocalDateTime;
 public class Garden {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "garden_id")
     private Long gardenId;
 
     private double latitude;
