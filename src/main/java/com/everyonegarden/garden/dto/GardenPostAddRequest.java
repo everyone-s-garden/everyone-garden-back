@@ -44,6 +44,7 @@ public class GardenPostAddRequest {
                 .title(title)
                 .content(content)
                 .member(Member.builder().id(userId).build())
+                .garden(Garden.builder().gardenId(gardenId).build())
 
                 .build();
     }

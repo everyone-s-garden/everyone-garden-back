@@ -25,13 +25,16 @@ public class GardenResponse {
     public static GardenResponse of(Garden garden) {
         return GardenResponse.builder()
                 .gardenId(garden.getGardenId())
+
                 .name(garden.getName())
                 .type(garden.getType())
+                .link(garden.getLink())
+                .price(garden.getPrice())
+
                 .address(garden.getAddress())
                 .longitude(garden.getLongitude())
                 .latitude(garden.getLatitude())
-                .link(garden.getLink())
-                .price(garden.getPrice())
+
                 .build();
     }
 

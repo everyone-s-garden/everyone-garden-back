@@ -1,10 +1,13 @@
 package com.everyonegarden.garden;
 
 import com.everyonegarden.common.exception.BadRequestException;
+import com.everyonegarden.common.memberId.MemberId;
 import com.everyonegarden.garden.dto.*;
+import com.everyonegarden.garden.model.Garden;
 import com.everyonegarden.garden.s3.S3Service;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -75,21 +78,22 @@ public class GardenControllerV1 {
     }
 
     @GetMapping("mine")
-    public List<GardenResponse> getMyGarden() {
-        return List.of();
+    public List<GardenPostResponse> getMyGarden(@MemberId Long memberId) {
+        return gardenService.getGardenByMemberId(memberId);
     }
 
     @GetMapping("{gardenId}")
-    public GardenResponse getGardenDetail(@PathVariable("gardenId") Long gardenId) {
-        return null;
+    public GardenDetailResponse getGardenDetail(@PathVariable("gardenId") Long gardenId) {
+        return gardenService.getGardenDetailByGardenId(gardenId);
     }
 
     @PostMapping
-    public GardenAddSuccessResponse addGarden(@RequestBody @Valid GardenPostAddRequest gardenAddRequest) {
-        Long gardenId = gardenService.addGarden(gardenAddRequest);
+    public GardenAddSuccessResponse addGarden(@MemberId Long memberId,
+                                              @RequestBody @Valid GardenPostAddRequest gardenAddRequest) {
+        Garden garden = gardenService.addGarden(gardenAddRequest, memberId);
 
         return GardenAddSuccessResponse.builder()
-                .gardenId(gardenId)
+                .garden(GardenResponse.of(garden))
                 .build();
     }
 
@@ -113,9 +117,17 @@ public class GardenControllerV1 {
         return null;
     }
 
-    @DeleteMapping("{gardenId}")
-    public ResponseEntity<String> deleteGarden(@PathVariable("gardenId") Long gardenId) {
+    @PatchMapping("{gardenId}")
+    public ResponseEntity<GardenResponse> editGardenSelectively(@PathVariable("gardenId") Long gardenId) {
         return null;
+    }
+
+    @DeleteMapping("{gardenId}")
+    public ResponseEntity<String> deleteGarden(@MemberId Long memberId,
+                                               @PathVariable("gardenId") Long gardenId) {
+        gardenService.deleteGardenPost(memberId, gardenId);
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body("텃밭을 지웠어요");
     }
 
 }

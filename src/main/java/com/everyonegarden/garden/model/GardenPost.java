@@ -22,6 +22,10 @@ public class GardenPost {
     private String content;
 
     @ManyToOne
+    @JoinColumn(name = "garden_id")
+    private Garden garden;
+
+    @ManyToOne
     @JoinColumn(name="member_id")
     private Member member;
 

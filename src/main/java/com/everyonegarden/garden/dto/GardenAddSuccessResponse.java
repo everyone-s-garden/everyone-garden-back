@@ -13,6 +13,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @NoArgsConstructor @AllArgsConstructor @Builder
 public class GardenAddSuccessResponse {
 
-    private Long gardenId;
+    private GardenResponse garden;
 
 }
