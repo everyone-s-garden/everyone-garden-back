@@ -5,6 +5,7 @@ import com.everyonegarden.common.memberId.MemberId;
 import com.everyonegarden.garden.dto.*;
 import com.everyonegarden.garden.model.Garden;
 import com.everyonegarden.garden.s3.S3Service;
+import com.everyonegarden.gardenView.GardenViewService;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @RestController
@@ -22,6 +24,8 @@ import java.util.UUID;
 public class GardenControllerV1 {
 
     private final GardenService gardenService;
+    private final GardenViewService gardenViewService;
+
     private final S3Service s3Service;
 
     @GetMapping("{type}/by-region")
@@ -73,8 +77,16 @@ public class GardenControllerV1 {
     }
 
     @GetMapping("recent")
-    public List<GardenResponse> getRecentlyViewdGarden() {
-        return List.of();
+    public List<GardenResponse> getRecentlyViewedGarden(@MemberId Long memberId,
+                                                        @RequestParam(value = "page", required = false) Integer page,
+                                                        @RequestParam(value = "size", required = false) Integer size) {
+        if (page == null) page = 1;
+        if (size == null) size = 10;
+
+        return gardenViewService
+                .getRecentGardenView(memberId, page - 1, size).stream()
+                .map(GardenResponse::of)
+                .collect(Collectors.toList());
     }
 
     @GetMapping("mine")
@@ -83,8 +95,9 @@ public class GardenControllerV1 {
     }
 
     @GetMapping("{gardenId}")
-    public GardenDetailResponse getGardenDetail(@PathVariable("gardenId") Long gardenId) {
-        return gardenService.getGardenDetailByGardenId(gardenId);
+    public GardenDetailResponse getGardenDetail(@MemberId Long memberId,
+                                                @PathVariable("gardenId") Long gardenId) {
+        return gardenService.getGardenDetailByGardenId(memberId, gardenId);
     }
 
     @PostMapping

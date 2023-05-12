@@ -5,6 +5,7 @@ import com.everyonegarden.garden.dto.GardenPostAddRequest;
 import com.everyonegarden.garden.dto.GardenPostResponse;
 import com.everyonegarden.garden.dto.GardenResponse;
 import com.everyonegarden.garden.model.*;
+import com.everyonegarden.gardenView.GardenViewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,8 @@ public class GardenService {
     private final GardenRepository gardenRepository;
     private final GardenPostRepository gardenPostRepository;
     private final GardenImageRepository gardenImageRepository;
+
+    private final GardenViewService gardenViewService;
 
     public List<GardenResponse> getPublicGardenByRegion(String region) {
         return gardenRepository.getPublicGardenByRegion(region).stream()
@@ -75,9 +78,14 @@ public class GardenService {
                 .collect(Collectors.toList());
     }
 
-    public GardenDetailResponse getGardenDetailByGardenId(Long gardenId) {
+    @Transactional
+    public GardenDetailResponse getGardenDetailByGardenId(Long memberId, Long gardenId) {
         Garden garden = gardenRepository.findById(gardenId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "찾으시는 텃밭이 없어요"));
+
+        if (memberId != null) {
+            gardenViewService.addGardenView(memberId, gardenId);
+        }
 
         GardenPost gardenPost = gardenPostRepository.findByGardenId(gardenId)
                 .orElse(null);
