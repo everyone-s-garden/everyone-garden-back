@@ -2,7 +2,6 @@ package com.everyonegarden.garden;
 
 import com.everyonegarden.garden.dto.GardenPostAddRequest;
 import com.everyonegarden.garden.dto.GardenResponse;
-import com.everyonegarden.garden.model.Garden;
 import com.everyonegarden.garden.model.GardenImageRepository;
 import com.everyonegarden.garden.model.GardenPostRepository;
 import com.everyonegarden.garden.model.GardenRepository;

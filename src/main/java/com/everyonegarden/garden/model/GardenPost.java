@@ -1,6 +1,7 @@
 package com.everyonegarden.garden.model;
 
-import com.everyonegarden.auth.user.entity.User;
+
+import com.everyonegarden.member.entity.Member;
 import lombok.*;
 
 import javax.persistence.*;
@@ -21,8 +22,8 @@ public class GardenPost {
     private String content;
 
     @ManyToOne
-    @JoinColumn(name="user_id")
-    private User user;
+    @JoinColumn(name="member_id")
+    private Member member;
 
     @OneToMany(mappedBy = "gardenPost")
     private List<GardenImage> gardenImage = new ArrayList<>();

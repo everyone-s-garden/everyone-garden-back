@@ -1,10 +1,11 @@
 package com.everyonegarden.garden.dto;
 
-import com.everyonegarden.auth.user.entity.User;
+
 import com.everyonegarden.garden.model.Garden;
 import com.everyonegarden.garden.model.GardenImage;
 import com.everyonegarden.garden.model.GardenPost;
 import com.everyonegarden.garden.model.GardenType;
+import com.everyonegarden.member.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -42,7 +43,7 @@ public class GardenPostAddRequest {
 
                 .title(title)
                 .content(content)
-                .user(User.builder().id(userId).build())
+                .member(Member.builder().id(userId).build())
 
                 .build();
     }
