@@ -36,7 +36,7 @@ public class GardenControllerV1 {
         return gardenService.getAllGardenByRegion(region);
     }
 
-    @GetMapping("{type}}/by-coordinate")
+    @GetMapping("{type}/by-coordinate")
     public List<GardenResponse> getPublicGardenByCoordinate(@PathVariable("type") String type,
                                                             @RequestParam("lat") String latitude,
                                                             @RequestParam("long") String longitude) {
