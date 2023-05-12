@@ -20,7 +20,8 @@ import java.time.LocalDateTime;
 @Table(name = "garden")
 public class Garden {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "garden_id")
     private Long gardenId;
 
@@ -28,7 +29,8 @@ public class Garden {
     private double longitude;
     private String address;
 
-    @Column(nullable = false) @NotBlank
+    @Column(nullable = false)
+    @NotBlank
     private String name;
 
     @Column(nullable = false)
@@ -50,5 +52,27 @@ public class Garden {
     private LocalDateTime createdDate;
     @LastModifiedDate
     private LocalDateTime lastModifiedDate;
+
+    public Garden editGarden(Garden editedGarden) {
+        address = editedGarden.getAddress();
+        name = editedGarden.getName();
+        link = editedGarden.getLink();
+        price = editedGarden.getPrice();
+        size = editedGarden.getSize();
+        contact = editedGarden.getContact();
+
+        return this;
+    }
+
+    public Garden editGardenIgnoreNull(Garden editedGarden) {
+        if (editedGarden.getAddress() != null) address = editedGarden.getAddress();
+        if (editedGarden.getName() != null) name = editedGarden.getName();
+        if (editedGarden.getLink() != null) link = editedGarden.getLink();
+        if (editedGarden.getPrice() != null) price = editedGarden.getPrice();
+        if (editedGarden.getSize() != null) size = editedGarden.getSize();
+        if (editedGarden.getContact() != null) contact = editedGarden.getContact();
+
+        return this;
+    }
 
 }

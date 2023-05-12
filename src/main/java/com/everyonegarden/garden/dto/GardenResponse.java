@@ -2,6 +2,7 @@ package com.everyonegarden.garden.dto;
 
 import com.everyonegarden.garden.model.Garden;
 import com.everyonegarden.garden.model.GardenType;
+import com.everyonegarden.gardenView.GardenView;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -34,6 +35,22 @@ public class GardenResponse {
                 .address(garden.getAddress())
                 .longitude(garden.getLongitude())
                 .latitude(garden.getLatitude())
+
+                .build();
+    }
+
+    public static GardenResponse of(GardenView gardenView) {
+        return GardenResponse.builder()
+                .gardenId(gardenView.getGarden().getGardenId())
+
+                .name(gardenView.getGarden().getName())
+                .type(gardenView.getGarden().getType())
+                .link(gardenView.getGarden().getLink())
+                .price(gardenView.getGarden().getPrice())
+
+                .address(gardenView.getGarden().getAddress())
+                .latitude(gardenView.getGarden().getLatitude())
+                .longitude(gardenView.getGarden().getLongitude())
 
                 .build();
     }

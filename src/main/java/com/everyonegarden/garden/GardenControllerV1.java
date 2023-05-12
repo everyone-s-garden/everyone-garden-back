@@ -126,13 +126,25 @@ public class GardenControllerV1 {
     }
 
     @PutMapping("{gardenId}")
-    public ResponseEntity<GardenResponse> editGarden(@PathVariable("gardenId") Long gardenId) {
-        return null;
+    public ResponseEntity<GardenResponse> editGarden(@MemberId Long memberId,
+                                                     @PathVariable("gardenId") Long gardenId,
+                                                     @RequestBody @Valid GardenEditRequest gardenEditRequest) {
+        Garden garden = gardenService.editGardenNull(memberId, gardenEditRequest.toEntity(gardenId));
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(GardenResponse.of(garden));
     }
 
     @PatchMapping("{gardenId}")
-    public ResponseEntity<GardenResponse> editGardenSelectively(@PathVariable("gardenId") Long gardenId) {
-        return null;
+    public ResponseEntity<GardenResponse> editGardenSelectively(@MemberId Long memberId,
+                                                                @PathVariable("gardenId") Long gardenId,
+                                                                @RequestBody @Valid GardenEditRequest gardenEditRequest) {
+        Garden garden = gardenService.editGardenIgnoreNull(memberId, gardenEditRequest.toEntity(gardenId));
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(GardenResponse.of(garden));
     }
 
     @DeleteMapping("{gardenId}")

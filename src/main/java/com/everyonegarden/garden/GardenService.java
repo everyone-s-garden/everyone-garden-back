@@ -131,6 +131,29 @@ public class GardenService {
         return garden;
     }
 
+    public Garden editGardenNull(Long memberId, Garden editedGarden) {
+        Garden gardenToEdit = gardenRepository.findById(editedGarden.getGardenId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "수정하시려는 텃밭이 없어요"));
+
+        if (!gardenToEdit.getGardenId().equals(memberId)) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "텃밭을 수정하시려는 권한이 없어요");
+        }
+
+        return gardenToEdit.editGarden(editedGarden);
+    }
+
+    @Transactional
+    public Garden editGardenIgnoreNull(Long memberId, Garden editedGarden) {
+        Garden gardenToEdit = gardenRepository.findById(editedGarden.getGardenId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "수정하시려는 텃밭이 없어요"));
+
+        if (!gardenToEdit.getGardenId().equals(memberId)) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "텃밭을 수정하시려는 권한이 없어요");
+        }
+
+        return gardenToEdit.editGardenIgnoreNull(editedGarden);
+    }
+
     @Transactional
     public void deleteGardenPost(Long memberId, Long gardenId) {
         GardenPost gardenPostToDelete = gardenPostRepository.findByGardenId(gardenId)
