@@ -1,6 +1,7 @@
 package com.everyonegarden.auth.jwt;
 
 import io.jsonwebtoken.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,15 +19,19 @@ public class AuthToken {
 
     private static final String AUTHORITIES_KEY = "role";
 
-    AuthToken(String socialId, String role, Date expiry, Key key) {
+    @Builder
+    AuthToken(String socialId, String role, Long memberId, Date expiry, Key key) {
         this.key = key;
-        this.token = createAuthToken(socialId, role, expiry);
+        this.token = createAuthToken(socialId, role, memberId, expiry);
     }
 
-    private String createAuthToken(String socialId, String role, Date expiry) {
+    private String createAuthToken(String socialId, String role, Long id, Date expiry) {
         return Jwts.builder()
                 .setSubject(socialId)
+
                 .claim(AUTHORITIES_KEY, role)
+                .claim("memberId", id)
+
                 .signWith(key, SignatureAlgorithm.HS256)
                 .setExpiration(expiry)
                 .compact();
