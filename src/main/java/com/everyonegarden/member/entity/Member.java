@@ -1,7 +1,8 @@
-package com.everyonegarden.user.entity;
+package com.everyonegarden.member.entity;
 
-import com.everyonegarden.garden.entity.Post;
-import com.everyonegarden.user.enunerate.UserProvider;
+
+import com.everyonegarden.garden.model.GardenPost;
+import com.everyonegarden.member.enunerate.MemberProvider;
 import lombok.*;
 
 import javax.persistence.*;
@@ -14,11 +15,12 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+public class Member {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="user_id")
+    @Column(name="member_id")
     private Long id;
 
     @Column
@@ -26,7 +28,7 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private UserProvider userProvider;
+    private MemberProvider memberProvider;
 
     @Column
     private String name;
@@ -43,8 +45,8 @@ public class User {
     private int reportScore;
 
 
-    @OneToMany(mappedBy = "user")
-    private List<Post> posts = new ArrayList<>();
+    @OneToMany(mappedBy = "member")
+    private List<GardenPost> posts = new ArrayList<>();
 
 
 

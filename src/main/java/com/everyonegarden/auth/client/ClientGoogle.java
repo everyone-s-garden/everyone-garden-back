@@ -2,8 +2,9 @@ package com.everyonegarden.auth.client;
 
 import com.everyonegarden.auth.dto.GoogleUserResponse;
 import com.everyonegarden.auth.exception.TokenValidFailedException;
-import com.everyonegarden.user.entity.User;
-import com.everyonegarden.user.enunerate.UserProvider;
+
+import com.everyonegarden.member.entity.Member;
+import com.everyonegarden.member.enunerate.MemberProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -17,7 +18,7 @@ public class ClientGoogle implements ClientProxy{
     private final WebClient webClient;
 
     @Override
-    public User getUserData(String accessToken) {
+    public Member getUserData(String accessToken) {
 
         GoogleUserResponse googleUserResponse = webClient.get()
                 .uri("https://www.googleapis.com/oauth2/v2/userinfo")
@@ -32,11 +33,11 @@ public class ClientGoogle implements ClientProxy{
         System.out.println("googleUserResponse:"+googleUserResponse);
 
 
-        return User.builder()
+        return Member.builder()
                 .socialId(googleUserResponse.getSub())
                 .name(googleUserResponse.getName())
                 .email(googleUserResponse.getEmail())
-                .userProvider(UserProvider.GOOGLE)
+                .memberProvider(MemberProvider.GOOGLE)
                 .roleType("ROLE_USER")
                 .build();
     }

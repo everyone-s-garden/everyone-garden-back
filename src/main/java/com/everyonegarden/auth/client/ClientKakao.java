@@ -3,8 +3,8 @@ package com.everyonegarden.auth.client;
 
 import com.everyonegarden.auth.dto.KakaoUserResponse;
 import com.everyonegarden.auth.exception.TokenValidFailedException;
-import com.everyonegarden.user.entity.User;
-import com.everyonegarden.user.enunerate.UserProvider;
+import com.everyonegarden.member.entity.Member;
+import com.everyonegarden.member.enunerate.MemberProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -18,7 +18,7 @@ public class ClientKakao implements ClientProxy{
     private final WebClient webClient;
 
     @Override
-    public User getUserData(String accessToken) {
+    public Member getUserData(String accessToken) {
 
         KakaoUserResponse kakaoUserResponse = webClient.get()
                 .uri("https://kapi.kakao.com/v2/user/me")
@@ -29,11 +29,11 @@ public class ClientKakao implements ClientProxy{
                 .bodyToMono(KakaoUserResponse.class)
                 .block();
 
-        return User.builder()
+        return Member.builder()
                 .socialId(String.valueOf(kakaoUserResponse.getId()))
                 .name(kakaoUserResponse.getProperties().getNickname())
                 .email(kakaoUserResponse.getKakaoAccount().getEmail())
-                .userProvider(UserProvider.KAKAO)
+                .memberProvider(MemberProvider.KAKAO)
                 .roleType("ROLE_USER")
                 .build();
     }

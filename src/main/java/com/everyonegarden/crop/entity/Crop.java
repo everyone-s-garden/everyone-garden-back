@@ -4,7 +4,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -17,6 +16,6 @@ public class Crop {
     private Long id;
 
     private String name;
-    private String description;
+    private String howto;
 
 }

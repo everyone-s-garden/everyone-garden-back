@@ -1,12 +1,12 @@
 package com.everyonegarden.auth.service;
 
 import com.everyonegarden.auth.client.ClientGoogle;
-import com.everyonegarden.auth.dto.AuthRequest;
 import com.everyonegarden.auth.dto.AuthResponse;
 import com.everyonegarden.auth.jwt.AuthToken;
 import com.everyonegarden.auth.jwt.AuthTokenProvider;
-import com.everyonegarden.user.entity.User;
-import com.everyonegarden.user.repository.UserRepository;
+
+import com.everyonegarden.member.entity.Member;
+import com.everyonegarden.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
@@ -18,17 +18,17 @@ public class GoogleAuthService {
 
     private final ClientGoogle clientGoogle;
     private final AuthTokenProvider authTokenProvider;
-    private final UserRepository userRepository;
+    private final MemberRepository userRepository;
 
     @Transactional
     public AuthResponse login(String accessToken) {
-        User googleMember = clientGoogle.getUserData(accessToken);
+        Member googleMember = clientGoogle.getUserData(accessToken);
         String socialId = googleMember.getSocialId();
-        User user = userRepository.findBySocialId(socialId);
+        Member member = userRepository.findBySocialId(socialId);
 
         AuthToken appToken = authTokenProvider.createUserAppToken(socialId);
 
-        if (user == null) {
+        if (member == null) {
             userRepository.save(googleMember);
             return AuthResponse.builder()
                     .appToken(appToken.getToken())

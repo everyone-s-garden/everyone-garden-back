@@ -20,11 +20,11 @@ public class CropMonth {
     @Min(1)
     @Max(12)
     @Column(nullable = false)
-    private Integer month;
+    private Integer months ;
 
 
     @ManyToOne
-    @JoinColumn(name="CROP_ID")
+    @JoinColumn(name="crop_id")
     private Crop crop;
 
 

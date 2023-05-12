@@ -3,8 +3,8 @@ package com.everyonegarden.auth.service;
 import com.everyonegarden.auth.dto.AuthResponse;
 import com.everyonegarden.auth.jwt.AuthToken;
 import com.everyonegarden.auth.jwt.AuthTokenProvider;
-import com.everyonegarden.user.entity.User;
-import com.everyonegarden.user.repository.UserRepository;
+import com.everyonegarden.member.entity.Member;
+import com.everyonegarden.member.repository.MemberRepository;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +18,7 @@ import org.springframework.web.server.ResponseStatusException;
 public class AuthService {
 
     private final AuthTokenProvider authTokenProvider;
-    private final UserRepository userRepository;
+    private final MemberRepository userRepository;
 
     public AuthResponse updateToken(AuthToken authToken) {
         Claims claims = authToken.getTokenClaims();
@@ -44,8 +44,8 @@ public class AuthService {
         }
 
         try {
-            User user =  userRepository.findBySocialId(claims.getSubject());
-            return user.getId();
+            Member member =  userRepository.findBySocialId(claims.getSubject());
+            return member.getId();
 
         } catch (NullPointerException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "사용자가 존재하지 않습니다.");

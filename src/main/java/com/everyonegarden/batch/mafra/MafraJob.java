@@ -1,7 +1,8 @@
 package com.everyonegarden.batch.mafra;
 
-import com.everyonegarden.garden.Garden;
+
 import com.everyonegarden.garden.api.mafra.response.ApiMafraResponse;
+import com.everyonegarden.garden.model.Garden;
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
