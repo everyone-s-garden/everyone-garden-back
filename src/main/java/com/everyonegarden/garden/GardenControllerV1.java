@@ -1,5 +1,6 @@
 package com.everyonegarden.garden;
 
+import com.everyonegarden.common.exception.BadRequestException;
 import com.everyonegarden.garden.dto.*;
 import com.everyonegarden.garden.s3.S3Service;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +24,12 @@ public class GardenControllerV1 {
     @GetMapping("{type}/by-region")
     public List<GardenResponse> getPublicGardenByRegion(@PathVariable("type") String type,
                                                         @RequestParam("region") String region) {
-        GardenTypeRequest gardenTypeRequest = GardenTypeRequest.valueOf(type);
+        GardenTypeRequest gardenTypeRequest;
+        try {
+            gardenTypeRequest = GardenTypeRequest.valueOf(type.toUpperCase());
+        } catch (Exception e) {
+            throw new BadRequestException(String.format("%s은 올바른 범위가 아닙니다", type));
+        }
 
         if (gardenTypeRequest == GardenTypeRequest.PUBLIC) {
             return gardenService.getPublicGardenByRegion(region);
@@ -40,7 +46,12 @@ public class GardenControllerV1 {
     public List<GardenResponse> getPublicGardenByCoordinate(@PathVariable("type") String type,
                                                             @RequestParam("lat") String latitude,
                                                             @RequestParam("long") String longitude) {
-        GardenTypeRequest gardenTypeRequest = GardenTypeRequest.valueOf(type);
+        GardenTypeRequest gardenTypeRequest;
+        try {
+            gardenTypeRequest = GardenTypeRequest.valueOf(type.toUpperCase());
+        } catch (Exception e) {
+            throw new BadRequestException(String.format("%s은 올바른 범위가 아닙니다", type));
+        }
 
         double latStart = Double.parseDouble(latitude.split(",")[0]);
         double latEnd = Double.parseDouble(latitude.split(",")[1]);

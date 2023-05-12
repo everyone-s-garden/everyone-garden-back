@@ -20,7 +20,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(
             HttpServletRequest request,
             HttpServletResponse response,
-            FilterChain filterChain)  throws ServletException, IOException {
+            FilterChain filterChain) throws ServletException, IOException {
 
         if (request.getServletPath().startsWith("/auth")) {
             filterChain.doFilter(request, response);
@@ -38,6 +38,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 filterChain.doFilter(request, response);
             }
 
+            filterChain.doFilter(request, response);
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.everyonegarden.batch;
+package com.everyonegarden.config;
 
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.context.annotation.Configuration;
