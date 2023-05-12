@@ -1,10 +1,6 @@
 package com.everyonegarden.garden;
 
-import com.everyonegarden.garden.api.mafra.fetch.MafraFetchService;
-import com.everyonegarden.garden.dto.GardenAddSuccessResponse;
-import com.everyonegarden.garden.dto.GardenPostAddRequest;
-import com.everyonegarden.garden.dto.GardenResponse;
-import com.everyonegarden.garden.dto.ImageUploadSuccessResponse;
+import com.everyonegarden.garden.dto.*;
 import com.everyonegarden.garden.s3.S3Service;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -22,41 +18,44 @@ import java.util.UUID;
 public class GardenControllerV1 {
 
     private final GardenService gardenService;
-    private final MafraFetchService mafraFetchService;
     private final S3Service s3Service;
 
-    @GetMapping("public/by-region")
-    public List<GardenResponse> getPublicGardenByRegion(@RequestParam("region") String region) {
-        mafraFetchService.getMafraApiResponse(0, 10);
+    @GetMapping("{type}/by-region")
+    public List<GardenResponse> getPublicGardenByRegion(@PathVariable("type") String type,
+                                                        @RequestParam("region") String region) {
+        GardenTypeRequest gardenTypeRequest = GardenTypeRequest.valueOf(type);
 
-        return gardenService.getPublicGardenByRegion(region);
+        if (gardenTypeRequest == GardenTypeRequest.PUBLIC) {
+            return gardenService.getPublicGardenByRegion(region);
+        }
+
+        if (gardenTypeRequest == GardenTypeRequest.RPIVATE) {
+            return gardenService.getPrivateGardenByRegion(region);
+        }
+
+        return gardenService.getAllGardenByRegion(region);
     }
 
-    @GetMapping("public/by-coordinate")
-    public List<GardenResponse> getPublicGardenByCoordinate(@RequestParam("x") String xCoordinate,
-                                                            @RequestParam("y") String yCoordinate) {
-        double xStart = Double.parseDouble(xCoordinate.split(",")[0]);
-        double xEnd = Double.parseDouble(xCoordinate.split(",")[1]);
-        double yStart = Double.parseDouble(yCoordinate.split(",")[0]);
-        double yEnd = Double.parseDouble(yCoordinate.split(",")[1]);
+    @GetMapping("{type}}/by-coordinate")
+    public List<GardenResponse> getPublicGardenByCoordinate(@PathVariable("type") String type,
+                                                            @RequestParam("lat") String latitude,
+                                                            @RequestParam("long") String longitude) {
+        GardenTypeRequest gardenTypeRequest = GardenTypeRequest.valueOf(type);
 
-        return gardenService.getPublicGardenByCoordinate(xStart, xEnd, yStart, yEnd);
-    }
+        double latStart = Double.parseDouble(latitude.split(",")[0]);
+        double latEnd = Double.parseDouble(latitude.split(",")[1]);
+        double longStart = Double.parseDouble(longitude.split(",")[0]);
+        double longEnd = Double.parseDouble(longitude.split(",")[1]);
 
-    @GetMapping("private/by-region")
-    public List<GardenResponse> getPrivateGardenByRegion(@RequestParam("region") String region) {
-        return gardenService.getPrivateGardenByRegion(region);
-    }
+        if (gardenTypeRequest == GardenTypeRequest.PUBLIC) {
+            return gardenService.getPublicGardenByCoordinate(latStart, latEnd, longStart, longEnd);
+        }
 
-    @GetMapping("private/by-coordionate")
-    public List<GardenResponse> getPrivateGardenByCoordinate(@RequestParam("x") String xCoordinate,
-                                                             @RequestParam("y") String yCoordinate) {
-        double xStart = Double.parseDouble(xCoordinate.split(",")[0]);
-        double xEnd = Double.parseDouble(xCoordinate.split(",")[1]);
-        double yStart = Double.parseDouble(yCoordinate.split(",")[0]);
-        double yEnd = Double.parseDouble(yCoordinate.split(",")[1]);
+        if (gardenTypeRequest == GardenTypeRequest.RPIVATE) {
+            return gardenService.getPrivateGardenByCoordinate(latStart, latEnd, longStart, longEnd);
+        }
 
-        return gardenService.getPublicGardenByCoordinate(xStart, xEnd, yStart, yEnd);
+        return gardenService.getAllGardenByCoordinate(latStart, latEnd, longStart, longEnd);
     }
 
     @GetMapping("recent")
@@ -86,13 +85,14 @@ public class GardenControllerV1 {
     @SneakyThrows
     @PostMapping("images")
     public ImageUploadSuccessResponse uploadImage(@RequestParam("file") MultipartFile file) {
-        String fileName = UUID.randomUUID().toString().substring(0, 5) + (file.getOriginalFilename() == null ? "" : file.getOriginalFilename().replaceAll(" ", ""));
+        String uuidUntil5 = UUID.randomUUID().toString().substring(0, 5);
+        String fileName = uuidUntil5 + (file.getOriginalFilename() == null ? "" : file.getOriginalFilename().replaceAll(" ", ""));
         byte[] fileBytes = file.getInputStream().readAllBytes();
 
         String imageUrl = s3Service.putObject(fileName, fileBytes);
 
         return ImageUploadSuccessResponse.builder()
-                .id(UUID.randomUUID())
+                .id(uuidUntil5)
                 .imageUrl(imageUrl)
                 .build();
     }

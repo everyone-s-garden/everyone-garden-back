@@ -48,7 +48,7 @@ public class GardenPostAddRequest {
     }
 
     public List<GardenImage> toGardenImageEntityList(Long gardenPostId) {
-        return garden.getPicture().stream()
+        return garden.getImages().stream()
                 .map(image -> GardenImage.builder()
 
                         .url(image)

@@ -2,7 +2,10 @@ package com.everyonegarden.garden;
 
 import com.everyonegarden.garden.dto.GardenPostAddRequest;
 import com.everyonegarden.garden.dto.GardenResponse;
-import com.everyonegarden.garden.model.GardenPost;
+import com.everyonegarden.garden.model.Garden;
+import com.everyonegarden.garden.model.GardenImageRepository;
+import com.everyonegarden.garden.model.GardenPostRepository;
+import com.everyonegarden.garden.model.GardenRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -25,36 +28,52 @@ public class GardenService {
                 .collect(Collectors.toList());
     }
 
-    public List<GardenResponse> getPublicGardenByCoordinate(double xStart, double xEnd,
-                                                            double yStart, double yEnd) {
+    public List<GardenResponse> getPublicGardenByCoordinate(double latStart, double latEnd,
+                                                            double longStart, double longEnd) {
         return gardenRepository
-                .getPublicGardenByCoordinateWithinRange(xStart, xEnd, yStart, yEnd).stream()
+                .getPublicGardenByCoordinateWithinRange(latStart, latEnd, longStart, longEnd).stream()
                 .map(GardenResponse::of)
                 .collect(Collectors.toList());
     }
 
     public List<GardenResponse> getPrivateGardenByRegion(String region) {
-        return List.of();
+        return gardenRepository.getPrivateGardenByRegion(region).stream()
+                .map(GardenResponse::of)
+                .collect(Collectors.toList());
     }
 
-    public List<GardenResponse> getPrivateGardenByCoordinate(String xStart, String xEnd,
-                                                             String yStart, String yEnd) {
-        return List.of();
+    public List<GardenResponse> getPrivateGardenByCoordinate(double latStart, double latEnd,
+                                                             double longStart, double longEnd) {
+        return gardenRepository
+                .getPrivateGardenByCoordinateWithinRange(latStart, latEnd, longStart, longEnd).stream()
+                .map(GardenResponse::of)
+                .collect(Collectors.toList());
+    }
+
+    public List<GardenResponse> getAllGardenByRegion(String region) {
+        return gardenRepository
+                .getAllGardenByRegion(region).stream()
+                .map(GardenResponse::of)
+                .collect(Collectors.toList());
+    }
+
+    public List<GardenResponse> getAllGardenByCoordinate(double latStart, double latEnd,
+                                                         double longStart, double longEnd) {
+        return gardenRepository
+                .getAllGardenByCoordinateWithinRange(latStart, latEnd, longStart, longEnd).stream()
+                .map(GardenResponse::of)
+                .collect(Collectors.toList());
     }
 
     @Transactional
     public Long addGarden(GardenPostAddRequest gardenPostAddRequest) {
-
         Long userId = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
         Long gardenId = gardenRepository.save(gardenPostAddRequest.toGardenEntity()).getGardenId();
-
         Long gardenPostId = gardenPostRepository.save(gardenPostAddRequest.toGardenPostEntity(userId, gardenId)).getGardenPostId();
 
         gardenImageRepository.saveAll(gardenPostAddRequest.toGardenImageEntityList(gardenPostId));
 
         return gardenId;
-
     }
 
 }
