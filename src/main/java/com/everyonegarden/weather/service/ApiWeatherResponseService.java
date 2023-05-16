@@ -1,8 +1,8 @@
 package com.everyonegarden.weather.service;
 
 
-import com.everyonegarden.weather.dto.ApiWeatherResponse;
-import com.everyonegarden.weather.dto.ApiWeatherRow;
+import com.everyonegarden.weather.dto.ApiWeatherResult;
+import com.everyonegarden.weather.dto.ApiWeatherDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,9 +18,9 @@ public class ApiWeatherResponseService {
      * @Parameter : [list]
      * @Return : ApiResponse
      **/
-    public ApiWeatherResponse getWeatherResult(List<ApiWeatherRow> list) {
-        ApiWeatherResponse result = new ApiWeatherResponse();
-        result.setRow(list);
+    public ApiWeatherResult getWeatherResult(List<ApiWeatherDto> list) {
+        ApiWeatherResult result = new ApiWeatherResult();
+        result.setData(list);
         setSuccessResult(result);
         return result;
     }
@@ -31,7 +31,7 @@ public class ApiWeatherResponseService {
      * @Parameter : [result]
      * @Return : null
      **/
-    private void setSuccessResult(ApiWeatherResponse result) {
+    private void setSuccessResult(ApiWeatherResult result) {
         result.setSuccess(true);
         result.setCode(0);
     }

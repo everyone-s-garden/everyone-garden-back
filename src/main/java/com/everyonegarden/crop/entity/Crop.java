@@ -1,9 +1,12 @@
 package com.everyonegarden.crop.entity;
 
+import com.everyonegarden.garden.model.GardenPost;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -17,5 +20,8 @@ public class Crop {
 
     private String name;
     private String howto;
+
+    @OneToMany(mappedBy = "crop")
+    private List<CropMonths> raise_months = new ArrayList<>();
 
 }
