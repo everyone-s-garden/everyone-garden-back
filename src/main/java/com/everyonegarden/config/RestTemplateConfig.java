@@ -3,6 +3,7 @@ package com.everyonegarden.config;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -23,6 +24,7 @@ public class RestTemplateConfig {
     }
 
     @Bean
+    @Primary
     public RestTemplate xmlRestTemplate() {
         return new RestTemplateBuilder()
                 .messageConverters(List.of(
