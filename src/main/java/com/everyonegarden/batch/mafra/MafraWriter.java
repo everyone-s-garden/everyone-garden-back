@@ -2,7 +2,7 @@ package com.everyonegarden.batch.mafra;
 
 
 import com.everyonegarden.garden.model.Garden;
-import com.everyonegarden.garden.repository.GardenRepository;
+import com.everyonegarden.garden.model.GardenRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.stereotype.Component;

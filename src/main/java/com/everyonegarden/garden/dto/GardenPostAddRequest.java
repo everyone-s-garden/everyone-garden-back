@@ -44,12 +44,13 @@ public class GardenPostAddRequest {
                 .title(title)
                 .content(content)
                 .member(Member.builder().id(userId).build())
+                .garden(Garden.builder().gardenId(gardenId).build())
 
                 .build();
     }
 
     public List<GardenImage> toGardenImageEntityList(Long gardenPostId) {
-        return garden.getPicture().stream()
+        return garden.getImages().stream()
                 .map(image -> GardenImage.builder()
 
                         .url(image)

@@ -1,5 +1,6 @@
 package com.everyonegarden.auth.jwt;
 
+import com.everyonegarden.auth.CustomUser;
 import com.everyonegarden.auth.exception.TokenValidFailedException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.security.Keys;
@@ -17,6 +18,7 @@ import java.security.Key;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -33,13 +35,22 @@ public class AuthTokenProvider {
         this.key = Keys.hmacShaKeyFor(secretKey.getBytes());
     }
 
-    public AuthToken createToken(String id, String role, String expiry) {
+    public AuthToken createToken(String id, String role, String expiry, Long memberId) {
         Date expiryDate = getExpiryDate(expiry);
-        return new AuthToken(id, role, expiryDate, key);
+        return AuthToken.builder()
+                .socialId(id)
+                .memberId(memberId)
+
+                .role(role)
+                .expiry(expiryDate)
+
+                .key(key)
+
+                .build();
     }
 
-    public AuthToken createUserAppToken(String id) {
-        return createToken(id, "ROLE_USER", expiry);
+    public AuthToken createUserAppToken(String id, Long memberId) {
+        return createToken(id, "ROLE_USER", expiry, memberId);
     }
 
     public AuthToken convertAuthToken(String token) {
@@ -55,14 +66,20 @@ public class AuthTokenProvider {
         if(authToken.validate()) {
 
             Claims claims = authToken.getTokenClaims();
-            Collection<? extends GrantedAuthority> authorities =
-                    Arrays.stream(new String[]{claims.get(AUTHORITIES_KEY).toString()})
+            List<SimpleGrantedAuthority> authorities = Arrays.stream(new String[]{claims.get(AUTHORITIES_KEY).toString()})
                             .map(SimpleGrantedAuthority::new)
                             .collect(Collectors.toList());
 
-            User principal = new User(claims.getSubject(), "", authorities);//security의 User
+            int memberId = (int) claims.get("memberId");
 
-            return new UsernamePasswordAuthenticationToken(principal, authToken, authorities);
+            CustomUser customUser = CustomUser.builder()
+                    .socialId(claims.getSubject())
+                    .memberId((long) memberId)
+                    .authorities(authorities)
+                    .build();
+
+            return new UsernamePasswordAuthenticationToken(customUser, authToken, authorities);
+
         } else {
             throw new TokenValidFailedException();
         }

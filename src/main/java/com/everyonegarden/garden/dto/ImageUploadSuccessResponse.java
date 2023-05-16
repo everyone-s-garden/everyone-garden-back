@@ -5,13 +5,11 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.UUID;
-
 @Getter
 @NoArgsConstructor @AllArgsConstructor @Builder
 public class ImageUploadSuccessResponse {
 
-    private UUID id;
+    private String id;
     private String imageUrl;
 
 }
