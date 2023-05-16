@@ -11,6 +11,7 @@ import org.apache.http.conn.ssl.NoopHostnameVerifier;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -47,9 +48,9 @@ public class WeatherFetchService {
    private final ApiWeatherResponseService apiWeatherResponseService;
 
     //EndPoint
-   //@Value("${api.weather.url}") private String apiUrl ;
+   @Value("${api.weather.url}") private String apiUrl ;
     //홈페이지에서 받은 키
-   // @Value("${api.weather.secret}") private String serviceKey ;
+    @Value("${api.weather.secret}") private String serviceKey ;
 
 
     static String[] time={"2300","2300",
@@ -65,8 +66,7 @@ public class WeatherFetchService {
     public List<ApiWeatherDto> getWeather(String nx, String ny) throws Exception {
 
 
-        String apiUrl= "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst";
-        String serviceKey= "Wom3o6rUTrWsbJCTIyw5CZVEiXfr67Zl9u7L8d9XVbdaGqmssQdl2IjMkWSIDjZeP0JCUY%2BHi4sIrLoqqQVvrA%3D%3D";
+
 
         String baseDate = getTodayDate();
         String baseTime = getNearTime(); // 조회 시간  0200, 0500, 0800, 1100, 1400, 1700, 2000, 2300 (1일 8회)
