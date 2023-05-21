@@ -26,7 +26,8 @@ public class KakaoAuthService {
         String socialId = kakaoMember.getSocialId();
         Member member = userRepository.findBySocialId(socialId);
 
-        AuthToken appToken = authTokenProvider.createUserAppToken(socialId, member.getId());
+
+        AuthToken appToken = authTokenProvider.createUserAppToken(socialId);
 
         if (member == null) {
             userRepository.save(kakaoMember);

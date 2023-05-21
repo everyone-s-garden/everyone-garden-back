@@ -2,20 +2,14 @@ package com.everyonegarden.weather.service;
 
 import com.everyonegarden.weather.dto.ApiWeatherDto;
 
-import com.fasterxml.jackson.core.JsonParser;
-import com.nimbusds.jose.shaded.json.JSONObject;
+
+
 import lombok.RequiredArgsConstructor;
 import net.minidev.json.JSONArray;
+import net.minidev.json.JSONObject;
 import net.minidev.json.parser.JSONParser;
-import org.apache.http.conn.ssl.NoopHostnameVerifier;
-import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
+
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -23,19 +17,14 @@ import org.springframework.web.client.RestTemplate;
 import java.net.URI;
 
 import java.net.URLEncoder;
-import java.security.KeyManagementException;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
 
-import java.security.cert.X509Certificate;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.http.ssl.TrustStrategy;
-import javax.net.ssl.SSLContext;
+
 
 
 
@@ -91,8 +80,9 @@ public class WeatherFetchService {
         String makeUrl = urlBuilder.toString();
 
 
+        System.out.println(makeUrl);
         URI uri = new URI(makeUrl);
-        RestTemplate restTemplate = this.makeRestTemplate();
+        RestTemplate restTemplate = new RestTemplate();
         String jsonString = restTemplate.getForObject(uri,String.class);
 
         JSONParser jsonParser = new JSONParser();
@@ -149,34 +139,6 @@ public class WeatherFetchService {
         return time[index];
     }
 
-
-
-    //restTemplate ssl 인증 무시하는 메서드
-    private RestTemplate makeRestTemplate() throws KeyStoreException, NoSuchAlgorithmException, KeyManagementException {
-
-        TrustStrategy acceptingTrustStrategy = (X509Certificate[] chain, String authType) -> true;
-
-        SSLContext sslContext = org.apache.http.ssl.SSLContexts.custom()
-                .loadTrustMaterial(null, acceptingTrustStrategy)
-                .build();
-
-        SSLConnectionSocketFactory csf = new SSLConnectionSocketFactory(sslContext, new NoopHostnameVerifier());
-
-        CloseableHttpClient httpClient = HttpClients.custom()
-                .setSSLSocketFactory(csf)
-                .build();
-
-        HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
-        requestFactory.setHttpClient(httpClient);
-
-        requestFactory.setConnectTimeout(3 * 1000);
-
-        requestFactory.setReadTimeout(3 * 1000);
-
-        return new RestTemplate(requestFactory);
-    }
-
-
     private ApiWeatherDto makeWeatherDto(JSONObject item) {
         /*
 
@@ -198,8 +160,8 @@ public class WeatherFetchService {
                 .fcstDate((String)item.get("fcstDate"))
                 .fcstTime((String)item.get("fcstTime"))
                 .fcstValue((String) item.get("fcstValue"))
-                .nx((String) item.get("nx"))
-                .ny((String) item.get("ny"))
+                .nx(item.get("nx").toString())
+                .ny((String) item.get("ny").toString())
                 .build();
 
         return dto;
