@@ -3,14 +3,11 @@ package com.everyonegarden.weather.dto;
 
 import lombok.Data;
 
-import java.util.List;
-
 @Data
-public class ApiWeatherResult<T> {
+public class ApiWeatherRandomResult<T> {
 
     private boolean success;
     private int code;
+    private String regionName;
     private T data;
-
-
 }

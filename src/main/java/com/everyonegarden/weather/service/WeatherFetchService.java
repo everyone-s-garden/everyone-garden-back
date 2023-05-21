@@ -34,7 +34,7 @@ import java.util.List;
 public class WeatherFetchService {
 
    private final RestTemplate restTemplate ;
-   private final ApiWeatherResponseService apiWeatherResponseService;
+   private final WeatherResponseService apiWeatherResponseService;
 
     //EndPoint
     @Value("${api.weather.url}") private String apiUrl ;
@@ -50,6 +50,7 @@ public class WeatherFetchService {
                           "1400", "1400","1400",
                           "1700", "1700","1700",
                           "2000", "2000","2000","2300"};
+
 
 
     public List<ApiWeatherDto> getWeather(String nx, String ny) throws Exception {
@@ -102,7 +103,7 @@ public class WeatherFetchService {
                 result.add(makeWeatherDto(item));
         }
 
-        
+
         System.out.println(urlBuilder);
 
         return result;

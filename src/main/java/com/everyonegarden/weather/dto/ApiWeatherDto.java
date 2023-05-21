@@ -17,8 +17,8 @@ public class ApiWeatherDto {
     private String fcstDate; // 예보 일자
     private String fcstTime; // 예보 시각
     private String fcstValue; // 자료에 대한 값
-    private String nx; // 경도
-    private String ny; // 위도
+    private String nx; // 경도 lng
+    private String ny; // 위도 lat
 
 
 
