@@ -12,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class GoogleAuthService {
@@ -24,21 +26,21 @@ public class GoogleAuthService {
     public AuthResponse login(String accessToken) {
         Member googleMember = clientGoogle.getUserData(accessToken);
         String socialId = googleMember.getSocialId();
-        Member member = userRepository.findBySocialId(socialId);
+        Optional<Member> memberOptional = userRepository.findBySocialIdOptional(socialId);
 
-        AuthToken appToken = authTokenProvider.createUserAppToken(socialId);
+        AuthToken appToken;
 
-        if (member == null) {
-            userRepository.save(googleMember);
-            return AuthResponse.builder()
-                    .appToken(appToken.getToken())
-                    .isNewMember(Boolean.TRUE)
-                    .build();
+        if (memberOptional.isEmpty()) {
+            Member savedMember = userRepository.save(googleMember);
+            appToken = authTokenProvider.createUserAppToken(socialId, savedMember.getId());
+        } else {
+            appToken = authTokenProvider.createUserAppToken(socialId, memberOptional.get().getId());
         }
 
         return AuthResponse.builder()
                 .appToken(appToken.getToken())
                 .isNewMember(Boolean.FALSE)
                 .build();
+
     }
 }

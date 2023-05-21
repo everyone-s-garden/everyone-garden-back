@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 
 @Service
 @RequiredArgsConstructor
@@ -24,22 +26,21 @@ public class KakaoAuthService {
     public AuthResponse login(String accessToken) {
         Member kakaoMember = clientKakao.getUserData(accessToken);
         String socialId = kakaoMember.getSocialId();
-        Member member = userRepository.findBySocialId(socialId);
+        Optional<Member> memberOptional = userRepository.findBySocialIdOptional(socialId);
 
+        AuthToken appToken;
 
-        AuthToken appToken = authTokenProvider.createUserAppToken(socialId);
-
-        if (member == null) {
-            userRepository.save(kakaoMember);
-            return AuthResponse.builder()
-                    .appToken(appToken.getToken())
-                    .isNewMember(Boolean.TRUE)
-                    .build();
+        if (memberOptional.isEmpty()) {
+            Member savedMember = userRepository.save(kakaoMember);
+            appToken = authTokenProvider.createUserAppToken(socialId, savedMember.getId());
+        } else {
+            appToken = authTokenProvider.createUserAppToken(socialId, memberOptional.get().getId());
         }
 
         return AuthResponse.builder()
                 .appToken(appToken.getToken())
                 .isNewMember(Boolean.FALSE)
                 .build();
+
     }
 }

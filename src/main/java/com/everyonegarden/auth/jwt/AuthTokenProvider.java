@@ -35,10 +35,12 @@ public class AuthTokenProvider {
         this.key = Keys.hmacShaKeyFor(secretKey.getBytes());
     }
 
-    public AuthToken createToken(String id, String role, String expiry) {
+    public AuthToken createToken(String id, String role, String expiry,Long memberId) {
         Date expiryDate = getExpiryDate(expiry);
         return AuthToken.builder()
                 .socialId(id)
+                .memberId(memberId)
+
                 .role(role)
                 .expiry(expiryDate)
 
@@ -47,8 +49,8 @@ public class AuthTokenProvider {
                 .build();
     }
 
-    public AuthToken createUserAppToken(String id) {
-        return createToken(id, "ROLE_USER", expiry);
+    public AuthToken createUserAppToken(String id, Long memberId) {
+        return createToken(id, "ROLE_USER", expiry,memberId);
     }
 
     public AuthToken convertAuthToken(String token) {

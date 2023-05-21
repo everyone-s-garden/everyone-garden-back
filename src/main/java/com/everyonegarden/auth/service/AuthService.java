@@ -29,7 +29,7 @@ public class AuthService {
         String socialId = claims.getSubject();
         Long memberId = userRepository.findBySocialId(socialId).getId();
 
-        AuthToken newAppToken = authTokenProvider.createUserAppToken(socialId);
+        AuthToken newAppToken = authTokenProvider.createUserAppToken(socialId,memberId);
 
         return AuthResponse.builder()
                 .appToken(newAppToken.getToken())

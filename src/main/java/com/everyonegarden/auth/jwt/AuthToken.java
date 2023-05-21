@@ -20,16 +20,17 @@ public class AuthToken {
     private static final String AUTHORITIES_KEY = "role";
 
     @Builder
-    AuthToken(String socialId, String role, Date expiry, Key key) {
+    AuthToken(String socialId, String role,Long memberId, Date expiry, Key key) {
         this.key = key;
-        this.token = createAuthToken(socialId, role, expiry);
+        this.token = createAuthToken(socialId, role, memberId, expiry);
     }
 
-    private String createAuthToken(String socialId, String role, Date expiry) {
+    private String createAuthToken(String socialId, String role,Long id, Date expiry) {
         return Jwts.builder()
                 .setSubject(socialId)
 
                 .claim(AUTHORITIES_KEY, role)
+                .claim("memberId",id)
 
                 .signWith(key, SignatureAlgorithm.HS256)
                 .setExpiration(expiry)
