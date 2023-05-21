@@ -2,12 +2,12 @@ package com.everyonegarden.weather.service;
 
 import com.everyonegarden.weather.dto.ApiWeatherDto;
 
-
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonArray;
 
 import lombok.RequiredArgsConstructor;
-import net.minidev.json.JSONArray;
-import net.minidev.json.JSONObject;
-import net.minidev.json.parser.JSONParser;
+
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -37,7 +37,7 @@ public class WeatherFetchService {
    private final ApiWeatherResponseService apiWeatherResponseService;
 
     //EndPoint
-   @Value("${api.weather.url}") private String apiUrl ;
+    @Value("${api.weather.url}") private String apiUrl ;
     //홈페이지에서 받은 키
     @Value("${api.weather.secret}") private String serviceKey ;
 
@@ -85,27 +85,24 @@ public class WeatherFetchService {
         RestTemplate restTemplate = new RestTemplate();
         String jsonString = restTemplate.getForObject(uri,String.class);
 
-        JSONParser jsonParser = new JSONParser();
-        JSONObject jsonObject = (JSONObject) jsonParser.parse(jsonString);
+        JsonObject jsonObject = JsonParser.parseString(jsonString).getAsJsonObject();
+        JsonObject jsonResponse = (JsonObject) jsonObject.get("response");
+        JsonObject jsonBody = (JsonObject) jsonResponse.get("body");
+        JsonObject jsonItems = (JsonObject) jsonBody.get("items");
 
-        //가장 큰 Json 객체 response 가져오기
-        JSONObject jsonResponse = (JSONObject) jsonObject.get("response");
-        // body부분 파싱
-        JSONObject jsonBody = (JSONObject) jsonResponse.get("body");
-        // items 파싱
-        JSONObject jsonItems = (JSONObject) jsonBody.get("items");
 
         // itmes는 JSON -> 배열로 가져오기
-        JSONArray jsonItemList = (JSONArray) jsonItems.get("item");
+        JsonArray jsonItemList = (JsonArray) jsonItems.get("item");
 
         List<ApiWeatherDto> result = new ArrayList<>();
 
         for(Object o : jsonItemList){
-            JSONObject item = (JSONObject) o;
-            result.add(makeWeatherDto(item));
+            JsonObject item = (JsonObject) o;
+            if(check(item))
+                result.add(makeWeatherDto(item));
         }
 
-
+        
         System.out.println(urlBuilder);
 
         return result;
@@ -139,31 +136,37 @@ public class WeatherFetchService {
         return time[index];
     }
 
-    private ApiWeatherDto makeWeatherDto(JSONObject item) {
-        /*
+    /*
+     * 일일 평균 온도, 하늘 상태, 강수량에 해당하는 카테고리인지 확인
+     */
 
-    private String baseDate; // 날짜
-    private String baseTime; // 발료 시간
-    private String category; // 자료 구분 코드
-    private String fcstDate; // 예보 일자
-    private String fcstTime; // 예보 시각
-    private String fcstValue; // 자료에 대한 값
-    private String nx; // 경도
-    private String ny; // 위도
-         */
-        //{"baseDate":"20230516","baseTime":"2000","category":"TMP","fcstDate":"20230516","fcstTime":"2100","fcstValue":"22","nx":60,"ny":125}
+    public boolean check(JsonObject item) {
+
+        String target = item.get("category").getAsString();
+
+        if (target.equals("PCP") ||
+                target.equals("SKY") ||
+                target.equals("TMP")
+        ) return true;
+
+
+        return false;
+    }
+
+    private ApiWeatherDto makeWeatherDto(JsonObject item) {
 
         ApiWeatherDto dto = ApiWeatherDto.builder()
-                .baseDate((String) item.get("baseDate"))
-                .baseTime((String)item.get("baseTime"))
-                .category((String)item.get("category"))
-                .fcstDate((String)item.get("fcstDate"))
-                .fcstTime((String)item.get("fcstTime"))
-                .fcstValue((String) item.get("fcstValue"))
-                .nx(item.get("nx").toString())
-                .ny((String) item.get("ny").toString())
+                .baseDate(item.get("baseDate").getAsString())
+                .baseTime(item.get("baseTime").getAsString())
+                .category(item.get("category").getAsString())
+                .fcstDate(item.get("fcstDate").getAsString())
+                .fcstTime(item.get("fcstTime").getAsString())
+                .fcstValue(item.get("fcstValue").getAsString())
+                .nx(item.get("nx").getAsString())
+                .ny(item.get("ny").getAsString())
                 .build();
 
         return dto;
+
     }
 }
