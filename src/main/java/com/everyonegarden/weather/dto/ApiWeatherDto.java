@@ -19,7 +19,7 @@ public class ApiWeatherDto {
     private String fcstValue; // 자료에 대한 값
     private String nx; // 경도 lng
     private String ny; // 위도 lat
-
+    private String regionName;
 
 
 }

@@ -27,14 +27,6 @@ public class WeatherResponseService {
         return result;
     }
 
-    public ApiWeatherRandomResult getWeatherRandomResult(List<ApiWeatherDto> list, String regionName) {
-        ApiWeatherRandomResult result = new ApiWeatherRandomResult();
-        result.setData(list);
-        result.setRegionName(regionName);
-        result.setSuccess(true);
-        result.setCode(0);
-        return result;
-    }
 
 
 }

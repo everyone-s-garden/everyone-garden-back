@@ -5,7 +5,7 @@ import com.everyonegarden.weather.dto.ApiWeatherRandomResult;
 import com.everyonegarden.weather.dto.ApiWeatherResult;
 import com.everyonegarden.weather.entity.Region;
 import com.everyonegarden.weather.repository.RegionRepository;
-import com.everyonegarden.weather.service.WeatherAllService;
+import com.everyonegarden.weather.service.WeatherGetService;
 import com.everyonegarden.weather.service.WeatherResponseService;
 import com.everyonegarden.weather.service.WeatherFetchService;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +26,7 @@ public class WeatherController {
     private RegionRepository regionRepository;
     private final WeatherFetchService weatherFetchService;
     public final WeatherResponseService weatherResponseService;
-    public final WeatherAllService weatherAllService;
+    public final WeatherGetService weatherAllService;
 
     /*
      * 위치를 지정한 경우
@@ -43,7 +43,7 @@ public class WeatherController {
 
         try {
 
-            list = weatherFetchService.getWeather(region.getNx(),region.getNy());
+            //list = weatherFetchService.getWeather(region.getNx(),region.getNy());
 
         }catch (Exception e){
             e.printStackTrace();
@@ -58,7 +58,7 @@ public class WeatherController {
      * 위치를 지정하지 않은 경우
      */
     @GetMapping("/weather/all")
-    public ResponseEntity<ApiWeatherRandomResult> weatherAllRequest() throws Exception {
+    public ResponseEntity<ApiWeatherResult> weatherAllRequest() throws Exception {
 
         return weatherAllService.getRandomWeather();
 

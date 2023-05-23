@@ -1,13 +1,11 @@
 package com.everyonegarden.weather.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 
-@Getter
+@Data
 @Entity
 @Builder
 @NoArgsConstructor
