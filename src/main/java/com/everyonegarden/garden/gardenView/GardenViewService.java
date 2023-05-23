@@ -1,11 +1,9 @@
-package com.everyonegarden.gardenView;
+package com.everyonegarden.garden.gardenView;
 
-import com.everyonegarden.garden.model.Garden;
+import com.everyonegarden.garden.Garden;
 import com.everyonegarden.member.entity.Member;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,9 +15,7 @@ public class GardenViewService {
 
     private final GardenViewRepository gardenViewRepository;
 
-    public List<GardenView> getRecentGardenView(Long memberId, int page, int size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by("createdDate").descending());
-
+    public List<GardenView> getRecentGardenView(Long memberId, Pageable pageable) {
         return gardenViewRepository.findByMemberId(memberId, pageable);
     }
 

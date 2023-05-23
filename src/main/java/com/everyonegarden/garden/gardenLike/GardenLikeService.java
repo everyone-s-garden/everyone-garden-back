@@ -1,9 +1,8 @@
-package com.everyonegarden.gardenLike;
+package com.everyonegarden.garden.gardenLike;
 
-import com.everyonegarden.garden.model.Garden;
-import com.everyonegarden.gardenLike.model.GardenLike;
-import com.everyonegarden.gardenLike.model.GardenLikePk;
-import com.everyonegarden.gardenLike.model.GardenLikeRepository;
+import com.everyonegarden.garden.Garden;
+import com.everyonegarden.garden.gardenLike.model.GardenLike;
+import com.everyonegarden.garden.gardenLike.model.GardenLikeRepository;
 import com.everyonegarden.member.entity.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

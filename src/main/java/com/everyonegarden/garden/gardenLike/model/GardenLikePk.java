@@ -1,4 +1,4 @@
-package com.everyonegarden.gardenLike.model;
+package com.everyonegarden.garden.gardenLike.model;
 
 import lombok.*;
 

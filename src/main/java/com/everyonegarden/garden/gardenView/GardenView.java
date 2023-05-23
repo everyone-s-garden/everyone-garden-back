@@ -1,6 +1,6 @@
-package com.everyonegarden.gardenView;
+package com.everyonegarden.garden.gardenView;
 
-import com.everyonegarden.garden.model.Garden;
+import com.everyonegarden.garden.Garden;
 import com.everyonegarden.member.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,11 +23,11 @@ public class GardenView {
     private Long gardenViewId;
 
     @ManyToOne
-    @JoinColumn(name = "garden_id", referencedColumnName = "garden_id")
+    @JoinColumn(name = "garden_id")
     private Garden garden;
 
     @ManyToOne
-    @JoinColumn(name = "member_id", referencedColumnName = "member_id")
+    @JoinColumn(name = "member_id")
     private Member member;
 
 

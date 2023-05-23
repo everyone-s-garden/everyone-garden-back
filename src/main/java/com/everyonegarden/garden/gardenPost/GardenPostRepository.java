@@ -1,5 +1,6 @@
-package com.everyonegarden.garden.model;
+package com.everyonegarden.garden.gardenPost;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -12,6 +13,6 @@ public interface GardenPostRepository extends JpaRepository<GardenPost, Long> {
     Optional<GardenPost> findByGardenId(Long gardenId);
 
     @Query("select g from GardenPost g where g.member.id = ?1")
-    List<GardenPost> findByMemberId(Long memberId);
+    List<GardenPost> findByMemberId(Long memberId, Pageable pageable);
 
 }

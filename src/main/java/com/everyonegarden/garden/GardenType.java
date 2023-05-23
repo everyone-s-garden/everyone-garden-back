@@ -1,4 +1,4 @@
-package com.everyonegarden.garden.model;
+package com.everyonegarden.garden;
 
 public enum GardenType {
     PUBLIC, PRIVATE, UNKNOWN, MANUAL

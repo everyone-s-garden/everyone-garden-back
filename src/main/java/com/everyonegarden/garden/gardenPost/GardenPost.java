@@ -1,6 +1,8 @@
-package com.everyonegarden.garden.model;
+package com.everyonegarden.garden.gardenPost;
 
 
+import com.everyonegarden.garden.Garden;
+import com.everyonegarden.garden.gardenImage.GardenImage;
 import com.everyonegarden.member.entity.Member;
 import lombok.*;
 

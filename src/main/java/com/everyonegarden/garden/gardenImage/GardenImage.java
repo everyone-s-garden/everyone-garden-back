@@ -1,6 +1,7 @@
-package com.everyonegarden.garden.model;
+package com.everyonegarden.garden.gardenImage;
 
 
+import com.everyonegarden.garden.gardenPost.GardenPost;
 import lombok.*;
 
 import javax.persistence.*;

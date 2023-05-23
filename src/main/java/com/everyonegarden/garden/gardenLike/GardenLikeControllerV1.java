@@ -1,8 +1,8 @@
-package com.everyonegarden.gardenLike;
+package com.everyonegarden.garden.gardenLike;
 
 import com.everyonegarden.common.memberId.MemberId;
 import com.everyonegarden.garden.dto.GardenResponse;
-import com.everyonegarden.gardenLike.model.GardenLike;
+import com.everyonegarden.garden.gardenLike.model.GardenLike;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

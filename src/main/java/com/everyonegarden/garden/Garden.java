@@ -1,4 +1,4 @@
-package com.everyonegarden.garden.model;
+package com.everyonegarden.garden;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,9 +20,8 @@ import java.time.LocalDateTime;
 @Table(name = "garden")
 public class Garden {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "garden_id")
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long gardenId;
 
     private double latitude;
@@ -38,7 +37,7 @@ public class Garden {
     private GardenType type;
 
     private String link;
-    private Integer price;
+    private String price;
 
     private String contact;
     private String size;

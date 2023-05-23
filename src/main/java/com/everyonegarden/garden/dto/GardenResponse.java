@@ -1,8 +1,8 @@
 package com.everyonegarden.garden.dto;
 
-import com.everyonegarden.garden.model.Garden;
-import com.everyonegarden.garden.model.GardenType;
-import com.everyonegarden.gardenView.GardenView;
+import com.everyonegarden.garden.Garden;
+import com.everyonegarden.garden.GardenType;
+import com.everyonegarden.garden.gardenView.GardenView;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -21,7 +21,7 @@ public class GardenResponse {
     private double latitude;
 
     private String link;
-    private Integer price;
+    private String price;
 
     public static GardenResponse of(Garden garden) {
         return GardenResponse.builder()
