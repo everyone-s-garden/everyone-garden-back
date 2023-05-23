@@ -24,9 +24,6 @@ import java.time.format.DateTimeFormatter;
 
 
 
-
-
-
 //단기예보
 @Service
 @RequiredArgsConstructor
@@ -51,7 +48,7 @@ public class WeatherFetchService {
                           "2000", "2000","2000","2300"};
 
 
-    public JsonArray getWeather(String nx, String ny) throws Exception {
+    public JsonArray fetchWeather(String nx, String ny) throws Exception {
 
 
 

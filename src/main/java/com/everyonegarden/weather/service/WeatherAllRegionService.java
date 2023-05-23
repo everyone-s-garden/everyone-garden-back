@@ -20,14 +20,14 @@ import java.util.*;
 
 @Service
 @RequiredArgsConstructor
-public class WeatherGetService {
+public class WeatherAllRegionService {
 
     private final RegionRepository regionRepository ;
     private final WeatherFetchService weatherFetchService;
     public final WeatherResponseService weatherResponseService;
 
 
-    public ResponseEntity<ApiWeatherResult> getRandomWeather() throws Exception {
+    public ResponseEntity<ApiWeatherResult> getAllRegionWeather() throws Exception {
 
         // 모든 지역에 대한 좌표
         List<RegionRandomMapping> allRegion = regionRepository.findAllBy();
@@ -46,7 +46,7 @@ public class WeatherGetService {
 
 
         for(RegionRandomMapping region : allRegion){
-            JsonArray jsonItemList = weatherFetchService.getWeather(region.getNx(),region.getNy());
+            JsonArray jsonItemList = weatherFetchService.fetchWeather(region.getNx(),region.getNy());
             for(Object o : jsonItemList){
                 JsonObject item = (JsonObject) o;
                 if(checkNow(item,timeformat,dayformat))
@@ -69,18 +69,6 @@ public class WeatherGetService {
         if ((category.equals("PCP") ||
                 category.equals("SKY") ||
                 category.equals("TMP") ) && fcstTime.equals(time) && fcstDate.equals(date)
-        ) return true;
-
-
-        return false;
-    }
-    public boolean check(JsonObject item) {
-
-        String target = item.get("category").getAsString();
-
-        if (target.equals("PCP") ||
-                target.equals("SKY") ||
-                target.equals("TMP")
         ) return true;
 
 
