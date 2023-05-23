@@ -1,6 +1,7 @@
 package com.everyonegarden.common.memberId;
 
 import com.everyonegarden.auth.CustomUser;
+import com.everyonegarden.common.exception.UnauthorizedException;
 import org.springframework.core.MethodParameter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -26,9 +27,12 @@ public class MemberIdResolver implements HandlerMethodArgumentResolver {
             return null;
         }
 
-        CustomUser member = (CustomUser) authentication.getPrincipal();
-
-        return member.getMemberId();
+        try {
+            CustomUser member = (CustomUser) authentication.getPrincipal();
+            return member.getMemberId();
+        } catch (Exception e) {
+            throw new UnauthorizedException("JWT Token을 다시 확인해 주세요");
+        }
     }
 
 }

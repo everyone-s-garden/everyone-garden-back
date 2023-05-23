@@ -1,4 +1,4 @@
-package com.everyonegarden.garden.s3;
+package com.everyonegarden.common.s3;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;

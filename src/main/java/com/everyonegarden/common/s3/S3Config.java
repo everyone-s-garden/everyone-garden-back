@@ -1,4 +1,4 @@
-package com.everyonegarden.garden.s3;
+package com.everyonegarden.common.s3;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
