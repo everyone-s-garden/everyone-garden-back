@@ -11,7 +11,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter
+@Data
 @Entity
 @Builder
 @NoArgsConstructor
@@ -44,6 +44,9 @@ public class Member {
 
     @Column
     private int reportScore;
+
+    @Column
+    private boolean permanentSusp;
 
 
     /*
