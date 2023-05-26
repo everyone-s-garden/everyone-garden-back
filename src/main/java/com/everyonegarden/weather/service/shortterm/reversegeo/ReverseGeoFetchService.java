@@ -1,4 +1,4 @@
-package com.everyonegarden.weather.service.reversegeo;
+package com.everyonegarden.weather.service.shortterm.reversegeo;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;

@@ -23,6 +23,10 @@ public class Region {
     String ny ;
 
     @Column
+    String regid;
+
+
+    @Column
     String regionName; // 지역 이름
 
 }

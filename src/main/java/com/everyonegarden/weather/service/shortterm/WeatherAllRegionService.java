@@ -1,10 +1,11 @@
-package com.everyonegarden.weather.service;
+package com.everyonegarden.weather.service.shortterm;
 
-import com.everyonegarden.weather.dto.ApiWeatherDto;
+import com.everyonegarden.weather.dto.ApiWeatherShortDto;
 import com.everyonegarden.weather.dto.ApiWeatherResult;
 import com.everyonegarden.weather.repository.RegionRandomMapping;
 import com.everyonegarden.weather.repository.RegionRepository;
 
+import com.everyonegarden.weather.service.WeatherResponseService;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
@@ -23,7 +24,8 @@ import java.util.*;
 public class WeatherAllRegionService {
 
     private final RegionRepository regionRepository ;
-    private final WeatherFetchService weatherFetchService;
+
+    private final WeatherShortApiService weatherShortService;
     public final WeatherResponseService weatherResponseService;
 
 
@@ -31,7 +33,7 @@ public class WeatherAllRegionService {
 
         // 모든 지역에 대한 좌표
         List<RegionRandomMapping> allRegion = regionRepository.findAllBy();
-        List<ApiWeatherDto> result = new ArrayList<>();
+        List<ApiWeatherShortDto> result = new ArrayList<>();
 
 
         // 현재 시간 구하기
@@ -46,11 +48,11 @@ public class WeatherAllRegionService {
 
 
         for(RegionRandomMapping region : allRegion){
-            JsonArray jsonItemList = weatherFetchService.fetchWeather(region.getNx(),region.getNy());
+            JsonArray jsonItemList = weatherShortService.shortWeather(region.getNx(),region.getNy());
             for(Object o : jsonItemList){
                 JsonObject item = (JsonObject) o;
                 if(checkNow(item,timeformat,dayformat))
-                    result.add(makeWeatherDto(item,region.getRegionName()));
+                    result.add(new ApiWeatherShortDto(item,region.getRegionName()));
             }
 
         }
@@ -66,31 +68,14 @@ public class WeatherAllRegionService {
         String fcstTime = item.get("fcstTime").getAsString();
         String fcstDate = item.get("fcstDate").getAsString();
 
-        if ((category.equals("PCP") ||
+        if ((category.equals("POP") ||
                 category.equals("SKY") ||
                 category.equals("TMP") ) && fcstTime.equals(time) && fcstDate.equals(date)
         ) return true;
 
-
         return false;
     }
 
-    private ApiWeatherDto makeWeatherDto(JsonObject item, String regionName) {
 
-        ApiWeatherDto dto = ApiWeatherDto.builder()
-                .baseDate(item.get("baseDate").getAsString())
-                .baseTime(item.get("baseTime").getAsString())
-                .category(item.get("category").getAsString())
-                .fcstDate(item.get("fcstDate").getAsString())
-                .fcstTime(item.get("fcstTime").getAsString())
-                .fcstValue(item.get("fcstValue").getAsString())
-                .nx(item.get("nx").getAsString())
-                .ny(item.get("ny").getAsString())
-                .regionName(regionName)
-                .build();
-
-        return dto;
-
-    }
 
 }
