@@ -1,6 +1,6 @@
 package com.everyonegarden.crop.entity;
 
-import com.everyonegarden.garden.model.GardenPost;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

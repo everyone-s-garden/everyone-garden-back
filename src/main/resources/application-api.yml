@@ -5,7 +5,10 @@ api:
   weather:
     url: http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst
     secret: ${API_WEATHER_SECRET}
+  weatherWeek:
+    url: http://apis.data.go.kr/1360000/MidFcstInfoService/getMidLandFcst
+    secret: ${API_WEATHERWEEK_SECRET}
   reverseGeo:
     url: https://naveropenapi.apigw.ntruss.com/map-reversegeocode/v2/gc
-    id:  ${API_REVERSEGEO_ID}
-    secret: ${API_REVERSEGEO_SECRET}
+    id: ${API_REGEO_ID}
+    secret: ${API_REGEO_SECRET}

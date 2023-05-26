@@ -2,9 +2,10 @@ package com.everyonegarden.weather.controller;
 
 
 import com.everyonegarden.weather.dto.ApiWeatherResult;
-import com.everyonegarden.weather.service.WeatherAllRegionService;
+import com.everyonegarden.weather.service.midterm.WeatherWeekService;
+import com.everyonegarden.weather.service.shortterm.WeatherAllRegionService;
 import com.everyonegarden.weather.service.WeatherResponseService;
-import com.everyonegarden.weather.service.reversegeo.WeatherOneRegionService;
+import com.everyonegarden.weather.service.shortterm.WeatherOneRegionService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,15 +25,28 @@ public class WeatherController {
     public final WeatherAllRegionService weatherAllRegionService;
     public final WeatherOneRegionService weatherOneRegionService;
 
+    public final WeatherWeekService weatherWeekService ;
+
     /*
-     * 위치를 지정한 경우
+     * 위치를 지정한 경우 시간대별
      */
     @GetMapping("/time")
     public ResponseEntity<ApiWeatherResult> weatherRegionRequest( @RequestParam("lat") String lat,
                                                                   @RequestParam("long") String lng) throws Exception {
         return weatherOneRegionService.getRegionWeather(lat,lng);
-
     }
+
+    /*
+     * 위치를 지정한 경우 주간별
+     */
+    @GetMapping("/week")
+    public ResponseEntity<ApiWeatherResult> weatherWeekRequest( @RequestParam("lat") String lat,
+                                                                @RequestParam("long") String lng) throws Exception {
+        return weatherWeekService.getWeekWeather(lat,lng);
+    }
+
+
+
 
     /*
      * 위치를 지정하지 않은 경우

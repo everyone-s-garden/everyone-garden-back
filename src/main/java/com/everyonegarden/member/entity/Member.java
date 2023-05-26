@@ -1,7 +1,8 @@
 package com.everyonegarden.member.entity;
 
 
-import com.everyonegarden.garden.model.GardenPost;
+
+//import com.everyonegarden.garden.gardenPost.GardenPost;
 import com.everyonegarden.member.enunerate.MemberProvider;
 import lombok.*;
 
@@ -45,9 +46,12 @@ public class Member {
     private int reportScore;
 
 
+    /*
     @OneToMany(mappedBy = "member")
     private List<GardenPost> posts = new ArrayList<>();
 
+
+     */
 
 
 }
