@@ -11,4 +11,4 @@ api:
   reverseGeo:
     url: https://naveropenapi.apigw.ntruss.com/map-reversegeocode/v2/gc
     id: ${API_REGEO_ID}
-    secret: ${API_REGEO_SECRET}    
+    secret: ${API_REGEO_SECRET}
