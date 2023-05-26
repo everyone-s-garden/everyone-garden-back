@@ -46,12 +46,10 @@ public class Member {
     private int reportScore;
 
 
-    /*
+
     @OneToMany(mappedBy = "member")
     private List<GardenPost> posts = new ArrayList<>();
 
-
-     */
 
 
 }
