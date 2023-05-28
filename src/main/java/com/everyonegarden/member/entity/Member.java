@@ -1,15 +1,9 @@
 package com.everyonegarden.member.entity;
 
-
-
-//import com.everyonegarden.garden.gardenPost.GardenPost;
 import com.everyonegarden.member.enunerate.MemberProvider;
 import lombok.*;
 
 import javax.persistence.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Entity
@@ -17,7 +11,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Member {
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,12 +37,5 @@ public class Member {
 
     @Column
     private int reportScore;
-
-
-
-    @OneToMany(mappedBy = "member")
-    private List<GardenPost> posts = new ArrayList<>();
-
-
 
 }
