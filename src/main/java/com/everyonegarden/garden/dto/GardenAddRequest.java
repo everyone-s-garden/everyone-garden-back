@@ -11,11 +11,11 @@ import java.util.List;
 @NoArgsConstructor @AllArgsConstructor @Builder
 public class GardenAddRequest {
 
-    private List<String> images;
     private String name;
     private String address;
     private String link;
     private Integer price;
     private String size;
+    private List<String> images;
 
 }

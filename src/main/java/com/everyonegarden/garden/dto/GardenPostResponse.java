@@ -1,7 +1,7 @@
 package com.everyonegarden.garden.dto;
 
-import com.everyonegarden.garden.model.GardenImage;
-import com.everyonegarden.garden.model.GardenPost;
+import com.everyonegarden.garden.gardenImage.GardenImage;
+import com.everyonegarden.garden.gardenPost.GardenPost;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

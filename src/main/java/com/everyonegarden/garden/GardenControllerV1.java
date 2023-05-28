@@ -1,13 +1,14 @@
 package com.everyonegarden.garden;
 
+import com.everyonegarden.common.PageService;
 import com.everyonegarden.common.exception.BadRequestException;
 import com.everyonegarden.common.memberId.MemberId;
 import com.everyonegarden.garden.dto.*;
-import com.everyonegarden.garden.model.Garden;
-import com.everyonegarden.garden.s3.S3Service;
-import com.everyonegarden.gardenView.GardenViewService;
+import com.everyonegarden.common.s3.S3Service;
+import com.everyonegarden.garden.gardenView.GardenViewService;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,18 +20,22 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
-@RestController
-@RequestMapping("v1/garden")
+@RestController @RequestMapping("v1/garden")
 public class GardenControllerV1 {
 
     private final GardenService gardenService;
     private final GardenViewService gardenViewService;
 
     private final S3Service s3Service;
+    private final PageService pageService;
 
     @GetMapping("{type}/by-region")
     public List<GardenResponse> getPublicGardenByRegion(@PathVariable("type") String type,
-                                                        @RequestParam("region") String region) {
+                                                        @RequestParam("region") String region,
+                                                        @RequestParam(value = "page", required = false) Integer page,
+                                                        @RequestParam(value = "size", required = false) Integer size) {
+        Pageable pageable = pageService.getPageable(page - 1, size);
+
         GardenTypeRequest gardenTypeRequest;
         try {
             gardenTypeRequest = GardenTypeRequest.valueOf(type.toUpperCase());
@@ -39,20 +44,24 @@ public class GardenControllerV1 {
         }
 
         if (gardenTypeRequest == GardenTypeRequest.PUBLIC) {
-            return gardenService.getPublicGardenByRegion(region);
+            return gardenService.getPublicGardenByRegion(region, pageable);
         }
 
         if (gardenTypeRequest == GardenTypeRequest.RPIVATE) {
-            return gardenService.getPrivateGardenByRegion(region);
+            return gardenService.getPrivateGardenByRegion(region, pageable);
         }
 
-        return gardenService.getAllGardenByRegion(region);
+        return gardenService.getAllGardenByRegion(region, pageable);
     }
 
     @GetMapping("{type}/by-coordinate")
     public List<GardenResponse> getPublicGardenByCoordinate(@PathVariable("type") String type,
                                                             @RequestParam("lat") String latitude,
-                                                            @RequestParam("long") String longitude) {
+                                                            @RequestParam("long") String longitude,
+                                                            @RequestParam(value = "page", required = false) Integer page,
+                                                            @RequestParam(value = "size", required = false) Integer size) {
+        Pageable pageable = pageService.getPageable(page, size);
+
         GardenTypeRequest gardenTypeRequest;
         try {
             gardenTypeRequest = GardenTypeRequest.valueOf(type.toUpperCase());
@@ -66,32 +75,35 @@ public class GardenControllerV1 {
         double longEnd = Double.parseDouble(longitude.split(",")[1]);
 
         if (gardenTypeRequest == GardenTypeRequest.PUBLIC) {
-            return gardenService.getPublicGardenByCoordinate(latStart, latEnd, longStart, longEnd);
+            return gardenService.getPublicGardenByCoordinate(latStart, latEnd, longStart, longEnd, pageable);
         }
 
         if (gardenTypeRequest == GardenTypeRequest.RPIVATE) {
-            return gardenService.getPrivateGardenByCoordinate(latStart, latEnd, longStart, longEnd);
+            return gardenService.getPrivateGardenByCoordinate(latStart, latEnd, longStart, longEnd, pageable);
         }
 
-        return gardenService.getAllGardenByCoordinate(latStart, latEnd, longStart, longEnd);
+        return gardenService.getAllGardenByCoordinate(latStart, latEnd, longStart, longEnd, pageable);
     }
 
     @GetMapping("recent")
     public List<GardenResponse> getRecentlyViewedGarden(@MemberId Long memberId,
                                                         @RequestParam(value = "page", required = false) Integer page,
                                                         @RequestParam(value = "size", required = false) Integer size) {
-        if (page == null) page = 1;
-        if (size == null) size = 10;
+        Pageable pageable = pageService.getPageable(page, size);
 
         return gardenViewService
-                .getRecentGardenView(memberId, page - 1, size).stream()
+                .getRecentGardenView(memberId, pageable).stream()
                 .map(GardenResponse::of)
                 .collect(Collectors.toList());
     }
 
     @GetMapping("mine")
-    public List<GardenPostResponse> getMyGarden(@MemberId Long memberId) {
-        return gardenService.getGardenByMemberId(memberId);
+    public List<GardenPostResponse> getMyGarden(@MemberId Long memberId,
+                                                @RequestParam(value = "page", required = false) Integer page,
+                                                @RequestParam(value = "size", required = false) Integer size) {
+        Pageable pageable = pageService.getPageable(page, size);
+
+        return gardenService.getGardenByMemberId(memberId, pageable);
     }
 
     @GetMapping("{gardenId}")

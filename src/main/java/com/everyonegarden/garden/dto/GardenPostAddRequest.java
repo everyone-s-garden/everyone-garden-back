@@ -1,10 +1,10 @@
 package com.everyonegarden.garden.dto;
 
 
-import com.everyonegarden.garden.model.Garden;
-import com.everyonegarden.garden.model.GardenImage;
-import com.everyonegarden.garden.model.GardenPost;
-import com.everyonegarden.garden.model.GardenType;
+import com.everyonegarden.garden.Garden;
+import com.everyonegarden.garden.gardenImage.GardenImage;
+import com.everyonegarden.garden.gardenPost.GardenPost;
+import com.everyonegarden.garden.GardenType;
 import com.everyonegarden.member.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -31,7 +31,7 @@ public class GardenPostAddRequest {
                 .address(garden.getAddress())
                 .name(garden.getName())
                 .link(garden.getLink())
-                .price(garden.getPrice())
+                .price(String.valueOf(garden.getPrice()))
                 .contact(contact)
                 .size(garden.getSize())
 

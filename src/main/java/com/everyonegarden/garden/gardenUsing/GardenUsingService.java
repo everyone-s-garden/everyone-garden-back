@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -14,9 +15,8 @@ public class GardenUsingService {
 
     private final GardenUsingRepository gardenUsingRepository;
 
-    public GardenUsing getGardenUsingByMemberId(Long memberId, Pageable pageable) {
-        return gardenUsingRepository.findByMemberId(memberId)
-                .orElseThrow(() -> new IllegalStateException(""));
+    public List<GardenUsing> getGardenUsingByMemberId(Long memberId, Pageable pageable) {
+        return gardenUsingRepository.findAllByMemberId(memberId);
     }
 
     public GardenUsing add(GardenUsing gardenUsing) {

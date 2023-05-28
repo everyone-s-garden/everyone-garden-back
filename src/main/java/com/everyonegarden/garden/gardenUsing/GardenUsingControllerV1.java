@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @RestController
@@ -27,8 +28,9 @@ public class GardenUsingControllerV1 {
                                                     @RequestParam(value = "size", required = false) Integer size) {
         Pageable pageable = pageService.getPageable(page, size);
 
-        GardenUsing gardenUsing = gardenUsingService.getGardenUsingByMemberId(memberId, pageable);
-        return List.of(GardenUsingResponse.of(gardenUsing));
+        return gardenUsingService.getGardenUsingByMemberId(memberId, pageable).stream()
+                .map(GardenUsingResponse::of)
+                .collect(Collectors.toList());
     }
 
     @PostMapping

@@ -4,9 +4,13 @@ import com.everyonegarden.garden.dto.GardenDetailResponse;
 import com.everyonegarden.garden.dto.GardenPostAddRequest;
 import com.everyonegarden.garden.dto.GardenPostResponse;
 import com.everyonegarden.garden.dto.GardenResponse;
-import com.everyonegarden.garden.model.*;
-import com.everyonegarden.gardenView.GardenViewService;
+import com.everyonegarden.garden.gardenImage.GardenImage;
+import com.everyonegarden.garden.gardenImage.GardenImageRepository;
+import com.everyonegarden.garden.gardenPost.GardenPost;
+import com.everyonegarden.garden.gardenPost.GardenPostRepository;
+import com.everyonegarden.garden.gardenView.GardenViewService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -27,51 +31,54 @@ public class GardenService {
 
     private final GardenViewService gardenViewService;
 
-    public List<GardenResponse> getPublicGardenByRegion(String region) {
-        return gardenRepository.getPublicGardenByRegion(region).stream()
+    public List<GardenResponse> getPublicGardenByRegion(String region, Pageable pageable) {
+        return gardenRepository.getPublicGardenByRegion(region, pageable).stream()
                 .map(GardenResponse::of)
                 .collect(Collectors.toList());
     }
 
     public List<GardenResponse> getPublicGardenByCoordinate(double latStart, double latEnd,
-                                                            double longStart, double longEnd) {
+                                                            double longStart, double longEnd,
+                                                            Pageable pageable) {
         return gardenRepository
-                .getPublicGardenByCoordinateWithinRange(latStart, latEnd, longStart, longEnd).stream()
+                .getPublicGardenByCoordinateWithinRange(latStart, latEnd, longStart, longEnd, pageable).stream()
                 .map(GardenResponse::of)
                 .collect(Collectors.toList());
     }
 
-    public List<GardenResponse> getPrivateGardenByRegion(String region) {
-        return gardenRepository.getPrivateGardenByRegion(region).stream()
+    public List<GardenResponse> getPrivateGardenByRegion(String region, Pageable pageable) {
+        return gardenRepository.getPrivateGardenByRegion(region, pageable).stream()
                 .map(GardenResponse::of)
                 .collect(Collectors.toList());
     }
 
     public List<GardenResponse> getPrivateGardenByCoordinate(double latStart, double latEnd,
-                                                             double longStart, double longEnd) {
+                                                             double longStart, double longEnd,
+                                                             Pageable pageable) {
         return gardenRepository
-                .getPrivateGardenByCoordinateWithinRange(latStart, latEnd, longStart, longEnd).stream()
+                .getPrivateGardenByCoordinateWithinRange(latStart, latEnd, longStart, longEnd, pageable).stream()
                 .map(GardenResponse::of)
                 .collect(Collectors.toList());
     }
 
-    public List<GardenResponse> getAllGardenByRegion(String region) {
+    public List<GardenResponse> getAllGardenByRegion(String region, Pageable pageable) {
         return gardenRepository
-                .getAllGardenByRegion(region).stream()
+                .getAllGardenByRegion(region, pageable).stream()
                 .map(GardenResponse::of)
                 .collect(Collectors.toList());
     }
 
     public List<GardenResponse> getAllGardenByCoordinate(double latStart, double latEnd,
-                                                         double longStart, double longEnd) {
+                                                         double longStart, double longEnd,
+                                                         Pageable pageable) {
         return gardenRepository
-                .getAllGardenByCoordinateWithinRange(latStart, latEnd, longStart, longEnd).stream()
+                .getAllGardenByCoordinateWithinRange(latStart, latEnd, longStart, longEnd, pageable).stream()
                 .map(GardenResponse::of)
                 .collect(Collectors.toList());
     }
 
-    public List<GardenPostResponse> getGardenByMemberId(Long memberId) {
-        List<GardenPost> gardenPosts = gardenPostRepository.findByMemberId(memberId);
+    public List<GardenPostResponse> getGardenByMemberId(Long memberId, Pageable pageable) {
+        List<GardenPost> gardenPosts = gardenPostRepository.findByMemberId(memberId, pageable);
 
         return gardenPosts.stream()
                 .map(GardenPostResponse::of)
@@ -105,7 +112,7 @@ public class GardenService {
                 .name(garden.getName())
                 .type(garden.getType().toString())
                 .link(garden.getLink())
-                .price(garden.getPrice())
+                .price(Integer.valueOf(garden.getPrice()))
                 .contact(garden.getContact())
                 .size(garden.getSize())
 

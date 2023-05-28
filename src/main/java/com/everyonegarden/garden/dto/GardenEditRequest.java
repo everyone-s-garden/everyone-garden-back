@@ -1,6 +1,6 @@
 package com.everyonegarden.garden.dto;
 
-import com.everyonegarden.garden.model.Garden;
+import com.everyonegarden.garden.Garden;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -27,7 +27,7 @@ public class GardenEditRequest {
                 .name(name)
                 .link(link)
 
-                .price(price)
+                .price(String.valueOf(price))
                 .size(size)
                 .contact(contact)
 
