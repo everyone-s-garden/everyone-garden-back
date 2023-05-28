@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor @AllArgsConstructor @Builder
 public class GardenResponse {
-    private Long gardenId;
+    private Long id;
 
     private String name;
     private GardenType type;
@@ -25,7 +25,7 @@ public class GardenResponse {
 
     public static GardenResponse of(Garden garden) {
         return GardenResponse.builder()
-                .gardenId(garden.getGardenId())
+                .id(garden.getGardenId())
 
                 .name(garden.getName())
                 .type(garden.getType())
@@ -41,7 +41,7 @@ public class GardenResponse {
 
     public static GardenResponse of(GardenView gardenView) {
         return GardenResponse.builder()
-                .gardenId(gardenView.getGarden().getGardenId())
+                .id(gardenView.getGarden().getGardenId())
 
                 .name(gardenView.getGarden().getName())
                 .type(gardenView.getGarden().getType())
