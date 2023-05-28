@@ -1,6 +1,5 @@
 package com.everyonegarden.garden;
 
-import com.everyonegarden.garden.Garden;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,6 +10,9 @@ import java.util.List;
 
 @Repository
 public interface GardenRepository extends JpaRepository<Garden, Long> {
+
+    @Query("select g from Garden g where g.address like %:query% or g.name like %:query%")
+    List<Garden> findAllGardenByQuery(String query, Pageable pageable);
 
     @Query("select g from Garden g where g.type = 'PUBLIC' and " +
             "g.latitude between :latStart and :latEnd and " +

@@ -29,6 +29,18 @@ public class GardenControllerV1 {
     private final S3Service s3Service;
     private final PageService pageService;
 
+    @GetMapping
+    public List<GardenResponse> getGardenByQuery(@RequestParam("query") String query,
+                                                 @RequestParam(value = "page", required = false) Integer page,
+                                                 @RequestParam(value = "size", required = false) Integer size) {
+        Pageable pageable = pageService.getPageable(page, size);
+        List<Garden> gardenList = gardenService.getGardenByQuery(query, pageable);
+
+        return gardenList.stream()
+                .map(GardenResponse::of)
+                .collect(Collectors.toList());
+    }
+
     @GetMapping("{type}/by-region")
     public List<GardenResponse> getPublicGardenByRegion(@PathVariable("type") String type,
                                                         @RequestParam("region") String region,
