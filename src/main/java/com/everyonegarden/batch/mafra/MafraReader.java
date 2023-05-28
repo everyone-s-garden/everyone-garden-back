@@ -2,8 +2,6 @@ package com.everyonegarden.batch.mafra;
 
 import com.everyonegarden.batch.batchStatus.BatchStatus;
 import com.everyonegarden.batch.batchStatus.BatchStatusService;
-import com.everyonegarden.garden.api.mafra.fetch.MafraFetchService;
-import com.everyonegarden.garden.api.mafra.response.ApiMafraResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.item.ItemReader;

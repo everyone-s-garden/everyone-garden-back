@@ -1,4 +1,4 @@
-package com.everyonegarden.config;
+package com.everyonegarden.common.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;

@@ -1,17 +1,17 @@
 package com.everyonegarden.batch.mafra;
 
-
-import com.everyonegarden.garden.api.mafra.response.ApiMafraResponse;
-import com.everyonegarden.garden.model.Garden;
+import com.everyonegarden.garden.Garden;
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
+import org.springframework.batch.item.ItemWriter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.List;
+
 
 @RequiredArgsConstructor
 @Configuration
@@ -40,7 +40,7 @@ public class MafraJob {
                 .<ApiMafraResponse, List<Garden>>chunk(2)
                 .reader(mafraReader)
                 .processor(mafraProcessor)
-                .writer(mafraWriter)
+                .writer((ItemWriter<? super List<Garden>>) mafraWriter)
                 .build();
     }
 

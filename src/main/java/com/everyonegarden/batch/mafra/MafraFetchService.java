@@ -1,7 +1,5 @@
-package com.everyonegarden.garden.api.mafra.fetch;
+package com.everyonegarden.batch.mafra;
 
-import com.everyonegarden.garden.api.mafra.response.ApiMafraResponse;
-import com.everyonegarden.garden.api.mafra.response.ApiMafraRow;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

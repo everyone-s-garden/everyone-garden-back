@@ -1,4 +1,4 @@
-package com.everyonegarden.garden.api.mafra.response;
+package com.everyonegarden.batch.mafra;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
