@@ -35,15 +35,18 @@ public class GetOneTwoDayService {
 
     public ArrayList<String> getSkyOneTwo(Region region) throws Exception {
 
-        // 오늘 날짜
+
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat sdfDay = new SimpleDateFormat("yyyyMMdd");
         SimpleDateFormat sdfTime = new SimpleDateFormat("HH");
+
+
+        // 오늘 날짜
+        calendar.add(Calendar.HOUR, 1);
         String oneday = sdfDay.format(calendar.getTime());
 
-
         // 내일 날짜
-        calendar.add(Calendar.DATE, 1);
+        calendar.add(Calendar.HOUR, 6);
         String twoday = sdfDay.format(calendar.getTime());
 
         //시각
@@ -57,6 +60,10 @@ public class GetOneTwoDayService {
             if(checkSky(item,fcstTime,oneday,twoday))
                 skyOneTwo.add(item.get("fcstValue").toString());
 
+        }
+
+        if(twoday.equals(oneday)){
+            skyOneTwo.add(skyOneTwo.get(0));
         }
 
         return skyOneTwo;
