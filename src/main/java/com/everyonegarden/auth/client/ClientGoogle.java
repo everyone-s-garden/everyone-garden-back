@@ -22,7 +22,7 @@ public class ClientGoogle implements ClientProxy{
     public Member getUserData(String accessToken) {
 
         GoogleUserResponse googleUserResponse = webClient.get()
-                .uri("https://www.googleapis.com/oauth2/v2/userinfo")
+                .uri("https://www.googleapis.com/oauth2/v3/userinfo")
                 .header("AUTHORIZATION","Bearer"+accessToken)
                 .retrieve()
                 .onStatus(HttpStatus::is4xxClientError, response -> Mono.error(new TokenValidFailedException("Social Access Token is unauthorized")))
