@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -36,15 +37,14 @@ public class WeatherAllRegionService {
         List<ApiWeatherShortDto> result = new ArrayList<>();
 
 
-        // 현재 시간 구하기
-        LocalTime localTime= LocalTime.now();
-        DateTimeFormatter formatterTime = DateTimeFormatter.ofPattern("HH");
-        String timeformat = localTime.format(formatterTime)+"00";
+        // 현재 날짜
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat sdfDay = new SimpleDateFormat("yyyyMMdd");
+        SimpleDateFormat sdfTime = new SimpleDateFormat("HH");
 
-        // 현재 날짜 구하기
-        LocalDate today = LocalDate.now();
-        DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern("yyyyMMdd");
-        String dayformat = today.format(formatterDate);
+        calendar.add(Calendar.HOUR, 1);
+        String dayformat = sdfDay.format(calendar.getTime());
+        String timeformat = sdfTime.format(calendar.getTime())+"00";
 
 
         for(RegionRandomMapping region : allRegion){
