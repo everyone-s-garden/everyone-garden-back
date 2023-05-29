@@ -38,4 +38,7 @@ public class Member {
     @Column
     private int reportScore;
 
+    @Column
+    private Boolean permanentSusp=false;
+
 }
