@@ -17,7 +17,7 @@ public class CropControllerV1 {
     private final CropService cropService;
 
     @GetMapping
-    public List<CropResponse> getAllCropByMonth(@RequestParam("month") Integer month) {
+    public List<CropResponse> getAllCropByMonth(@RequestParam(value = "month", required = false) Integer month) {
         if (month == null) month = LocalDate.now().getMonthValue();
 
         return cropService.getAllCropByMonth(month).stream()
