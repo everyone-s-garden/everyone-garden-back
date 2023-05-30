@@ -20,7 +20,8 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
-@RestController @RequestMapping("v1/garden")
+@RestController
+@RequestMapping("v1/garden")
 public class GardenControllerV1 {
 
     private final GardenService gardenService;
@@ -37,6 +38,16 @@ public class GardenControllerV1 {
         List<Garden> gardenList = gardenService.getGardenByQuery(query, pageable);
 
         return gardenList.stream()
+                .map(GardenResponse::of)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("all")
+    public List<GardenResponse> getAllGarden(@RequestParam(value = "page", required = false) Integer page,
+                                             @RequestParam(value = "size", required = false) Integer size) {
+        Pageable pageable = pageService.getPageable(page, size);
+
+        return gardenService.getAllGarden(pageable).stream()
                 .map(GardenResponse::of)
                 .collect(Collectors.toList());
     }

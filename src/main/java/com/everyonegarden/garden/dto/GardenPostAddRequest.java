@@ -18,22 +18,31 @@ import java.util.stream.Collectors;
 @NoArgsConstructor @AllArgsConstructor @Builder
 public class GardenPostAddRequest {
 
-    private String title;
-    private String content;
+    private String name;
+    private String price;
+    private String size;
     private String contact;
+    private String link;
 
-    private GardenAddRequest garden;
+    private String address;
+    private Double latitude;
+    private Double longitude;
+
+    private List<String> images;
 
     public Garden toGardenEntity() {
         return Garden.builder()
-
                 .type(GardenType.MANUAL)
-                .address(garden.getAddress())
-                .name(garden.getName())
-                .link(garden.getLink())
-                .price(String.valueOf(garden.getPrice()))
+
+                .name(name)
+                .price(price)
+                .size(size)
                 .contact(contact)
-                .size(garden.getSize())
+                .link(link)
+
+                .address(address)
+                .latitude(latitude)
+                .longitude(longitude)
 
                 .build();
     }
@@ -41,8 +50,7 @@ public class GardenPostAddRequest {
     public GardenPost toGardenPostEntity(Long userId, Long gardenId) {
         return GardenPost.builder()
 
-                .title(title)
-                .content(content)
+                .title(name)
                 .member(Member.builder().id(userId).build())
                 .garden(Garden.builder().gardenId(gardenId).build())
 
@@ -50,7 +58,7 @@ public class GardenPostAddRequest {
     }
 
     public List<GardenImage> toGardenImageEntityList(Long gardenPostId) {
-        return garden.getImages().stream()
+        return images.stream()
                 .map(image -> GardenImage.builder()
 
                         .url(image)

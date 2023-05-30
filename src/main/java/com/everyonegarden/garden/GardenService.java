@@ -35,6 +35,10 @@ public class GardenService {
         return gardenRepository.findAllGardenByQuery(query, pageable);
     }
 
+    public List<Garden> getAllGarden(Pageable pageable) {
+        return gardenRepository.findAllGarden(pageable);
+    }
+
     public List<GardenResponse> getPublicGardenByRegion(String region, Pageable pageable) {
         return gardenRepository.getPublicGardenByRegion(region, pageable).stream()
                 .map(GardenResponse::of)

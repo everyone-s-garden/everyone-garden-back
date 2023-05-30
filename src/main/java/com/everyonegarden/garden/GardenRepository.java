@@ -52,6 +52,6 @@ public interface GardenRepository extends JpaRepository<Garden, Long> {
     List<Garden> getAllGardenByRegion(String region, Pageable pageable);
 
     @Query("select g from Garden g")
-    Page<Garden> findAll(Pageable pageable);
+    List<Garden> findAllGarden(Pageable pageable);
 
 }
