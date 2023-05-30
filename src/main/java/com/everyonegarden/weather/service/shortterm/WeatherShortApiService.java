@@ -41,8 +41,6 @@ public class WeatherShortApiService {
         String type = "JSON";
 
 
-        System.out.println(apiUrl);
-        System.out.println(serviceKey);
 
         StringBuilder urlBuilder = new StringBuilder(apiUrl);
 

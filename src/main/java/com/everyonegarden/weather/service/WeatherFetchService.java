@@ -33,7 +33,7 @@ public class WeatherFetchService {
 
     public JsonArray fetchWeather(String makeUrl) throws Exception {
 
-        System.out.println(makeUrl);
+
         URI uri = new URI(makeUrl);
         RestTemplate restTemplate = new RestTemplate();
         String jsonString = restTemplate.getForObject(uri,String.class);

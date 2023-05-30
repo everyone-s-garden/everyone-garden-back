@@ -44,7 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/v1/garden/all?**",
                         "/v1/garden/recent?**",
                         "/v1/garden?**") ;
-                );
+
     }
 
     @Override
