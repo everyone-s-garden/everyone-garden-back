@@ -33,13 +33,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().
                 antMatchers(
+                        "/",
                         "/v2/api-docs",
                         "/configuration/**",
                         "/swagger*/**",
                         "/webjars/**",
                         "/v1/weather/**",
-                        "/v1/crop",
-                        "/v1/garden/{all,public,private}/by-{region,coordinate}"
+                        "/v1/crop?**",
+                        "/v1/garden/{all|public|private}/by-{region|coordinate}?**",
+                        "/v1/garden/all?**",
+                        "/v1/garden/recent?**",
+                        "/v1/garden?**") ;
                 );
     }
 
