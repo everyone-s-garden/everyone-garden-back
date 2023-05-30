@@ -38,12 +38,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/configuration/**",
                         "/swagger*/**",
                         "/webjars/**",
-                        "/v1/weather/**",
-                        "/v1/crop?**",
-                        "/v1/garden/{all|public|private}/by-{region|coordinate}?**",
-                        "/v1/garden/all?**",
-                        "/v1/garden/recent?**",
-                        "/v1/garden?**") ;
+                        "/v1/weather/**") ;
 
     }
 
@@ -54,6 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
+                .antMatchers(HttpMethod.GET).permitAll()
                 .antMatchers("/auth/**","/").permitAll()
                 .anyRequest().authenticated()
 
