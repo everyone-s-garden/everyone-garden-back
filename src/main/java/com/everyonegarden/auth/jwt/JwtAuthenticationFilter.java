@@ -1,5 +1,6 @@
 package com.everyonegarden.auth.jwt;
 
+import com.everyonegarden.common.dto.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -26,19 +27,23 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
         } else {
             final String authorizationHeader = request.getHeader("Authorization");
-            if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
-                String tokenStr = JwtHeaderUtil.getAccessToken(request);
-                AuthToken token = tokenProvider.convertAuthToken(tokenStr);
-
-                if (token.validate()) {
-                    Authentication authentication = tokenProvider.getAuthentication(token);
-                    SecurityContextHolder.getContext().setAuthentication(authentication);
-                }
-
-                filterChain.doFilter(request, response);
-            } else {
-                filterChain.doFilter(request, response);
+            if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
+                response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                return ;
             }
+
+            String tokenStr = JwtHeaderUtil.getAccessToken(request);
+            AuthToken token = tokenProvider.convertAuthToken(tokenStr);
+
+            if(token.validate()){
+                Authentication authentication = tokenProvider.getAuthentication(token);
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            }else{
+                response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            }
+
+            filterChain.doFilter(request, response);
+
         }
     }
 }
