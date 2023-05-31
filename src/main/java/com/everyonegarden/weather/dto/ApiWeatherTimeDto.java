@@ -5,7 +5,7 @@ import com.google.gson.JsonObject;
 import lombok.Data;
 
 @Data
-public class ApiWeatherShortDto extends WeatherDto {
+public class ApiWeatherTimeDto extends WeatherDto {
 
 
     //baseDate":"20230516","baseTime":"2000","category":"TMP","fcstDate":"20230516","fcstTime":"2100","fcstValue":"22","nx":60,"ny":125}
@@ -19,7 +19,7 @@ public class ApiWeatherShortDto extends WeatherDto {
 
     private String regionName;
 
-    public ApiWeatherShortDto(JsonObject item, String regionName){
+    public ApiWeatherTimeDto(JsonObject item, String regionName){
 
         this.baseDate=item.get("baseDate").getAsString();
         this.category=item.get("category").getAsString();

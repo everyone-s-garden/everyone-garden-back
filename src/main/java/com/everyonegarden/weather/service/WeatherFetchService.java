@@ -52,4 +52,23 @@ public class WeatherFetchService {
         return jsonItemList;
     }
 
+    public String getTodayDate (){
+        //현재 날짜
+        LocalDate now = LocalDate.now();
+        // 포맷 정의
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+        // 포맷 적용
+        String today = now.format(formatter);
+        return today;
+    }
+    public String getTime (){
+        // 현재 시간
+        LocalTime now = LocalTime.now();
+        // 포맷 정의하기
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH");
+        String time  = now.format(formatter);
+
+        return time;
+    }
+
 }

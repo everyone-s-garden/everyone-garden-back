@@ -3,9 +3,9 @@ package com.everyonegarden.weather.controller;
 
 import com.everyonegarden.weather.dto.ApiWeatherResult;
 import com.everyonegarden.weather.service.midterm.WeatherWeekService;
-import com.everyonegarden.weather.service.shortterm.WeatherAllRegionService;
+import com.everyonegarden.weather.service.shortterm.all.WeatherAllRegionService;
 import com.everyonegarden.weather.service.WeatherResponseService;
-import com.everyonegarden.weather.service.shortterm.WeatherOneRegionService;
+import com.everyonegarden.weather.service.shortterm.time.WeatherOneRegionService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

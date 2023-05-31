@@ -1,6 +1,6 @@
-package com.everyonegarden.weather.service.shortterm;
+package com.everyonegarden.weather.service.shortterm.time;
 
-import com.everyonegarden.weather.dto.ApiWeatherShortDto;
+import com.everyonegarden.weather.dto.ApiWeatherTimeDto;
 import com.everyonegarden.weather.dto.ApiWeatherResult;
 import com.everyonegarden.weather.entity.Region;
 import com.everyonegarden.weather.repository.RegionRepository;
@@ -22,7 +22,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class WeatherOneRegionService {
     private final RegionRepository regionRepository ;
-    private final WeatherShortApiService weatherShortService;
+    private final WeatherTimeApiService weatherShortService;
     public final WeatherResponseService weatherResponseService;
 
     public final ReverseGeoFetchService reverseGeoFetchService;
@@ -36,13 +36,13 @@ public class WeatherOneRegionService {
         Region region = regionRepository.findByRegionName(regionName);
 
 
-        List<ApiWeatherShortDto> result = new ArrayList<>();
+        List<ApiWeatherTimeDto> result = new ArrayList<>();
 
         JsonArray jsonItemList = weatherShortService.shortWeather(region.getNx(),region.getNy());
         for(Object o : jsonItemList){
             JsonObject item = (JsonObject) o;
             if(check(item))
-                result.add(new ApiWeatherShortDto(item,regionName));
+                result.add(new ApiWeatherTimeDto(item,regionName));
 
         }
 

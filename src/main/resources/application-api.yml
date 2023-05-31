@@ -5,6 +5,9 @@ api:
   weather:
     url: http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst
     secret: ${API_WEATHER_SECRET}
+  weatherAll:
+    url: http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst
+    secret: ${API_WEATHERALL_SECRET}
   weatherWeek:
     url: http://apis.data.go.kr/1360000/MidFcstInfoService/getMidLandFcst
     secret: ${API_WEATHERWEEK_SECRET}

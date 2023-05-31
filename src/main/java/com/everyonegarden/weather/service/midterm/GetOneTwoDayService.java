@@ -1,33 +1,26 @@
 package com.everyonegarden.weather.service.midterm;
 
 
-import com.everyonegarden.weather.dto.ApiWeatherResult;
-import com.everyonegarden.weather.dto.ApiWeatherShortDto;
 import com.everyonegarden.weather.entity.Region;
 import com.everyonegarden.weather.repository.RegionRepository;
 import com.everyonegarden.weather.service.WeatherResponseService;
-import com.everyonegarden.weather.service.shortterm.WeatherShortApiService;
+import com.everyonegarden.weather.service.shortterm.time.WeatherTimeApiService;
 import com.everyonegarden.weather.service.shortterm.reversegeo.ReverseGeoFetchService;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class GetOneTwoDayService {
 
     private final RegionRepository regionRepository ;
-    private final WeatherShortApiService weatherShortService;
+    private final WeatherTimeApiService weatherShortService;
     public final WeatherResponseService weatherResponseService;
 
     public final ReverseGeoFetchService reverseGeoFetchService;

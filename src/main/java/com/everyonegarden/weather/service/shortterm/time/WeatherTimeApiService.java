@@ -1,4 +1,4 @@
-package com.everyonegarden.weather.service.shortterm;
+package com.everyonegarden.weather.service.shortterm.time;
 
 import com.everyonegarden.weather.service.WeatherFetchService;
 
@@ -14,7 +14,7 @@ import java.time.format.DateTimeFormatter;
 
 @Service
 @RequiredArgsConstructor
-public class WeatherShortApiService {
+public class WeatherTimeApiService {
 
 
     private final WeatherFetchService weatherFetchService;
@@ -36,8 +36,9 @@ public class WeatherShortApiService {
 
     public JsonArray shortWeather(String nx, String ny) throws Exception {
 
-        String baseDate = getTodayDate();
-        String baseTime = getNearTime(); // 조회 시간  0200, 0500, 0800, 1100, 1400, 1700, 2000, 2300 (1일 8회)
+        String baseDate = weatherFetchService.getTodayDate();
+        int index = Integer.parseInt(weatherFetchService.getTime());
+        String baseTime =time[index]; // 조회 시간  0200, 0500, 0800, 1100, 1400, 1700, 2000, 2300 (1일 8회)
         String type = "JSON";
 
 
@@ -55,18 +56,6 @@ public class WeatherShortApiService {
         String makeUrl = urlBuilder.toString();
 
         return weatherFetchService.fetchWeather(makeUrl);
-    }
-    /*1`
-     * 현재 날짜를 구하는 메서드
-     */
-    static String getTodayDate (){
-        //현재 날짜
-        LocalDate now = LocalDate.now();
-        // 포맷 정의
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
-        // 포맷 적용
-        String today = now.format(formatter);
-        return today;
     }
 
     /*
