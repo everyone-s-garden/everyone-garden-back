@@ -50,6 +50,9 @@ public class WriterScoreService {
         if (totalScore >= 25) {
             writer.setPermanentSusp(true);
         }
+
+        // 작성자 정보 업데이트
+        memberRepository.save(writer);
     }
 
 }
