@@ -34,16 +34,16 @@ public class GetOneTwoDayService {
         SimpleDateFormat sdfTime = new SimpleDateFormat("HH");
 
 
+        //시각
+        String fcstTime = sdfTime.format(calendar.getTime())+"00";
+
         // 오늘 날짜
         calendar.add(Calendar.HOUR, 1);
         String oneday = sdfDay.format(calendar.getTime());
 
         // 내일 날짜
-        calendar.add(Calendar.HOUR, 6);
+        calendar.add(Calendar.HOUR, 3);
         String twoday = sdfDay.format(calendar.getTime());
-
-        //시각
-        String fcstTime = sdfTime.format(calendar.getTime())+"00";
 
         ArrayList<String> skyOneTwo = new ArrayList<>();
 
