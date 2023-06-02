@@ -46,6 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
                 .authorizeRequests()
+                .antMatchers(HttpMethod.GET,"/v1/garden/{gardenID:[\\d+]}").permitAll()
                 .antMatchers(Constants.permitAllArray).permitAll()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
                 .anyRequest().authenticated()
