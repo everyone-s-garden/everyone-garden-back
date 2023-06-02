@@ -33,12 +33,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().
                 antMatchers(
-                        "/",
                         "/v2/api-docs",
                         "/configuration/**",
                         "/swagger*/**",
-                        "/webjars/**",
-                        "/v1/weather/**") ;
+                        "/webjars/**") ;
 
     }
 
@@ -48,9 +46,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
                 .authorizeRequests()
+                .antMatchers(Constants.permitAllArray).permitAll()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
-                .antMatchers(HttpMethod.GET).permitAll()
-                .antMatchers("/auth/**","/").permitAll()
                 .anyRequest().authenticated()
 
                 .and()
