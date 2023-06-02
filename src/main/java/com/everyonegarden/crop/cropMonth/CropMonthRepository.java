@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface CropMonthRepository extends JpaRepository<CropMonth, Long> {
 
-    List<CropMonth> findAllByMonth(Integer month);
+    List<CropMonth> findAllByMonths(Integer month);
 
 }

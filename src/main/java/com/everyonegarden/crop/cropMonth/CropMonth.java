@@ -13,7 +13,7 @@ import javax.validation.constraints.Min;
 @Getter
 @NoArgsConstructor @AllArgsConstructor @Builder
 
-@Entity @Table(uniqueConstraints = {@UniqueConstraint(name = "crop_month_unique", columnNames = {"month", "crop_id"})})
+@Entity @Table(uniqueConstraints = {@UniqueConstraint(name = "crop_month_unique", columnNames = {"months", "crop_id"})})
 public class CropMonth {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +22,7 @@ public class CropMonth {
 
     @Min(1) @Max(12)
     @Column(nullable = false)
-    private Integer month;
+    private Integer months;
 
     @ManyToOne
     @JoinColumn(name = "crop_id", referencedColumnName = "crop_id")

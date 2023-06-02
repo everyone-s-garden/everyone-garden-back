@@ -17,7 +17,7 @@ public class CropService {
     private final CropRepository cropRepository;
 
     public List<Crop> getAllCropByMonth(int month) {
-        List<CropMonth> cropMonthList = cropMonthRepository.findAllByMonth(month);
+        List<CropMonth> cropMonthList = cropMonthRepository.findAllByMonths(month);
 
         return cropMonthList.stream()
                 .map(cropMonth -> cropRepository.findById(cropMonth.getCrop().getCropId()))
