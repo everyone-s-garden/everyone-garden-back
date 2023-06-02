@@ -21,8 +21,6 @@ import java.util.stream.Collectors;
 public class GardenService {
 
     private final GardenRepository gardenRepository;
-    private final GardenImageRepository gardenImageRepository;
-
     private final GardenViewService gardenViewService;
 
     public List<Garden> getGardenByQuery(String query, Pageable pageable) {

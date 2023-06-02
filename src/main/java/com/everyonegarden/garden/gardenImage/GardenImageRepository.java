@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface GardenImageRepository extends JpaRepository<GardenImage, Long> {
 
-    @Query("select g from GardenImage g where g.gardenPost.gardenPostId = ?1")
+    @Query("select g from GardenImage g where g.garden.gardenId = ?1")
     List<GardenImage> findByGardenPostId(Long gardenPostId);
 
 }
