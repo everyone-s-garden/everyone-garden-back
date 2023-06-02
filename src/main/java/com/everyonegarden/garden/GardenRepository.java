@@ -54,4 +54,7 @@ public interface GardenRepository extends JpaRepository<Garden, Long> {
     @Query("select g from Garden g")
     List<Garden> findAllGarden(Pageable pageable);
 
+    @Query("select g from Garden g where g.member.id = ?1")
+    List<Garden> findByMemberId(Long MemberId, Pageable pageable);
+
 }

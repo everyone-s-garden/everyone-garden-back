@@ -1,6 +1,7 @@
 package com.everyonegarden.garden.dto;
 
 import com.everyonegarden.garden.Garden;
+import com.everyonegarden.garden.GardenStatus;
 import com.everyonegarden.garden.GardenType;
 import com.everyonegarden.garden.gardenView.GardenView;
 import lombok.AllArgsConstructor;
@@ -23,6 +24,11 @@ public class GardenResponse {
     private String link;
     private String price;
 
+    private String contact;
+    private String size;
+
+    private GardenStatus status;
+
     public static GardenResponse of(Garden garden) {
         return GardenResponse.builder()
                 .id(garden.getGardenId())
@@ -35,6 +41,11 @@ public class GardenResponse {
                 .address(garden.getAddress())
                 .longitude(garden.getLongitude())
                 .latitude(garden.getLatitude())
+
+                .contact(garden.getContact())
+                .size(garden.getSize())
+
+                .status(garden.getStatus())
 
                 .build();
     }

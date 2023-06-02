@@ -121,12 +121,14 @@ public class GardenControllerV1 {
     }
 
     @GetMapping("mine")
-    public List<GardenPostResponse> getMyGarden(@MemberId Long memberId,
+    public List<GardenResponse> getMyGarden(@MemberId Long memberId,
                                                 @RequestParam(value = "page", required = false) Integer page,
                                                 @RequestParam(value = "size", required = false) Integer size) {
         Pageable pageable = pageService.getPageable(page, size);
 
-        return gardenService.getGardenByMemberId(memberId, pageable);
+        return gardenService.getGardenByMemberId(memberId, pageable).stream()
+                .map(GardenResponse::of)
+                .collect(Collectors.toList());
     }
 
     @GetMapping("{gardenId}")
@@ -137,8 +139,10 @@ public class GardenControllerV1 {
 
     @PostMapping
     public GardenAddSuccessResponse addGarden(@MemberId Long memberId,
-                                              @RequestBody @Valid GardenPostAddRequest gardenAddRequest) {
-        Garden garden = gardenService.addGarden(gardenAddRequest, memberId);
+                                              @RequestBody @Valid GardenAddRequest gardenAddRequest) {
+
+
+        Garden garden = gardenService.addGarden(gardenAddRequest.toEntity(memberId));
 
         return GardenAddSuccessResponse.builder()
                 .garden(GardenResponse.of(garden))

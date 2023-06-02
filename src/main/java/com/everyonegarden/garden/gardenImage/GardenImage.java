@@ -1,8 +1,11 @@
 package com.everyonegarden.garden.gardenImage;
 
 
-import com.everyonegarden.garden.gardenPost.GardenPost;
-import lombok.*;
+import com.everyonegarden.garden.Garden;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
@@ -19,7 +22,7 @@ public class GardenImage {
     private String url;
 
     @ManyToOne
-    @JoinColumn(name="garden_post_id")
-    private GardenPost gardenPost;
+    @JoinColumn(name="garden_id")
+    private Garden garden;
 
 }

@@ -1,5 +1,7 @@
 package com.everyonegarden.garden;
 
+import com.everyonegarden.garden.gardenImage.GardenImage;
+import com.everyonegarden.member.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -11,6 +13,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor @AllArgsConstructor @Builder
@@ -47,10 +50,23 @@ public class Garden {
     private LocalDateTime useStartDate;
     private LocalDateTime useEndDate;
 
+    @Enumerated(value = EnumType.STRING)
+    @Column(length = 10)
+    private GardenStatus status;
+
+    @Column(length = 1000)
+    private String content;
+
     @CreatedDate
     private LocalDateTime createdDate;
     @LastModifiedDate
     private LocalDateTime lastModifiedDate;
+
+    @OneToMany(mappedBy = "garden")
+    private List<GardenImage> images;
+
+    @ManyToOne @JoinColumn(name = "member_id")
+    private Member member;
 
     public Garden editGarden(Garden editedGarden) {
         address = editedGarden.getAddress();
@@ -59,6 +75,7 @@ public class Garden {
         price = editedGarden.getPrice();
         size = editedGarden.getSize();
         contact = editedGarden.getContact();
+        content = editedGarden.getContent();
 
         return this;
     }
@@ -70,6 +87,7 @@ public class Garden {
         if (editedGarden.getPrice() != null) price = editedGarden.getPrice();
         if (editedGarden.getSize() != null) size = editedGarden.getSize();
         if (editedGarden.getContact() != null) contact = editedGarden.getContact();
+        if (editedGarden.getContact() != null) content = editedGarden.getContent();
 
         return this;
     }

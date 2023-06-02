@@ -36,8 +36,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/v2/api-docs",
                         "/configuration/**",
                         "/swagger*/**",
-                        "/webjars/**") ;
-
+                        "/webjars/**")
+                .antMatchers(HttpMethod.GET,"/v1/garden/{gardenID:[\\d+]}");
     }
 
     @Override
@@ -46,7 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
                 .authorizeRequests()
-                .antMatchers(HttpMethod.GET,"/v1/garden/{gardenID:[\\d+]}").permitAll()
+//                .antMatchers(HttpMethod.GET,"/v1/garden/{gardenID:[\\d+]}").permitAll()
                 .antMatchers(Constants.permitAllArray).permitAll()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
                 .anyRequest().authenticated()
