@@ -1,8 +1,8 @@
 package com.everyonegarden.batch.mafra;
 
 
-import com.everyonegarden.garden.Garden;
-import com.everyonegarden.garden.GardenType;
+import com.everyonegarden.garden.garden.Garden;
+import com.everyonegarden.garden.garden.GardenType;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.stereotype.Component;
 
