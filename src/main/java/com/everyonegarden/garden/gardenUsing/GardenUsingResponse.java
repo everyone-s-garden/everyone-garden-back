@@ -20,10 +20,10 @@ public class GardenUsingResponse {
     private Double latitude;
     private Double longitude;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy.MM.dd")
     private LocalDate useStartDate;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy.MM.dd")
     private LocalDate useEndDate;
 
     public static GardenUsingResponse of(GardenUsing gardenUsing) {

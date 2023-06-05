@@ -1,7 +1,7 @@
 package com.everyonegarden.garden.gardenImage;
 
 
-import com.everyonegarden.garden.Garden;
+import com.everyonegarden.garden.garden.Garden;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,8 +12,7 @@ import javax.persistence.*;
 @Getter
 @AllArgsConstructor @NoArgsConstructor @Builder
 
-@Table
-@Entity
+@Table @Entity
 public class GardenImage {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,8 +20,7 @@ public class GardenImage {
 
     private String url;
 
-    @ManyToOne
-    @JoinColumn(name="garden_id")
+    @ManyToOne @JoinColumn(name="garden_id")
     private Garden garden;
 
 }

@@ -1,4 +1,4 @@
-package com.everyonegarden.garden;
+package com.everyonegarden.garden.garden;
 
 import com.everyonegarden.garden.gardenImage.GardenImage;
 import com.everyonegarden.member.entity.Member;
@@ -19,25 +19,25 @@ import java.util.List;
 @NoArgsConstructor @AllArgsConstructor @Builder
 
 @EntityListeners(AuditingEntityListener.class)
-@Entity
-@Table(name = "garden")
+@Entity @Table(name = "garden")
 public class Garden {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long gardenId;
 
+    private String address;
     private double latitude;
     private double longitude;
-    private String address;
 
-    @Column(nullable = false)
     @NotBlank
+    @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.STRING) @Column(nullable = false)
     private GardenType type;
+    @Enumerated(value = EnumType.STRING) @Column(length = 10)
+    private GardenStatus status;
 
     private String link;
     private String price;
@@ -45,22 +45,19 @@ public class Garden {
     private String contact;
     private String size;
 
+    @Column(length = 1000)
+    private String content;
+
     private LocalDateTime recruitStartDate;
     private LocalDateTime recruitEndDate;
     private LocalDateTime useStartDate;
     private LocalDateTime useEndDate;
+    @CreatedDate private LocalDateTime createdDate;
+    @LastModifiedDate private LocalDateTime lastModifiedDate;
 
-    @Enumerated(value = EnumType.STRING)
-    @Column(length = 10)
-    private GardenStatus status;
-
-    @Column(length = 1000)
-    private String content;
-
-    @CreatedDate
-    private LocalDateTime createdDate;
-    @LastModifiedDate
-    private LocalDateTime lastModifiedDate;
+    private Boolean toilet;
+    private Boolean waterway;
+    private Boolean equipment;
 
     @OneToMany(mappedBy = "garden")
     private List<GardenImage> images;
@@ -76,6 +73,9 @@ public class Garden {
         size = editedGarden.getSize();
         contact = editedGarden.getContact();
         content = editedGarden.getContent();
+        toilet = editedGarden.getToilet();
+        waterway = editedGarden.getWaterway();
+        equipment = editedGarden.getEquipment();
 
         return this;
     }
@@ -87,7 +87,9 @@ public class Garden {
         if (editedGarden.getPrice() != null) price = editedGarden.getPrice();
         if (editedGarden.getSize() != null) size = editedGarden.getSize();
         if (editedGarden.getContact() != null) contact = editedGarden.getContact();
-        if (editedGarden.getContact() != null) content = editedGarden.getContent();
+        if (editedGarden.getToilet() != null) toilet = editedGarden.getToilet();
+        if (editedGarden.getWaterway() != null) waterway = editedGarden.getWaterway();
+        if (editedGarden.getEquipment() != null) equipment = editedGarden.getEquipment();
 
         return this;
     }

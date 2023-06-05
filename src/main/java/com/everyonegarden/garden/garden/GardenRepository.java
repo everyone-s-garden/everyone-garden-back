@@ -1,6 +1,5 @@
-package com.everyonegarden.garden;
+package com.everyonegarden.garden.garden;
 
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

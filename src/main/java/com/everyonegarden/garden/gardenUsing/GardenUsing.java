@@ -18,7 +18,6 @@ public class GardenUsing {
     private Long id;
 
     private String name;
-    private String image;
 
     private String address;
     private Double latitude;
@@ -28,6 +27,8 @@ public class GardenUsing {
     private LocalDate useEndDate;
 
     private Long memberId;
+
+    private String image;
 
     public GardenUsing edit(GardenUsing editedGardenUsing) {
 

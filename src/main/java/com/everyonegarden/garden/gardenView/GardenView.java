@@ -1,6 +1,6 @@
 package com.everyonegarden.garden.gardenView;
 
-import com.everyonegarden.garden.Garden;
+import com.everyonegarden.garden.garden.Garden;
 import com.everyonegarden.member.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

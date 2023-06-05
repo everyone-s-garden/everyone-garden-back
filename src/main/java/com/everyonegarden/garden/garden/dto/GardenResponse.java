@@ -1,8 +1,8 @@
-package com.everyonegarden.garden.dto;
+package com.everyonegarden.garden.garden.dto;
 
-import com.everyonegarden.garden.Garden;
-import com.everyonegarden.garden.GardenStatus;
-import com.everyonegarden.garden.GardenType;
+import com.everyonegarden.garden.garden.Garden;
+import com.everyonegarden.garden.garden.GardenStatus;
+import com.everyonegarden.garden.garden.GardenType;
 import com.everyonegarden.garden.gardenView.GardenView;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

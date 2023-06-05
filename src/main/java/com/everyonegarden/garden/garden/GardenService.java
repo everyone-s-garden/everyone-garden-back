@@ -1,9 +1,8 @@
-package com.everyonegarden.garden;
+package com.everyonegarden.garden.garden;
 
-import com.everyonegarden.garden.dto.GardenDetailResponse;
-import com.everyonegarden.garden.dto.GardenResponse;
+import com.everyonegarden.garden.garden.dto.GardenDetailResponse;
+import com.everyonegarden.garden.garden.dto.GardenResponse;
 import com.everyonegarden.garden.gardenImage.GardenImage;
-import com.everyonegarden.garden.gardenImage.GardenImageRepository;
 import com.everyonegarden.garden.gardenView.GardenViewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -23,12 +22,16 @@ public class GardenService {
     private final GardenRepository gardenRepository;
     private final GardenViewService gardenViewService;
 
-    public List<Garden> getGardenByQuery(String query, Pageable pageable) {
-        return gardenRepository.findAllGardenByQuery(query, pageable);
+    public List<GardenResponse> getGardenByQuery(String query, Pageable pageable) {
+        return gardenRepository.findAllGardenByQuery(query, pageable).stream()
+                .map(GardenResponse::of)
+                .collect(Collectors.toList());
     }
 
-    public List<Garden> getAllGarden(Pageable pageable) {
-        return gardenRepository.findAllGarden(pageable);
+    public List<GardenResponse> getAllGarden(Pageable pageable) {
+        return gardenRepository.findAllGarden(pageable).stream()
+                .map(GardenResponse::of)
+                .collect(Collectors.toList());
     }
 
     public List<GardenResponse> getPublicGardenByRegion(String region, Pageable pageable) {
@@ -77,8 +80,10 @@ public class GardenService {
                 .collect(Collectors.toList());
     }
 
-    public List<Garden> getGardenByMemberId(Long memberId, Pageable pageable) {
-        return gardenRepository.findByMemberId(memberId, pageable);
+    public List<GardenResponse> getGardenByMemberId(Long memberId, Pageable pageable) {
+        return gardenRepository.findByMemberId(memberId, pageable).stream()
+                .map(GardenResponse::of)
+                .collect(Collectors.toList());
     }
 
     @Transactional
@@ -90,28 +95,7 @@ public class GardenService {
             gardenViewService.addGardenView(memberId, gardenId);
         }
 
-        return GardenDetailResponse.builder()
-                .gardenId(garden.getGardenId())
-
-                .address(garden.getAddress())
-                .latitude(garden.getLatitude())
-                .longitude(garden.getLongitude())
-
-                .name(garden.getName())
-                .type(garden.getType().toString())
-                .link(garden.getLink())
-                .price(Integer.valueOf(garden.getPrice()))
-                .contact(garden.getContact())
-                .size(garden.getSize())
-
-                .recruitStartDate(LocalDate.from(garden.getRecruitStartDate()))
-                .recruitEndDate(LocalDate.from(garden.getRecruitEndDate()))
-                .useStartDate(LocalDate.from(garden.getUseStartDate()))
-                .useEndDate(LocalDate.from(garden.getUseEndDate()))
-
-                .images(garden.getImages().stream().map(GardenImage::getUrl).collect(Collectors.toList()))
-
-                .build();
+        return GardenDetailResponse.of(garden);
     }
 
     @Transactional
@@ -147,6 +131,10 @@ public class GardenService {
     public void deleteGardenPost(Long memberId, Long gardenId) {
         Garden gardenToDelete = gardenRepository.findById(gardenId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "지우시려는 텃밭이 없어요"));
+
+        if (!gardenToDelete.getMember().getId().equals(memberId)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "텃밭을 삭제할 권한이 없어요");
+        }
 
         gardenRepository.deleteById(gardenToDelete.getGardenId());
     }

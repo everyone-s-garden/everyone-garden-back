@@ -1,4 +1,4 @@
-package com.everyonegarden.garden.dto;
+package com.everyonegarden.garden.garden.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

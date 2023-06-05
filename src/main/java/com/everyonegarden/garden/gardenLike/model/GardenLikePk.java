@@ -9,7 +9,6 @@ import java.io.Serializable;
 @EqualsAndHashCode
 public class GardenLikePk implements Serializable {
 
-
     private Long memberId;
     private Long gardenId;
 

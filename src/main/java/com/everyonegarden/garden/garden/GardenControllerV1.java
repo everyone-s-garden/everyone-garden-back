@@ -1,10 +1,10 @@
-package com.everyonegarden.garden;
+package com.everyonegarden.garden.garden;
 
 import com.everyonegarden.common.PageService;
 import com.everyonegarden.common.exception.BadRequestException;
 import com.everyonegarden.common.memberId.MemberId;
-import com.everyonegarden.garden.dto.*;
 import com.everyonegarden.common.s3.S3Service;
+import com.everyonegarden.garden.garden.dto.*;
 import com.everyonegarden.garden.gardenView.GardenViewService;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -13,15 +13,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
+import java.net.URI;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
-@RestController
-@RequestMapping("v1/garden")
+@RestController @RequestMapping("v1/garden")
 public class GardenControllerV1 {
 
     private final GardenService gardenService;
@@ -35,11 +36,8 @@ public class GardenControllerV1 {
                                                  @RequestParam(value = "page", required = false) Integer page,
                                                  @RequestParam(value = "size", required = false) Integer size) {
         Pageable pageable = pageService.getPageable(page, size);
-        List<Garden> gardenList = gardenService.getGardenByQuery(query, pageable);
 
-        return gardenList.stream()
-                .map(GardenResponse::of)
-                .collect(Collectors.toList());
+        return gardenService.getGardenByQuery(query, pageable);
     }
 
     @GetMapping("all")
@@ -47,9 +45,7 @@ public class GardenControllerV1 {
                                              @RequestParam(value = "size", required = false) Integer size) {
         Pageable pageable = pageService.getPageable(page, size);
 
-        return gardenService.getAllGarden(pageable).stream()
-                .map(GardenResponse::of)
-                .collect(Collectors.toList());
+        return gardenService.getAllGarden(pageable);
     }
 
     @GetMapping("{type}/by-region")
@@ -57,20 +53,20 @@ public class GardenControllerV1 {
                                                         @RequestParam("region") String region,
                                                         @RequestParam(value = "page", required = false) Integer page,
                                                         @RequestParam(value = "size", required = false) Integer size) {
-        Pageable pageable = pageService.getPageable(page - 1, size);
+        Pageable pageable = pageService.getPageable(page, size);
 
         GardenTypeRequest gardenTypeRequest;
         try {
             gardenTypeRequest = GardenTypeRequest.valueOf(type.toUpperCase());
         } catch (Exception e) {
-            throw new BadRequestException(String.format("%s은 올바른 범위가 아닙니다", type));
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("%s은 올바른 범위가 아닙니다", type));
         }
 
         if (gardenTypeRequest == GardenTypeRequest.PUBLIC) {
             return gardenService.getPublicGardenByRegion(region, pageable);
         }
 
-        if (gardenTypeRequest == GardenTypeRequest.RPIVATE) {
+        if (gardenTypeRequest == GardenTypeRequest.PRIVATE) {
             return gardenService.getPrivateGardenByRegion(region, pageable);
         }
 
@@ -89,7 +85,7 @@ public class GardenControllerV1 {
         try {
             gardenTypeRequest = GardenTypeRequest.valueOf(type.toUpperCase());
         } catch (Exception e) {
-            throw new BadRequestException(String.format("%s은 올바른 범위가 아닙니다", type));
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("%s은 올바른 범위가 아닙니다", type));
         }
 
         double latStart = Double.parseDouble(latitude.split(",")[0]);
@@ -101,7 +97,7 @@ public class GardenControllerV1 {
             return gardenService.getPublicGardenByCoordinate(latStart, latEnd, longStart, longEnd, pageable);
         }
 
-        if (gardenTypeRequest == GardenTypeRequest.RPIVATE) {
+        if (gardenTypeRequest == GardenTypeRequest.PRIVATE) {
             return gardenService.getPrivateGardenByCoordinate(latStart, latEnd, longStart, longEnd, pageable);
         }
 
@@ -122,13 +118,11 @@ public class GardenControllerV1 {
 
     @GetMapping("mine")
     public List<GardenResponse> getMyGarden(@MemberId Long memberId,
-                                                @RequestParam(value = "page", required = false) Integer page,
-                                                @RequestParam(value = "size", required = false) Integer size) {
+                                            @RequestParam(value = "page", required = false) Integer page,
+                                            @RequestParam(value = "size", required = false) Integer size) {
         Pageable pageable = pageService.getPageable(page, size);
 
-        return gardenService.getGardenByMemberId(memberId, pageable).stream()
-                .map(GardenResponse::of)
-                .collect(Collectors.toList());
+        return gardenService.getGardenByMemberId(memberId, pageable);
     }
 
     @GetMapping("{gardenId}")
@@ -138,15 +132,13 @@ public class GardenControllerV1 {
     }
 
     @PostMapping
-    public GardenAddSuccessResponse addGarden(@MemberId Long memberId,
-                                              @RequestBody @Valid GardenAddRequest gardenAddRequest) {
-
-
+    public ResponseEntity<GardenResponse> addGarden(@MemberId Long memberId,
+                                                    @RequestBody @Valid GardenAddRequest gardenAddRequest) {
         Garden garden = gardenService.addGarden(gardenAddRequest.toEntity(memberId));
 
-        return GardenAddSuccessResponse.builder()
-                .garden(GardenResponse.of(garden))
-                .build();
+        return ResponseEntity
+                .created(URI.create(String.format("v1/garden/%s", garden.getGardenId())))
+                .body(GardenResponse.of(garden));
     }
 
     @SneakyThrows
