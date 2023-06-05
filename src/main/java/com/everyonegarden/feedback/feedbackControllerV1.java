@@ -9,10 +9,7 @@ import com.everyonegarden.feedback.image.FeedbackImageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -26,6 +23,7 @@ public class feedbackControllerV1 {
     private final FeedbackImageService feedbackImageService;
     private final PageService pageService;
 
+    @GetMapping("all")
     public List<FeedbackResponse> getAllFeedback(@RequestParam(value = "page", required = false) Integer page,
                                                  @RequestParam(value = "size", required = false) Integer size) {
         Pageable pageable = pageService.getPageableSorted(page, size, "createdDate");
@@ -36,6 +34,7 @@ public class feedbackControllerV1 {
                 .collect(Collectors.toList());
     }
 
+    @PostMapping
     public FeedbackResponse addFeedback(@MemberId Long memberId,
                                         @RequestBody @Valid FeedbackAddRequest feedbackAddRequest) {
         Feedback addedFeedback = feedbackService.add(feedbackAddRequest.toEntity(memberId));
