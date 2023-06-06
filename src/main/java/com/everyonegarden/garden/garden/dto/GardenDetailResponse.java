@@ -26,7 +26,7 @@ public class GardenDetailResponse {
     private String name;
     private String type;
     private String link;
-    private Integer price;
+    private String price;
 
     private String contact;
     private String size;
@@ -42,8 +42,7 @@ public class GardenDetailResponse {
     @DateTimeFormat(pattern = "yyyy.MM.dd")
     private LocalDate useEndDate;
 
-    private String postTitle;
-    private String postContent;
+    private String content;
     private List<String> images;
 
     private GardenDetailResponseFacility facility;
@@ -59,7 +58,7 @@ public class GardenDetailResponse {
                 .name(garden.getName())
                 .type(garden.getType().toString())
                 .link(garden.getLink())
-                .price(Integer.valueOf(garden.getPrice()))
+                .price(garden.getPrice())
                 .contact(garden.getContact())
                 .size(garden.getSize())
                 .status(garden.getStatus())
@@ -70,6 +69,9 @@ public class GardenDetailResponse {
                 .useEndDate(garden.getUseEndDate() == null ? null : LocalDate.from(garden.getUseEndDate()))
 
                 .images(garden.getImages().stream().map(GardenImage::getUrl).collect(Collectors.toList()))
+
+                .contact(garden.getContent())
+                .contact(garden.getContact())
 
                 .facility(GardenDetailResponseFacility.builder()
                         .toilet(garden.getToilet() != null && garden.getToilet())
