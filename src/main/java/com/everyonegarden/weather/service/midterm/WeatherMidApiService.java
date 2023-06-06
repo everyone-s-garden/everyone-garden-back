@@ -19,7 +19,7 @@ public class WeatherMidApiService {
 
     private final WeatherFetchService weatherFetchService;
     @Value("${api.weatherWeek.url}") private String apiUrl ;
-    @Value("${api.weatherWeek.secret}") private String serviceKey ;
+    @Value("${api.weather.secret}") private String serviceKey ;
 
     public JsonArray midWeather(String regId) throws Exception {
 

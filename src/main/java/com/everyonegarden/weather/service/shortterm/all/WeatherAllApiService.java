@@ -15,7 +15,7 @@ public class WeatherAllApiService {
     //EndPoint
     @Value("${api.weatherAll.url}") private String apiUrl ;
     //홈페이지에서 받은 키
-    @Value("${api.weatherAll.secret}") private String serviceKey ;
+    @Value("${api.weather.secret}") private String serviceKey ;
 
     private final WeatherFetchService weatherFetchService;
 
