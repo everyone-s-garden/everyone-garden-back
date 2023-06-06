@@ -28,6 +28,7 @@ import java.util.List;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final AuthTokenProvider authTokenProvider;
+    private final CorsConfigurationSource corsConfigurationSource;
 
     @Override
     public void configure(WebSecurity web) throws Exception {
@@ -60,7 +61,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
 
                 .cors()
-                .configurationSource(corsConfigurationSource())
+                .configurationSource(corsConfigurationSource)
                 .and()
 
                 .csrf().disable()
@@ -75,21 +76,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
 
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
-
-    }
-
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.addAllowedHeader("*");
-        corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
-        corsConfiguration.addAllowedOrigin("http://localhost:3000");
-        corsConfiguration.setMaxAge(600L);
-
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", corsConfiguration);
-
-        return source;
     }
 
 }
