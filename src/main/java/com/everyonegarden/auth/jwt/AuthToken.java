@@ -37,15 +37,19 @@ public class AuthToken {
                 .compact();
     }
 
-    public boolean validate() {
+    public boolean isValid() {
         return this.getTokenClaims() != null;
     }
 
     public Claims getTokenClaims() {
+        Claims claims = null;
+
+        JwtParser jwtParser = Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build();
+
         try {
-            return Jwts.parserBuilder()
-                    .setSigningKey(key)
-                    .build()
+            claims = jwtParser
                     .parseClaimsJws(token)
                     .getBody();
         } catch (SecurityException e) {
@@ -58,7 +62,10 @@ public class AuthToken {
             log.info("Unsupported JWT token.");
         } catch (IllegalArgumentException e) {
             log.info("JWT token compact of handler are invalid.");
+        } catch (Exception e) {
+            return null;
         }
-        return null;
+
+        return claims;
     }
 }

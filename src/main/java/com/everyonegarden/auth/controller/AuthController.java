@@ -60,7 +60,7 @@ public class AuthController {
         String appToken = JwtHeaderUtil.getAccessToken(request);
         // 이 appToken으로
         AuthToken authToken = authTokenProvider.convertAuthToken(appToken);
-        if (!authToken.validate()) { // 형식에 맞지 않는 token
+        if (!authToken.isValid()) { // 형식에 맞지 않는 token
             return ApiResponse.forbidden(null);
         }
 

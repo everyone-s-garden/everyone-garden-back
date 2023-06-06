@@ -11,43 +11,28 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-
-
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final AuthTokenProvider tokenProvider;
 
-
-
     @Override
-    protected void doFilterInternal(
-            HttpServletRequest request,
-            HttpServletResponse response,
-            FilterChain filterChain)  throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request,
+                                    HttpServletResponse response,
+                                    FilterChain filterChain) throws ServletException, IOException {
 
-
-        final String authorizationHeader = request.getHeader("Authorization");
-
-        if(authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")){
+        final String AUTHORIZATION_HEADER = request.getHeader("Authorization");
+        if (AUTHORIZATION_HEADER == null || !AUTHORIZATION_HEADER.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
             return;
         }
 
-        String tokenStr = JwtHeaderUtil.getAccessToken(request);
-        AuthToken token = tokenProvider.convertAuthToken(tokenStr);
-        // 유효한 토큰인지 확인
-        if (token.validate()) {
-            Authentication authentication = tokenProvider.getAuthentication(token);
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-            // 유효한 토큰이 아니라면
-        }else{
-            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-        }
+        final String TOKEN_WITHOUT_PREFIX = AUTHORIZATION_HEADER.replace("Bearer ", "");
+        AuthToken token = tokenProvider.convertAuthToken(TOKEN_WITHOUT_PREFIX);
+        Authentication authentication = tokenProvider.getAuthentication(token);
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
         filterChain.doFilter(request, response);
     }
 
-
 }
-
-

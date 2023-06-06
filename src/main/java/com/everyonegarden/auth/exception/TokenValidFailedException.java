@@ -1,7 +1,7 @@
 package com.everyonegarden.auth.exception;
 
 
-public class TokenValidFailedException extends RuntimeException {
+public class TokenValidFailedException extends IllegalStateException {
 
     public TokenValidFailedException() {
         super("Failed to generate Token.");
@@ -10,4 +10,5 @@ public class TokenValidFailedException extends RuntimeException {
     public TokenValidFailedException(String message) {
         super(message);
     }
+
 }

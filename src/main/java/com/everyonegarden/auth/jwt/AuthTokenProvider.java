@@ -8,15 +8,12 @@ import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.security.Key;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -63,26 +60,24 @@ public class AuthTokenProvider {
 
     public Authentication getAuthentication(AuthToken authToken) {
 
-        if(authToken.validate()) {
-
-            Claims claims = authToken.getTokenClaims();
-            List<SimpleGrantedAuthority> authorities = Arrays.stream(new String[]{claims.get(AUTHORITIES_KEY).toString()})
-                            .map(SimpleGrantedAuthority::new)
-                            .collect(Collectors.toList());
-
-            int memberId = (int) claims.get("memberId");
-
-            CustomUser customUser = CustomUser.builder()
-                    .socialId(claims.getSubject())
-                    .memberId((long) memberId)
-                    .authorities(authorities)
-                    .build();
-
-            return new UsernamePasswordAuthenticationToken(customUser, authToken, authorities);
-
-        } else {
-            throw new TokenValidFailedException();
+        Claims claims = authToken.getTokenClaims();
+        if (claims == null) {
+            return null;
         }
+
+        List<SimpleGrantedAuthority> authorities = Arrays.stream(new String[]{claims.get(AUTHORITIES_KEY).toString()})
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
+
+        int memberId = (int) claims.get("memberId");
+
+        CustomUser customUser = CustomUser.builder()
+                .socialId(claims.getSubject())
+                .memberId((long) memberId)
+                .authorities(authorities)
+                .build();
+
+        return new UsernamePasswordAuthenticationToken(customUser, authToken, authorities);
     }
 
 }
