@@ -20,7 +20,7 @@ import java.util.Calendar;
 public class GetOneTwoDayService {
 
     private final RegionRepository regionRepository ;
-    private final WeatherTimeApiService weatherShortService;
+    private final WeatherTimeApiService weatherTimeApiService;
     public final WeatherResponseService weatherResponseService;
 
     public final ReverseGeoFetchService reverseGeoFetchService;
@@ -38,16 +38,17 @@ public class GetOneTwoDayService {
         String fcstTime = sdfTime.format(calendar.getTime())+"00";
 
         // 오늘 날짜
-        calendar.add(Calendar.HOUR, 1);
         String oneday = sdfDay.format(calendar.getTime());
 
+
         // 내일 날짜
-        calendar.add(Calendar.HOUR, 3);
+        calendar.add(Calendar.DATE, 1);
         String twoday = sdfDay.format(calendar.getTime());
+
 
         ArrayList<String> skyOneTwo = new ArrayList<>();
 
-        JsonArray jsonItemList = weatherShortService.shortWeather(region.getNx(),region.getNy());
+        JsonArray jsonItemList = weatherTimeApiService.shortWeather(region.getNx(),region.getNy());
         for(Object o : jsonItemList){
             JsonObject item = (JsonObject) o;
             if(checkSky(item,fcstTime,oneday,twoday))
@@ -73,11 +74,13 @@ public class GetOneTwoDayService {
                 && fcstDate.equals(oneday)
                 && fcstTime.equals(time))
             return true;
-        else if(category.equals("SKY")
+
+        if(category.equals("SKY")
                 && fcstDate.equals(twoday)
                 && fcstTime.equals(time))
             return true;
-        else return false;
+
+        return false;
     }
 
 
