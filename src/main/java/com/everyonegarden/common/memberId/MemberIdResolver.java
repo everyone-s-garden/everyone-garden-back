@@ -31,8 +31,9 @@ public class MemberIdResolver implements HandlerMethodArgumentResolver {
             CustomUser member = (CustomUser) authentication.getPrincipal();
             return member.getMemberId();
         } catch (Exception e) {
-            throw new UnauthorizedException("JWT Token을 다시 확인해 주세요");
+            return null;
         }
+
     }
 
 }
