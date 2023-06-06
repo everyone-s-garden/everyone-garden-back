@@ -1,7 +1,6 @@
 package com.everyonegarden.garden.garden;
 
 import com.everyonegarden.common.PageService;
-import com.everyonegarden.common.exception.BadRequestException;
 import com.everyonegarden.common.memberId.MemberId;
 import com.everyonegarden.common.s3.S3Service;
 import com.everyonegarden.garden.garden.dto.*;
@@ -134,7 +133,7 @@ public class GardenControllerV1 {
     @PostMapping
     public ResponseEntity<GardenResponse> addGarden(@MemberId Long memberId,
                                                     @RequestBody @Valid GardenAddRequest gardenAddRequest) {
-        Garden garden = gardenService.addGarden(gardenAddRequest.toEntity(memberId));
+        Garden garden = gardenService.addGarden(gardenAddRequest, memberId);
 
         return ResponseEntity
                 .created(URI.create(String.format("v1/garden/%s", garden.getGardenId())))

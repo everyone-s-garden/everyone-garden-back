@@ -64,7 +64,7 @@ public class GardenAddRequest {
                 .build();
     }
 
-    public List<GardenImage> getImages(Long gardenId) {
+    public List<GardenImage> getGardenImages(Long gardenId) {
         return images.stream()
                 .map(image -> GardenImage.builder()
                         .url(image)

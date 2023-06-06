@@ -1,8 +1,10 @@
 package com.everyonegarden.garden.garden;
 
+import com.everyonegarden.garden.garden.dto.GardenAddRequest;
 import com.everyonegarden.garden.garden.dto.GardenDetailResponse;
 import com.everyonegarden.garden.garden.dto.GardenResponse;
 import com.everyonegarden.garden.gardenImage.GardenImage;
+import com.everyonegarden.garden.gardenImage.GardenImageRepository;
 import com.everyonegarden.garden.gardenView.GardenViewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -21,6 +23,7 @@ public class GardenService {
 
     private final GardenRepository gardenRepository;
     private final GardenViewService gardenViewService;
+    private final GardenImageRepository gardenImageRepository;
 
     public List<GardenResponse> getGardenByQuery(String query, Pageable pageable) {
         return gardenRepository.findAllGardenByQuery(query, pageable).stream()
@@ -99,8 +102,13 @@ public class GardenService {
     }
 
     @Transactional
-    public Garden addGarden(Garden garden) {
-        return gardenRepository.save(garden);
+    public Garden addGarden(GardenAddRequest gardenAddRequest, Long memberId) {
+        Garden addedGarden = gardenRepository.save(gardenAddRequest.toEntity(memberId));
+
+        List<GardenImage> gardenImages = gardenAddRequest.getGardenImages(addedGarden.getGardenId());
+        gardenImageRepository.saveAll(gardenImages);
+
+        return addedGarden;
     }
 
     @Transactional
