@@ -1,6 +1,7 @@
 package com.everyonegarden.garden.garden.dto;
 
 import com.everyonegarden.garden.garden.Garden;
+import com.everyonegarden.garden.garden.GardenStatus;
 import com.everyonegarden.garden.gardenImage.GardenImage;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,6 +30,8 @@ public class GardenDetailResponse {
 
     private String contact;
     private String size;
+
+    private GardenStatus status;
 
     @DateTimeFormat(pattern = "yyyy.MM.dd")
     private LocalDate recruitStartDate;
@@ -59,11 +62,12 @@ public class GardenDetailResponse {
                 .price(Integer.valueOf(garden.getPrice()))
                 .contact(garden.getContact())
                 .size(garden.getSize())
+                .status(garden.getStatus())
 
-                .recruitStartDate(LocalDate.from(garden.getRecruitStartDate()))
-                .recruitEndDate(LocalDate.from(garden.getRecruitEndDate()))
-                .useStartDate(LocalDate.from(garden.getUseStartDate()))
-                .useEndDate(LocalDate.from(garden.getUseEndDate()))
+                .recruitStartDate(garden.getRecruitStartDate() == null ? null : LocalDate.from(garden.getRecruitStartDate()))
+                .recruitEndDate(garden.getRecruitEndDate() == null ? null : LocalDate.from(garden.getRecruitEndDate()))
+                .useStartDate(garden.getUseStartDate() == null ? null : LocalDate.from(garden.getUseStartDate()))
+                .useEndDate(garden.getUseEndDate() == null ? null : LocalDate.from(garden.getUseEndDate()))
 
                 .images(garden.getImages().stream().map(GardenImage::getUrl).collect(Collectors.toList()))
 

@@ -80,9 +80,9 @@ public class GardenService {
                 .collect(Collectors.toList());
     }
 
-    public List<GardenResponse> getGardenByMemberId(Long memberId, Pageable pageable) {
+    public List<GardenDetailResponse> getGardenByMemberId(Long memberId, Pageable pageable) {
         return gardenRepository.findByMemberId(memberId, pageable).stream()
-                .map(GardenResponse::of)
+                .map(GardenDetailResponse::of)
                 .collect(Collectors.toList());
     }
 

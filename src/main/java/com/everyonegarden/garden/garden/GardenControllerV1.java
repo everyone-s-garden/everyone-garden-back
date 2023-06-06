@@ -117,7 +117,7 @@ public class GardenControllerV1 {
     }
 
     @GetMapping("mine")
-    public List<GardenResponse> getMyGarden(@MemberId Long memberId,
+    public List<GardenDetailResponse> getMyGarden(@MemberId Long memberId,
                                             @RequestParam(value = "page", required = false) Integer page,
                                             @RequestParam(value = "size", required = false) Integer size) {
         Pageable pageable = pageService.getPageable(page, size);
