@@ -56,7 +56,7 @@ public class GetOneTwoDayService {
 
         }
 
-        if(twoday.equals(oneday)){
+        if(skyOneTwo.size()==1){
             skyOneTwo.add(skyOneTwo.get(0));
         }
 

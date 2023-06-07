@@ -4,7 +4,7 @@ api:
     secret: ${API_MAFRA_SECRET}
   weather:
     url: http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst
-    secret: ${API_WEATHER_SECRET}
+    secret:  ${API_WEATHER_SECRET}
   weatherAll:
     url: http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst
   weatherWeek:
