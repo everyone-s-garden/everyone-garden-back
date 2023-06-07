@@ -52,7 +52,7 @@ public class GardenAddRequest {
                 .link(link)
                 .price(price)
 
-                .content(content)
+                .contact(contact)
                 .size(size)
 
                 .content(content)

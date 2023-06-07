@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.TransactionScoped;
+import javax.transaction.Transactional;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -18,13 +20,14 @@ public class GardenViewService {
         return gardenViewRepository.findByMemberId(memberId, pageable);
     }
 
-    public Long addGardenView(Long memberId, Long gardenId) {
+    @Transactional
+    public GardenView addGardenView(Long memberId, Long gardenId) {
         GardenView gardenView = GardenView.builder()
                 .garden(Garden.builder().gardenId(gardenId).build())
                 .member(Member.builder().id(memberId).build())
                 .build();
 
-        return gardenViewRepository.save(gardenView).getGardenViewId();
+        return gardenViewRepository.save(gardenView);
     }
 
 }

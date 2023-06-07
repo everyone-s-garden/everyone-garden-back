@@ -70,8 +70,8 @@ public class GardenDetailResponse {
 
                 .images(garden.getImages().stream().map(GardenImage::getUrl).collect(Collectors.toList()))
 
-                .contact(garden.getContent())
                 .contact(garden.getContact())
+                .content(garden.getContent())
 
                 .facility(GardenDetailResponseFacility.builder()
                         .toilet(garden.getToilet() != null && garden.getToilet())

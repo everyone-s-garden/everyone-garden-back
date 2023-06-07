@@ -30,7 +30,6 @@ public class GardenView {
     @JoinColumn(name = "member_id")
     private Member member;
 
-
     @CreatedDate
     private LocalDateTime createdDate;
 

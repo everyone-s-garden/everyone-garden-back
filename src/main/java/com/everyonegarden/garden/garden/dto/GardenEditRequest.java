@@ -15,7 +15,7 @@ public class GardenEditRequest {
     private String name;
     private String link;
 
-    private Integer price;
+    private String price;
     private String size;
     private String contact;
 
@@ -27,7 +27,7 @@ public class GardenEditRequest {
                 .name(name)
                 .link(link)
 
-                .price(String.valueOf(price))
+                .price(price)
                 .size(size)
                 .contact(contact)
 

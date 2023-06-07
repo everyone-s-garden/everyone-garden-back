@@ -44,7 +44,6 @@ public class GardenResponse {
 
                 .contact(garden.getContact())
                 .size(garden.getSize())
-
                 .status(garden.getStatus())
 
                 .build();
@@ -62,6 +61,10 @@ public class GardenResponse {
                 .address(gardenView.getGarden().getAddress())
                 .latitude(gardenView.getGarden().getLatitude())
                 .longitude(gardenView.getGarden().getLongitude())
+
+                .contact(gardenView.getGarden().getContact())
+                .size(gardenView.getGarden().getSize())
+                .status(gardenView.getGarden().getStatus())
 
                 .build();
     }

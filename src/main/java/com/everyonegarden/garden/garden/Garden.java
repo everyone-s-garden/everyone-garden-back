@@ -1,6 +1,7 @@
 package com.everyonegarden.garden.garden;
 
 import com.everyonegarden.garden.gardenImage.GardenImage;
+import com.everyonegarden.garden.gardenView.GardenView;
 import com.everyonegarden.member.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -59,8 +60,11 @@ public class Garden {
     private Boolean waterway;
     private Boolean equipment;
 
-    @OneToMany(mappedBy = "garden")
+    @OneToMany(mappedBy = "garden", orphanRemoval = true)
     private List<GardenImage> images;
+
+    @OneToMany(mappedBy = "garden", orphanRemoval = true)
+    private List<GardenView> gardenViews;
 
     @ManyToOne @JoinColumn(name = "member_id")
     private Member member;
