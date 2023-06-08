@@ -12,6 +12,7 @@ public class Constants {
             "/auth/**",
             "/v1/weather/**",
             "/v1/crop/**",
+
             "/v1/garden/all/by-region/**",
             "/v1/garden/public/by-region/**",
             "/v1/garden/private/by-region/**",

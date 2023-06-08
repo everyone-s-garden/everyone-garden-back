@@ -1,6 +1,7 @@
 package com.everyonegarden.garden.gardenLike;
 
 import com.everyonegarden.garden.garden.Garden;
+import com.everyonegarden.garden.garden.GardenRepository;
 import com.everyonegarden.garden.gardenLike.model.GardenLike;
 import com.everyonegarden.garden.gardenLike.model.GardenLikeRepository;
 import com.everyonegarden.member.entity.Member;
@@ -17,6 +18,7 @@ import java.util.Optional;
 @Service
 public class GardenLikeService {
 
+    private final GardenRepository gardenRepository;
     private final GardenLikeRepository gardenLikeRepository;
 
     public List<GardenLike> getAllGardenLikeByMemberId(Long memberId) {
@@ -24,8 +26,16 @@ public class GardenLikeService {
     }
 
     public void addGardenLike(Long memberId, Long gardenId) {
+        Optional<Garden> garden = gardenRepository.findById(gardenId);
+
+        if (garden.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "찜하시려는 텃밭이 없어요");
+        }
+
         GardenLike gardenLike = GardenLike.builder()
-                .garden(Garden.builder().gardenId(gardenId).build())
+                .gardenId(gardenId)
+                .memberId(memberId)
+                .garden(garden.get())
                 .member(Member.builder().id(memberId).build())
                 .build();
 

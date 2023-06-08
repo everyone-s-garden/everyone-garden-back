@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface GardenViewRepository extends JpaRepository<GardenView, Long> {
 
-    @Query("select g from GardenView g where g.member.id = ?1")
+    @Query("select distinct g from GardenView g where g.member.id = ?1")
     List<GardenView> findByMemberId(Long memberId, Pageable pageable);
 
 }

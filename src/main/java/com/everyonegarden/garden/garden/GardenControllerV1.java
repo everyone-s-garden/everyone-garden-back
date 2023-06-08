@@ -1,6 +1,7 @@
 package com.everyonegarden.garden.garden;
 
 import com.everyonegarden.common.PageService;
+import com.everyonegarden.common.exception.UnauthorizedException;
 import com.everyonegarden.common.memberId.MemberId;
 import com.everyonegarden.common.s3.S3Service;
 import com.everyonegarden.garden.garden.dto.*;
@@ -21,7 +22,8 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
-@RestController @RequestMapping("v1/garden")
+@RestController
+@RequestMapping("v1/garden")
 public class GardenControllerV1 {
 
     private final GardenService gardenService;
@@ -116,7 +118,7 @@ public class GardenControllerV1 {
     }
 
     @GetMapping("mine")
-    public List<GardenDetailResponse> getMyGarden(@MemberId Long memberId,
+    public List<GardenResponse> getMyGarden(@MemberId Long memberId,
                                             @RequestParam(value = "page", required = false) Integer page,
                                             @RequestParam(value = "size", required = false) Integer size) {
         Pageable pageable = pageService.getPageable(page, size);
@@ -125,14 +127,16 @@ public class GardenControllerV1 {
     }
 
     @GetMapping("{gardenId}")
-    public GardenDetailResponse getGardenDetail(@MemberId Long memberId,
-                                                @PathVariable("gardenId") Long gardenId) {
+    public GardenResponse getGardenDetail(@MemberId Long memberId,
+                                          @PathVariable("gardenId") Long gardenId) {
         return gardenService.getGardenDetailByGardenId(memberId, gardenId);
     }
 
     @PostMapping
     public ResponseEntity<GardenResponse> addGarden(@MemberId Long memberId,
                                                     @RequestBody @Valid GardenAddRequest gardenAddRequest) {
+        if (memberId == null) throw new UnauthorizedException("token이 올바르지 않아요");
+
         Garden garden = gardenService.addGarden(gardenAddRequest, memberId);
 
         return ResponseEntity
@@ -156,21 +160,10 @@ public class GardenControllerV1 {
     }
 
     @PutMapping("{gardenId}")
-    public ResponseEntity<GardenResponse> editGarden(@MemberId Long memberId,
-                                                     @PathVariable("gardenId") Long gardenId,
-                                                     @RequestBody @Valid GardenEditRequest gardenEditRequest) {
-        Garden garden = gardenService.editGardenNull(memberId, gardenEditRequest.toEntity(gardenId));
-
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(GardenResponse.of(garden));
-    }
-
-    @PatchMapping("{gardenId}")
     public ResponseEntity<GardenResponse> editGardenSelectively(@MemberId Long memberId,
                                                                 @PathVariable("gardenId") Long gardenId,
                                                                 @RequestBody @Valid GardenEditRequest gardenEditRequest) {
-        Garden garden = gardenService.editGardenIgnoreNull(memberId, gardenEditRequest.toEntity(gardenId));
+        Garden garden = gardenService.editGarden(memberId, gardenEditRequest.toEntity(gardenId));
 
         return ResponseEntity
                 .status(HttpStatus.OK)
