@@ -15,7 +15,7 @@ public class PageService {
         return PageRequest.of(page - 1, size);
     }
 
-    public Pageable getPageableSorted(Integer page, Integer size, String sort) {
+    public Pageable getPageableSortedDesc(Integer page, Integer size, String sort) {
         if (page == null) page = 1;
         if (size == null) size = 10;
 

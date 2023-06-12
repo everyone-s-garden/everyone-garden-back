@@ -8,7 +8,10 @@ import java.util.List;
 
 public interface GardenViewRepository extends JpaRepository<GardenView, Long> {
 
-    @Query("select distinct g from GardenView g where g.member.id = ?1")
+    @Query("SELECT g FROM GardenView g WHERE " +
+            "g.createdDate IN (SELECT MAX(gv.createdDate) FROM GardenView gv WHERE gv.member.id = ?1 " +
+            "AND gv.garden.gardenId = g.garden.gardenId) " +
+            "AND g.member.id = ?1")
     List<GardenView> findByMemberId(Long memberId, Pageable pageable);
 
 }

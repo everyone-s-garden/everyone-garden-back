@@ -26,7 +26,7 @@ public class feedbackControllerV1 {
     @GetMapping("all")
     public List<FeedbackResponse> getAllFeedback(@RequestParam(value = "page", required = false) Integer page,
                                                  @RequestParam(value = "size", required = false) Integer size) {
-        Pageable pageable = pageService.getPageableSorted(page, size, "createdDate");
+        Pageable pageable = pageService.getPageableSortedDesc(page, size, "createdDate");
         Page<Feedback> feedbackPaged = feedbackService.getAllFeedback(pageable);
 
         return feedbackPaged.getContent().stream()

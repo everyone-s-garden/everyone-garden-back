@@ -5,6 +5,7 @@ import com.everyonegarden.common.exception.UnauthorizedException;
 import com.everyonegarden.common.memberId.MemberId;
 import com.everyonegarden.common.s3.S3Service;
 import com.everyonegarden.garden.garden.dto.*;
+import com.everyonegarden.garden.gardenLike.GardenLikeService;
 import com.everyonegarden.garden.gardenView.GardenViewService;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -22,12 +23,12 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
-@RestController
-@RequestMapping("v1/garden")
+@RestController @RequestMapping("v1/garden")
 public class GardenControllerV1 {
 
     private final GardenService gardenService;
     private final GardenViewService gardenViewService;
+    private final GardenLikeService gardenLikeService;
 
     private final S3Service s3Service;
     private final PageService pageService;
@@ -129,7 +130,8 @@ public class GardenControllerV1 {
     @GetMapping("{gardenId}")
     public GardenResponse getGardenDetail(@MemberId Long memberId,
                                           @PathVariable("gardenId") Long gardenId) {
-        return gardenService.getGardenDetailByGardenId(memberId, gardenId);
+        GardenResponse garden = gardenService.getGardenDetailByGardenId(memberId, gardenId);
+        return garden.updateIsLiked(gardenLikeService.isGardenLikedByMember(memberId, gardenId));
     }
 
     @PostMapping

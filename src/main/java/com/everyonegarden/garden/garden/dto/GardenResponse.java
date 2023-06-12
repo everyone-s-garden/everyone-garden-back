@@ -45,8 +45,15 @@ public class GardenResponse {
 
     private String content;
     private List<String> images;
-
     private GardenEditRequestFacility facility;
+
+    private boolean liked;
+
+    public GardenResponse updateIsLiked(Boolean liked) {
+        this.liked = liked != null && liked;
+
+        return this;
+    }
 
     public static GardenResponse of(Garden garden) {
         return GardenResponse.builder()
@@ -74,13 +81,14 @@ public class GardenResponse {
                 .contact(garden.getContact())
                 .content(garden.getContent())
 
+                .liked(false)
+
                 .facility(GardenEditRequestFacility.builder()
                         .toilet(garden.getToilet() != null && garden.getToilet())
                         .waterway(garden.getWaterway() != null && garden.getWaterway())
                         .equipment(garden.getEquipment() != null && garden.getEquipment())
                         .build()
                 )
-
                 .build();
     }
 

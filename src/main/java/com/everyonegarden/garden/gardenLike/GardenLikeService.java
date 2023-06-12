@@ -25,6 +25,12 @@ public class GardenLikeService {
         return gardenLikeRepository.findByMemberId(memberId);
     }
 
+    public boolean isGardenLikedByMember(Long memberId, Long gardenId) {
+        if (memberId == null || gardenId == null) return false;
+
+        return gardenLikeRepository.findByMemberIdAndGardenId(memberId, gardenId).isPresent();
+    }
+
     public void addGardenLike(Long memberId, Long gardenId) {
         Optional<Garden> garden = gardenRepository.findById(gardenId);
 
