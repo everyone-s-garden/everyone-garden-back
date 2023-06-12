@@ -2,8 +2,10 @@ package com.everyonegarden.weather.dto;
 
 import com.google.gson.JsonObject;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
+@EqualsAndHashCode(callSuper=false)
 public class ApiWeatherMidAmDto extends WeatherDto{
 
     private String wf1Am;
@@ -25,6 +27,6 @@ public class ApiWeatherMidAmDto extends WeatherDto{
         this.wf5Am = item.get("wf5Am").getAsString();
         this.wf6Am = item.get("wf6Am").getAsString();
         this.wf7Am = item.get("wf7Am").getAsString();
-        this.regionName = regionName;
+        this.regionName = makeRegion(regionName);
     }
 }

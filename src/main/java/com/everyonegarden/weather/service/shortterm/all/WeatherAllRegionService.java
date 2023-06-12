@@ -2,6 +2,7 @@ package com.everyonegarden.weather.service.shortterm.all;
 
 import com.everyonegarden.weather.dto.ApiWeatherAllDto;
 import com.everyonegarden.weather.dto.ApiWeatherResult;
+import com.everyonegarden.weather.dto.ApiWeatherTimeDto;
 import com.everyonegarden.weather.repository.RegionRandomMapping;
 import com.everyonegarden.weather.repository.RegionRepository;
 
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -28,6 +30,8 @@ public class WeatherAllRegionService {
 
 
     public ResponseEntity<ApiWeatherResult> getAllRegionWeather() throws Exception {
+
+
 
         // 모든 지역에 대한 좌표
         List<RegionRandomMapping> allRegion = regionRepository.findAllBy();
@@ -43,8 +47,9 @@ public class WeatherAllRegionService {
             }
 
         }
+        Map<String, List<ApiWeatherAllDto>> groupedData = result.stream().collect(Collectors.groupingBy(ApiWeatherAllDto::getRegionName));
 
-        return new ResponseEntity<>(weatherResponseService.getWeatherResult(result), HttpStatus.OK);
+        return new ResponseEntity<>(weatherResponseService.getWeatherAllResult(groupedData), HttpStatus.OK);
 
     }
 

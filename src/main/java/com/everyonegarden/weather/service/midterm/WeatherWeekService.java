@@ -1,5 +1,6 @@
 package com.everyonegarden.weather.service.midterm;
 
+import com.everyonegarden.weather.dto.ApiWeatherAllDto;
 import com.everyonegarden.weather.dto.ApiWeatherMidAmDto;
 import com.everyonegarden.weather.dto.ApiWeatherMidPmDto;
 
@@ -19,6 +20,8 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -54,15 +57,24 @@ public class WeatherWeekService {
                 result.add(new ApiWeatherMidPmDto(item,skyOneTwo.get(0),skyOneTwo.get(1),regionName));
 
             }
-           return new ResponseEntity<>(weatherResponseService.getWeatherResult(result), HttpStatus.OK);
+            Map<String, List<ApiWeatherMidPmDto>> groupedData= result.stream()
+                    .collect(Collectors.groupingBy(ApiWeatherMidPmDto::getRegionName));
+
+           return new ResponseEntity<>(weatherResponseService.getWeatherPmResult(groupedData), HttpStatus.OK);
         } else {
             List<ApiWeatherMidAmDto> result = new ArrayList<>();
             JsonArray jsonItemList = weatherMidApiService.midWeather(region.getRegid());
             for (Object o : jsonItemList) {
                 JsonObject item = (JsonObject) o;
                 result.add(new ApiWeatherMidAmDto(item,skyOneTwo.get(0),skyOneTwo.get(1),regionName));
+
+
             }
-            return new ResponseEntity<>(weatherResponseService.getWeatherResult(result), HttpStatus.OK);
+
+            Map<String, List<ApiWeatherMidAmDto>> groupedData= result.stream()
+                    .collect(Collectors.groupingBy(ApiWeatherMidAmDto::getRegionName));
+
+            return new ResponseEntity<>(weatherResponseService.getWeatherAmResult(groupedData), HttpStatus.OK);
         }
     }
 }

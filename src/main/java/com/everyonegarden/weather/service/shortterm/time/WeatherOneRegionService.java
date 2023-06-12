@@ -1,5 +1,7 @@
 package com.everyonegarden.weather.service.shortterm.time;
 
+import com.everyonegarden.weather.dto.ApiWeatherMidAmDto;
+import com.everyonegarden.weather.dto.ApiWeatherMidPmDto;
 import com.everyonegarden.weather.dto.ApiWeatherTimeDto;
 import com.everyonegarden.weather.dto.ApiWeatherResult;
 import com.everyonegarden.weather.entity.Region;
@@ -17,6 +19,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -45,8 +49,10 @@ public class WeatherOneRegionService {
                 result.add(new ApiWeatherTimeDto(item,regionName));
 
         }
+        Map<String, List<ApiWeatherTimeDto>> groupedData = result.stream()
+                .collect(Collectors.groupingBy(ApiWeatherTimeDto::getRegionName));
 
-        return new ResponseEntity<>(weatherResponseService.getWeatherResult(result), HttpStatus.OK);
+        return new ResponseEntity<>(weatherResponseService.getWeatherTimeResult(groupedData), HttpStatus.OK);
 
     }
 

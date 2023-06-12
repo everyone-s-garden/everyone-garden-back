@@ -1,6 +1,8 @@
 package com.everyonegarden.report.service;
 
 
+import com.everyonegarden.garden.garden.GardenRepository;
+import com.everyonegarden.member.entity.Member;
 import com.everyonegarden.report.dto.ReportRequestDto;
 import com.everyonegarden.report.entity.Report;
 import com.everyonegarden.report.repository.ReportRepository;
@@ -15,9 +17,10 @@ public class ReportService {
 
 
     private final ReportRepository reportRepository;
+    private final GardenRepository gardenRepository;
     private final WriterScoreService writerScoreService;
 
-    public String registerReport(String postId, String reporterId, String writerId, ReportRequestDto reportRequestDto){
+    public String registerReport(Long postId, Long reporterId, ReportRequestDto reportRequestDto){
 
         Optional<Report> report = reportRepository.findByPostIdAndReporterId(postId,reporterId);
 
@@ -29,6 +32,9 @@ public class ReportService {
                     .build();
             //저장
             reportRepository.save(newReport);
+            Member writer = gardenRepository.findByGardenId(postId).getMember();
+
+            String writerId = writer.getSocialId();
             // 작성자 찾아서 점수 누적하고 영구정지 여부 만들기
             writerScoreService.sumReportScore(newReport,writerId,reportRequestDto);
 

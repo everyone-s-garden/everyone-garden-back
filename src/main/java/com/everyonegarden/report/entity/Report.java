@@ -18,10 +18,10 @@ public class Report {
     private Long id;
 
     @Column
-    private String postId;
+    private Long postId;
 
     @Column
-    private String reporterId;
+    private Long reporterId;
 
     @Column
     private String contents;
