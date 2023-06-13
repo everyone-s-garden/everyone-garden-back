@@ -12,19 +12,13 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class ReportController {
 
-
-
     private final ReportService reportService;
 
     @PostMapping("v1/report")
     public String reportPost(@MemberId Long reporterId,
-                             @RequestParam("postId") Long postId,
                              @RequestBody ReportRequestDto reportRequestDto) {
 
-        return reportService.registerReport(postId, reporterId, reportRequestDto);
+        return reportService.registerReport(reporterId, reportRequestDto);
     }
-
-
-
 
 }
