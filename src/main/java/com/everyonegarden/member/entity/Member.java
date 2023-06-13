@@ -35,10 +35,4 @@ public class Member {
     @Column
     private String roleType;
 
-    @Column
-    private int reportScore;
-
-    @Column
-    private Boolean permanentSusp=false;
-
 }
