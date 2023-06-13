@@ -79,6 +79,9 @@ public class Garden {
     @JoinColumn(name = "member_id")
     private Member member;
 
+    private boolean deleted;
+    private int reportedScore;
+
     public Garden editGarden(Garden editedGarden) {
         if (editedGarden.getAddress() != null) address = editedGarden.getAddress();
         if (editedGarden.getName() != null) name = editedGarden.getName();
