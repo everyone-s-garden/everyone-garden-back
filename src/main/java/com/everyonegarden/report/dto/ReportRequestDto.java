@@ -6,5 +6,6 @@ import lombok.Data;
 public class ReportRequestDto {
     private String item;
     private String content;
+    private Long postId;
 }
 
