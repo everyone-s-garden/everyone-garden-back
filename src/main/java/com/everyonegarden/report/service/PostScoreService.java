@@ -1,5 +1,7 @@
 package com.everyonegarden.report.service;
 
+import com.everyonegarden.garden.garden.Garden;
+import com.everyonegarden.garden.garden.GardenRepository;
 import com.everyonegarden.member.entity.Member;
 import com.everyonegarden.member.repository.MemberRepository;
 import com.everyonegarden.report.dto.ReportRequestDto;
@@ -10,14 +12,12 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class WriterScoreService {
-    private final MemberRepository memberRepository;
-    private final ReportRepository reportRepository;
-    public void sumReportScore(Report report, String writerId, ReportRequestDto dto) {
+public class PostScoreService {
+    private final GardenRepository gardenRepository;
+    public void sumReportScore(Report report, Garden garden, ReportRequestDto dto) {
 
         String item = dto.getItem();
         int score = 0;
-        Member writer = memberRepository.findBySocialId(writerId);
 
         switch (item) {
             case "허위매물":
@@ -44,15 +44,15 @@ public class WriterScoreService {
         }
 
 
-        int totalScore = writer.getReportScore() + score;
-        writer.setReportScore(totalScore);
+        int totalScore = garden.getReportedScore() + score;
+        garden.setReportedScore(totalScore);
 
         if (totalScore >= 25) {
-            writer.setPermanentSusp(true);
+            garden.setDeleted(true);
         }
 
         // 작성자 정보 업데이트
-        memberRepository.save(writer);
+        gardenRepository.save(garden);
     }
 
 }
