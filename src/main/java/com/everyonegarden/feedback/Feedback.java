@@ -26,7 +26,8 @@ public class Feedback {
     @Column(name = "content", length = 1500)
     private String content;
 
-    @ManyToOne @JoinColumn(name = "member_id", referencedColumnName = "member_id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "member_id", referencedColumnName = "member_id")
     private Member member;
 
     @OneToMany(mappedBy = "feedback")
