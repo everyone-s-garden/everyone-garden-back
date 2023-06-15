@@ -16,7 +16,7 @@ public class CorsConfig {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
         corsConfiguration.addAllowedHeader("*");
         corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
-        corsConfiguration.addAllowedOrigin("http://localhost:3000");
+        corsConfiguration.setAllowedOrigins(List.of("http://localhost:3000", "https://everyonesgarden.vercel.app"));
         corsConfiguration.setMaxAge(600L);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
