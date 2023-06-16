@@ -13,7 +13,7 @@ import javax.persistence.*;
 public class Location {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long regionId;
+    private Long id;
 
     private Double latitude;
     private Double longitude;
