@@ -27,19 +27,21 @@ public class GoogleAuthService {
         Member googleMember = clientGoogle.getUserData(accessToken);
         String socialId = googleMember.getSocialId();
         Optional<Member> memberOptional = userRepository.findBySocialIdOptional(socialId);
-
+        boolean tag = false;
         AuthToken appToken;
 
         if (memberOptional.isEmpty()) {
             Member savedMember = userRepository.save(googleMember);
             appToken = authTokenProvider.createUserAppToken(socialId, savedMember.getId());
+            tag=true;
         } else {
             appToken = authTokenProvider.createUserAppToken(socialId, memberOptional.get().getId());
         }
 
         return AuthResponse.builder()
                 .appToken(appToken.getToken())
-                .isNewMember(Boolean.FALSE)
+                .isNewMember(tag)
+                .userPK(userRepository.findBySocialId(socialId).getId())
                 .build();
 
     }
