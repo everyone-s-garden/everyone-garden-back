@@ -41,7 +41,7 @@ public class GoogleAuthService {
         return AuthResponse.builder()
                 .appToken(appToken.getToken())
                 .isNewMember(tag)
-                .userPK(userRepository.findBySocialId(socialId).getId())
+                .userId(userRepository.findBySocialId(socialId).getId())
                 .name(userRepository.findBySocialId(socialId).getName())
                 .build();
 
