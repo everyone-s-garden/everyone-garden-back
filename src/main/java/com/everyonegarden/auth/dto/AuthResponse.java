@@ -14,4 +14,5 @@ public class AuthResponse {
     private String appToken;
     private Boolean isNewMember;
     private Long userPK;
+    private String name;
 }
