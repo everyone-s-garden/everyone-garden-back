@@ -20,7 +20,8 @@ public class Constants {
             "/v1/garden/public/by-coordinate/**",
             "/v1/garden/private/by-coordinate/**",
             "/v1/garden/recent/**",
-            "/v1/garden/**"
+            "/v1/garden/**",
+            "/v1/location/**"
     };
 }
 
