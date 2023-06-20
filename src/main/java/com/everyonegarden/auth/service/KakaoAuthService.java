@@ -21,7 +21,6 @@ public class KakaoAuthService {
     private final ClientKakao clientKakao;
     private final AuthTokenProvider authTokenProvider;
     private final MemberRepository userRepository;
-    private final AuthService authService;
 
     @Transactional
     public AuthResponse login(String accessToken) {
@@ -35,7 +34,7 @@ public class KakaoAuthService {
         if (memberOptional.isEmpty()) {
             Member savedMember = userRepository.save(kakaoMember);
             appToken = authTokenProvider.createUserAppToken(socialId, savedMember.getId());
-            tag=true;
+            tag = true;
         } else {
             appToken = authTokenProvider.createUserAppToken(socialId, memberOptional.get().getId());
         }
