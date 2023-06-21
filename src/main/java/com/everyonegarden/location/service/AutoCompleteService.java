@@ -18,8 +18,7 @@ import java.util.List;
 public class AutoCompleteService {
 
     private final LocationRepository locationRepository;
-    public List<LocationResponse> autoCompleteLocation(String[] tokenArr, Pageable pageable){
-        List<Location> locationList=  locationRepository.findAllLocationByLevel(tokenArr[0], tokenArr[1], tokenArr[2], tokenArr[3],pageable);
+    public List<LocationResponse> autoCompleteLocation(List<Location> locationList){
         List<LocationResponse> autoLocationList = new ArrayList<>();
 
         for(Location location : locationList){
@@ -29,7 +28,7 @@ public class AutoCompleteService {
         return autoLocationList;
     }
 
-    public String[] getAddressLevel(String address){
+    public String[] getAddressLevelArr(String address){
         String[] levelsArr = new String[4];
         String[] tokenArr = address.split(" ");
 
@@ -37,5 +36,24 @@ public class AutoCompleteService {
             levelsArr[i]=tokenArr[i];
         }
         return levelsArr;
+    }
+
+    public int getAddressLevel(String address){
+        String[] tokenArr = address.split(" ");
+
+        return tokenArr.length;
+    }
+
+    public List<Location> selectQuery(int level, String[] tokenArr, Pageable pageable){
+        switch (level){
+            case 1:
+                 return locationRepository.findAllLocationByLevel1(tokenArr[0], tokenArr[1], tokenArr[2], tokenArr[3],pageable);
+            case 2:
+                 return locationRepository.findAllLocationByLevel2(tokenArr[0], tokenArr[1], tokenArr[2], tokenArr[3],pageable);
+            case 3:
+                return locationRepository.findAllLocationByLevel3(tokenArr[0], tokenArr[1], tokenArr[2], tokenArr[3],pageable);
+            default:
+                return locationRepository.findAllLocationByLevel4(tokenArr[0], tokenArr[1], tokenArr[2], tokenArr[3],pageable);
+        }
     }
 }
