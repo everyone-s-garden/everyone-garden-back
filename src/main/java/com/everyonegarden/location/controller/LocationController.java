@@ -22,15 +22,12 @@ import java.util.List;
 public class LocationController {
 
     private final AutoCompleteService autoCompleteService;
-
     private final Pageable pageable = PageRequest.of(0, 5);
 
     @GetMapping(value = "/v1/location")
     public List<LocationResponse> LocationRequest(@RequestParam String address) {
+        String blankRemovedAddress = address.replace(" ","");
 
-        int level = autoCompleteService.getAddressLevel(address);
-        String[] tokenArr = autoCompleteService.getAddressLevelArr(address);
-
-        return  autoCompleteService.autoCompleteLocation(autoCompleteService.selectQuery(level,tokenArr,pageable));
+        return autoCompleteService.autoCompleteLocation(blankRemovedAddress,pageable);
     }
 }
