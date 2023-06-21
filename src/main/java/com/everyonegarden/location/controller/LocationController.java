@@ -28,8 +28,9 @@ public class LocationController {
     @GetMapping(value = "/v1/location")
     public List<LocationResponse> LocationRequest(@RequestParam String address) {
 
-        String[] tokenArr = autoCompleteService.getAddressLevel(address);
+        int level = autoCompleteService.getAddressLevel(address);
+        String[] tokenArr = autoCompleteService.getAddressLevelArr(address);
 
-        return  autoCompleteService.autoCompleteLocation(tokenArr,pageable);
+        return  autoCompleteService.autoCompleteLocation(autoCompleteService.selectQuery(level,tokenArr,pageable));
     }
 }
