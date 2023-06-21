@@ -7,10 +7,10 @@ dataFrame = excelData.parse('합본 DB')
 
 # AWS RDS 연결
 mysql_connection = pymysql.connect(
-    host='',
+    host='database-chatbot.c5a7ow4d3vcq.ap-northeast-2.rds.amazonaws.com',
     database='garden',
-    user='',
-    password=''
+    user='admin',
+    password='everyonesgarden'
 )
 cursor = mysql_connection.cursor()
 

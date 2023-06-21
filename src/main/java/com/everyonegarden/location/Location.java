@@ -26,6 +26,8 @@ public class Location {
     private String level3;
     private String level4;
 
+    private String fullAddress;
+
     public String getFullAddress() {
         StringBuilder levelCombined = new StringBuilder();
         if (level1 != null) levelCombined.append(level1).append(" ");
@@ -34,4 +36,5 @@ public class Location {
         if (level4 != null) levelCombined.append(level4).append(" ");
         return levelCombined.toString();
     }
+
 }
