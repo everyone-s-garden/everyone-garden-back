@@ -19,10 +19,40 @@ public interface LocationRepository extends JpaRepository<Location, Long> {
             "OR location.level2 LIKE %:level2% " +
             "OR location.level3 LIKE %:level3% " +
             "OR location.level4 LIKE %:level4% ")
-    List<Location> findAllLocationByLevel(@Param("level1") String level1,
+    List<Location> findAllLocationByLevel1(@Param("level1") String level1,
                                           @Param("level2") String level2,
                                           @Param("level3") String level3,
                                           @Param("level4") String level4,
                                           Pageable pageable);
+    @Query(value = "SELECT location FROM Location location " +
+            "WHERE location.level1 LIKE %:level1% " +
+            "AND location.level2 LIKE %:level2% " +
+            "OR location.level3 LIKE %:level3% " +
+            "OR location.level4 LIKE %:level4% ")
+    List<Location> findAllLocationByLevel2(@Param("level1") String level1,
+                                           @Param("level2") String level2,
+                                           @Param("level3") String level3,
+                                           @Param("level4") String level4,
+                                           Pageable pageable);
+    @Query(value = "SELECT location FROM Location location " +
+            "WHERE location.level1 LIKE %:level1% " +
+            "AND location.level2 LIKE %:level2% " +
+            "AND location.level3 LIKE %:level3% " +
+            "OR location.level4 LIKE %:level4% ")
+    List<Location> findAllLocationByLevel3(@Param("level1") String level1,
+                                           @Param("level2") String level2,
+                                           @Param("level3") String level3,
+                                           @Param("level4") String level4,
+                                           Pageable pageable);
+    @Query(value = "SELECT location FROM Location location " +
+            "WHERE location.level1 LIKE %:level1% " +
+            "AND location.level2 LIKE %:level2% " +
+            "AND location.level3 LIKE %:level3% " +
+            "AND location.level4 LIKE %:level4% ")
+    List<Location> findAllLocationByLevel4(@Param("level1") String level1,
+                                           @Param("level2") String level2,
+                                           @Param("level3") String level3,
+                                           @Param("level4") String level4,
+                                           Pageable pageable);
 
 }
