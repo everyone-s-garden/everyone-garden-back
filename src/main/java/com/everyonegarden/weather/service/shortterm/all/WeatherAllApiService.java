@@ -22,9 +22,11 @@ public class WeatherAllApiService {
     public JsonArray allWeather(String nx, String ny) throws Exception {
 
         String baseDate = weatherFetchService.getTodayDate();
+        String baseTime =weatherFetchService.getTime();
 
-        int presentTime = Integer.parseInt(weatherFetchService.getTime())-1;
-        String baseTime = presentTime+"00";
+        int presentTime = Integer.parseInt(baseTime)-1;
+        if(presentTime<10) baseTime = "0"+ presentTime;
+        baseTime = baseTime+"00";
         String type = "JSON";
 
         StringBuilder urlBuilder = new StringBuilder(apiUrl);
