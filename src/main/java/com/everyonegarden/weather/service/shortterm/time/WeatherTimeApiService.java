@@ -8,9 +8,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.net.URLEncoder;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 
 @Service
 @RequiredArgsConstructor
@@ -41,8 +38,6 @@ public class WeatherTimeApiService {
         String baseTime =time[index]; // 조회 시간  0200, 0500, 0800, 1100, 1400, 1700, 2000, 2300 (1일 8회)
         String type = "JSON";
 
-
-
         StringBuilder urlBuilder = new StringBuilder(apiUrl);
 
         urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8") + "=" + serviceKey);
@@ -56,20 +51,5 @@ public class WeatherTimeApiService {
         String makeUrl = urlBuilder.toString();
 
         return weatherFetchService.fetchWeather(makeUrl);
-    }
-
-    /*
-     * 현재 시간을 기준으로
-     * 조회 시간  0200, 0500, 0800, 1100, 1400, 1700, 2000, 2300 (1일 8회)
-     * 중 가까운 조회시간 구하기
-     */
-    static String getNearTime (){
-        // 현재 시간
-        LocalTime now = LocalTime.now();
-        // 포맷 정의하기
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH");
-        int index = Integer.parseInt(now.format(formatter));
-
-        return time[index];
     }
 }
