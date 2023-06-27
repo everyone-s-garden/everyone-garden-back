@@ -24,19 +24,13 @@ import java.util.stream.Collectors;
 public class WeatherAllRegionService {
 
     private final RegionRepository regionRepository ;
-
     private final WeatherAllApiService weatherAllService;
     public final WeatherResponseService weatherResponseService;
 
-
     public ResponseEntity<ApiWeatherResult> getAllRegionWeather() throws Exception {
-
-
-
         // 모든 지역에 대한 좌표
         List<RegionRandomMapping> allRegion = regionRepository.findAllBy();
         List<ApiWeatherAllDto> result = new ArrayList<>();
-
 
         for(RegionRandomMapping region : allRegion){
             JsonArray jsonItemList = weatherAllService.allWeather(region.getNx(),region.getNy());
@@ -50,9 +44,7 @@ public class WeatherAllRegionService {
         Map<String, List<ApiWeatherAllDto>> groupedData = result.stream().collect(Collectors.groupingBy(ApiWeatherAllDto::getRegionName));
 
         return new ResponseEntity<>(weatherResponseService.getWeatherAllResult(groupedData), HttpStatus.OK);
-
     }
-
 
     public boolean checkNow(JsonObject item) {
 
@@ -63,7 +55,4 @@ public class WeatherAllRegionService {
 
         return false;
     }
-
-
-
 }
