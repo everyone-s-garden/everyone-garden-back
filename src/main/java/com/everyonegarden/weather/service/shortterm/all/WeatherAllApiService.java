@@ -24,11 +24,8 @@ public class WeatherAllApiService {
         String baseDate = weatherFetchService.getTodayDate();
 
         int presentTime = Integer.parseInt(weatherFetchService.getTime())-1;
-        String baseTime = presentTime+"30";
+        String baseTime = presentTime+"00";
         String type = "JSON";
-
-
-
 
         StringBuilder urlBuilder = new StringBuilder(apiUrl);
 
@@ -42,7 +39,7 @@ public class WeatherAllApiService {
 
         String makeUrl = urlBuilder.toString();
 
-        //System.out.println(makeUrl);
+        System.out.println("makeUrl="+makeUrl);
         return weatherFetchService.fetchWeather(makeUrl);
     }
 }
