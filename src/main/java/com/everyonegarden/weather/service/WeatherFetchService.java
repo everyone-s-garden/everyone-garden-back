@@ -8,10 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-
 import java.net.URI;
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 
 //단기예보
@@ -19,10 +17,10 @@ import java.time.format.DateTimeFormatter;
 @RequiredArgsConstructor
 public class WeatherFetchService {
     public JsonArray fetchWeather(String makeUrl) throws Exception {
-        System.out.println("makeUrl="+makeUrl);
+        System.out.println("makeUrl=" + makeUrl);
         URI uri = new URI(makeUrl);
         RestTemplate restTemplate = new RestTemplate();
-        String jsonString = restTemplate.getForObject(uri,String.class);
+        String jsonString = restTemplate.getForObject(uri, String.class);
 
         JsonObject jsonObject = JsonParser.parseString(jsonString).getAsJsonObject();
         JsonObject jsonResponse = (JsonObject) jsonObject.get("response");
@@ -34,23 +32,24 @@ public class WeatherFetchService {
         return jsonItemList;
     }
 
-    public String getTodayDate (){
-        //현재 날짜
-        LocalDate now = LocalDate.now();
-        // 포맷 정의
+    public String getTodayDate() {
+        LocalDateTime now = LocalDateTime.now();
+        ZoneId zoneId = ZoneId.of("Asia/Seoul");
+        ZonedDateTime zoneDateTime = now.atZone(zoneId);
+
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
-        // 포맷 적용
-        String today = now.format(formatter);
-        return today;
+        String formattedDateTime = zoneDateTime.format(formatter);
+        return formattedDateTime;
     }
-    public String getTime (){
-        // 현재 시간
-        LocalTime now = LocalTime.now();
-        // 포맷 정의하기
+
+    public String getTime() {
+        LocalDateTime now = LocalDateTime.now();
+        ZoneId zoneId = ZoneId.of("Asia/Seoul");
+        ZonedDateTime zoneDateTime = now.atZone(zoneId);
+
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH");
-        String time  = now.format(formatter);
+        String formattedDateTime = zoneDateTime.format(formatter);
 
-        return time;
+        return formattedDateTime;
     }
-
 }
