@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor @AllArgsConstructor @Builder
 public class MainResponse {
 
-
     @DateTimeFormat(pattern = "yyyy-MM-DDThh:mm:ss")
     private LocalDateTime timestamp;
 

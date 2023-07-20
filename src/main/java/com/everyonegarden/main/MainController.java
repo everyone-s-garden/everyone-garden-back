@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
 
-@RestController
 @RequestMapping("/")
+@RestController
 public class MainController {
 
     @GetMapping
@@ -18,4 +18,5 @@ public class MainController {
                 .message("모두의 텃밭 개발용 TEST API입니다")
                 .build();
     }
+
 }
