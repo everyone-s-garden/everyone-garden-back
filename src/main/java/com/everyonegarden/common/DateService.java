@@ -1,6 +1,7 @@
 package com.everyonegarden.common;
 
-import com.everyonegarden.common.exception.BadRequestException;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;
@@ -25,7 +26,7 @@ public class DateService {
                     dateSplit.get(2)
             );
         } catch (DateTimeException e) {
-            throw new BadRequestException("useStartDate의 형식이 올바르지 않아요. 년, 월, 일은 온점(.)으로 구분되야 하고, 생략할 수 없어요. " +
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "useStartDate의 형식이 올바르지 않아요. 년, 월, 일은 온점(.)으로 구분되야 하고, 생략할 수 없어요. " +
                     "예) 2023.05.01 (가능), 2023.5.1 (가능), 2023.05 (불가능), 23.05.02 (불가능), 2023.05 (불가능)");
         }
 
@@ -45,11 +46,10 @@ public class DateService {
                     dateSplit.get(2)
             ).atStartOfDay();
         } catch (DateTimeException e) {
-            throw new BadRequestException("useStartDate의 형식이 올바르지 않아요. 년, 월, 일은 온점(.)으로 구분되야 하고, 생략할 수 없어요. " +
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "useStartDate의 형식이 올바르지 않아요. 년, 월, 일은 온점(.)으로 구분되야 하고, 생략할 수 없어요. " +
                     "예) 2023.05.01 (가능), 2023.5.1 (가능), 2023.05 (불가능), 23.05.02 (불가능), 2023.05 (불가능)");
         }
 
     }
-
 
 }

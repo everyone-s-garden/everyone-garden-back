@@ -23,8 +23,8 @@ public class RestTemplateConfig {
         return converter;
     }
 
-    @Bean
     @Primary
+    @Bean
     public RestTemplate xmlRestTemplate() {
         return new RestTemplateBuilder()
                 .messageConverters(List.of(
