@@ -2,6 +2,9 @@ package com.everyonegarden.weather.service.midterm;
 
 import com.everyonegarden.weather.service.WeatherFetchService;
 import com.google.gson.JsonArray;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,7 +26,11 @@ public class WeatherMidApiService {
 
     public JsonArray midWeather(String regId) throws Exception {
 
-        String tmFc = makeTmFc();
+        TodayTimer todayTimer = new TodayTimer();
+        String today = todayTimer.getDay();
+        int time = Integer.parseInt(todayTimer.getTime());
+
+        String tmFc = makeTmFc(today,time);
         String dataType = "JSON";
 
         StringBuilder urlBuilder = new StringBuilder(apiUrl);
@@ -42,28 +49,13 @@ public class WeatherMidApiService {
     //06시, 18시(일 2회)
     // 6시부터 18시 사이이면 6시
     //18시부터 5시사이이면  18시
-    static String makeTmFc(){
-
-        //현재 날짜
-        LocalDate now = LocalDate.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
-        String today = now.format(formatter);
-
-        // 현재 시간 구하기
-        LocalTime localTime= LocalTime.now();
-        DateTimeFormatter formatterTime = DateTimeFormatter.ofPattern("HH");
-        int timeformat = Integer.parseInt(localTime.format(formatterTime));
+    static String makeTmFc(String today,int timeformat){
 
         String time="";
         if(timeformat>=6 && timeformat<=17) time="0600";
         else time="1800";
 
         return today+time;
-
-
-
     }
-
-
 
 }

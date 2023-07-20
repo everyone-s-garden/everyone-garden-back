@@ -45,9 +45,8 @@ public class WeatherWeekService {
         ArrayList<String> skyOneTwo = getOneTwoDayService.getSkyOneTwo(region);
 
         // 현재 시간 구하기
-        LocalTime localTime= LocalTime.now();
-        DateTimeFormatter formatterTime = DateTimeFormatter.ofPattern("HH");
-        int timeformat = Integer.parseInt(localTime.format(formatterTime));
+        TodayTimer todayTimer = new TodayTimer();
+        int timeformat = Integer.parseInt(todayTimer.getTime());
 
         if(timeformat<=12) {
             List<ApiWeatherMidPmDto> result = new ArrayList<>();

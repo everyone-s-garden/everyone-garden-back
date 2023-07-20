@@ -28,22 +28,17 @@ public class GetOneTwoDayService {
 
     public ArrayList<String> getSkyOneTwo(Region region) throws Exception {
 
-
-        Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat sdfDay = new SimpleDateFormat("yyyyMMdd");
-        SimpleDateFormat sdfTime = new SimpleDateFormat("HH");
-
+        TodayTimer todayTimer = new TodayTimer();
 
         //시각
-        String fcstTime = sdfTime.format(calendar.getTime())+"00";
+        String fcstTime = todayTimer.getTime()+"00";
 
         // 오늘 날짜
-        String oneday = sdfDay.format(calendar.getTime());
+        String oneday = todayTimer.getDay();
 
 
         // 내일 날짜
-        calendar.add(Calendar.DATE, 1);
-        String twoday = sdfDay.format(calendar.getTime());
+        String twoday = todayTimer.getTomorrow();
 
 
         ArrayList<String> skyOneTwo = new ArrayList<>();
@@ -82,9 +77,5 @@ public class GetOneTwoDayService {
 
         return false;
     }
-
-
-
-
 
 }

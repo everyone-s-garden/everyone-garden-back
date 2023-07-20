@@ -45,9 +45,6 @@ public class WeatherController {
         return weatherWeekService.getWeekWeather(lat,lng);
     }
 
-
-
-
     /*
      * 위치를 지정하지 않은 경우
      */
