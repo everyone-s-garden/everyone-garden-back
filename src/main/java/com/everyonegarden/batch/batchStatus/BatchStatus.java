@@ -5,23 +5,29 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Getter
 @NoArgsConstructor @AllArgsConstructor @Builder
+
+@Table(name = "BATCH_STATUS")
 @Entity
 public class BatchStatus {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
     private Long id;
 
+    @Column(name = "api_name")
     private String apiName;
 
+    @Column(name = "size")
     private Integer size;
+
+    @Column(name = "current_page")
     private Integer currentPage;
+
+    @Column(name = "batch_request_page")
     private Integer batchRequestPage;
 
     public boolean isBatchDone() {
