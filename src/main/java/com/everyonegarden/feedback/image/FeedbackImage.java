@@ -11,7 +11,8 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor @AllArgsConstructor @Builder
 
-@Entity @Table
+@Table(name = "FEEDBACK_IMAGE")
+@Entity
 public class FeedbackImage {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -17,7 +17,8 @@ import java.util.List;
 @NoArgsConstructor @AllArgsConstructor @Builder
 
 @EntityListeners(AuditingEntityListener.class)
-@Entity @Table
+@Table(name = "FEEDBACK")
+@Entity
 public class Feedback {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
