@@ -11,7 +11,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
-@RestController @RequestMapping("v1/crop")
+@RequestMapping("v1/crop")
+@RestController
 public class CropControllerV1 {
 
     private final CropService cropService;

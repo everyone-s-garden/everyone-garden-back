@@ -13,7 +13,9 @@ import javax.validation.constraints.Min;
 @Getter
 @NoArgsConstructor @AllArgsConstructor @Builder
 
-@Entity @Table(uniqueConstraints = {@UniqueConstraint(name = "crop_month_unique", columnNames = {"months", "crop_id"})})
+@Table(name = "CROP_MONTH",
+        uniqueConstraints = { @UniqueConstraint(name = "crop_month_unique", columnNames = {"months", "crop_id"}) })
+@Entity
 public class CropMonth {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +23,7 @@ public class CropMonth {
     private Long cropMonthId;
 
     @Min(1) @Max(12)
-    @Column(nullable = false)
+    @Column(name = "months", nullable = false)
     private Integer months;
 
     @ManyToOne
