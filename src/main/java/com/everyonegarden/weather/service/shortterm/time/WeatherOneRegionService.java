@@ -32,7 +32,7 @@ public class WeatherOneRegionService {
     public final ReverseGeoFetchService reverseGeoFetchService;
 
 
-    public ResponseEntity<ApiWeatherResult> getRegionWeather(String lat, String lng) throws Exception {
+    public ResponseEntity<List<ApiWeatherTimeDto>> getRegionWeather(String lat, String lng) throws Exception {
 
 
         String regionName = reverseGeoFetchService.getRegionName(lat,lng);
@@ -49,10 +49,8 @@ public class WeatherOneRegionService {
                 result.add(new ApiWeatherTimeDto(item,regionName));
 
         }
-        Map<String, List<ApiWeatherTimeDto>> groupedData = result.stream()
-                .collect(Collectors.groupingBy(ApiWeatherTimeDto::getRegionName));
 
-        return new ResponseEntity<>(weatherResponseService.getWeatherTimeResult(groupedData), HttpStatus.OK);
+        return new ResponseEntity<>(result, HttpStatus.OK);
 
     }
 

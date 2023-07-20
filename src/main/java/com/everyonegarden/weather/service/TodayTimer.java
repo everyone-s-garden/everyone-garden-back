@@ -1,4 +1,4 @@
-package com.everyonegarden.weather.service.midterm;
+package com.everyonegarden.weather.service;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

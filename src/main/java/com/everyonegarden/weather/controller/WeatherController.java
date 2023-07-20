@@ -2,11 +2,14 @@ package com.everyonegarden.weather.controller;
 
 
 import com.everyonegarden.weather.dto.ApiWeatherResult;
+import com.everyonegarden.weather.dto.ApiWeatherTimeDto;
+import com.everyonegarden.weather.dto.WeatherDto;
 import com.everyonegarden.weather.service.midterm.WeatherWeekService;
 import com.everyonegarden.weather.service.shortterm.all.WeatherAllRegionService;
 import com.everyonegarden.weather.service.WeatherResponseService;
 import com.everyonegarden.weather.service.shortterm.time.WeatherOneRegionService;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +34,7 @@ public class WeatherController {
      * 위치를 지정한 경우 시간대별
      */
     @GetMapping("/time")
-    public ResponseEntity<ApiWeatherResult> weatherRegionRequest( @RequestParam("lat") String lat,
+    public ResponseEntity<List<ApiWeatherTimeDto>> weatherRegionRequest( @RequestParam("lat") String lat,
                                                                   @RequestParam("long") String lng) throws Exception {
         return weatherOneRegionService.getRegionWeather(lat,lng);
     }
@@ -40,7 +43,7 @@ public class WeatherController {
      * 위치를 지정한 경우 주간별
      */
     @GetMapping("/week")
-    public ResponseEntity<ApiWeatherResult> weatherWeekRequest( @RequestParam("lat") String lat,
+    public ResponseEntity<List<WeatherDto>> weatherWeekRequest( @RequestParam("lat") String lat,
                                                                 @RequestParam("long") String lng) throws Exception {
         return weatherWeekService.getWeekWeather(lat,lng);
     }
@@ -54,6 +57,5 @@ public class WeatherController {
         return weatherAllRegionService.getAllRegionWeather();
 
     }
-
 
 }

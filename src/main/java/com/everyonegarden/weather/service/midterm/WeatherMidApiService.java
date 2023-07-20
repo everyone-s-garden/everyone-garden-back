@@ -1,19 +1,13 @@
 package com.everyonegarden.weather.service.midterm;
 
+import com.everyonegarden.weather.service.TodayTimer;
 import com.everyonegarden.weather.service.WeatherFetchService;
 import com.google.gson.JsonArray;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.net.URLEncoder;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 
 @Service
 @RequiredArgsConstructor

@@ -31,24 +31,4 @@ public class WeatherFetchService {
         return jsonItemList;
     }
 
-    public String getTodayDate() {
-        LocalDateTime now = LocalDateTime.now();
-        ZoneId zoneId = ZoneId.of("Asia/Seoul");
-        ZonedDateTime zoneDateTime = now.atZone(zoneId);
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
-        String formattedDateTime = zoneDateTime.format(formatter);
-        return formattedDateTime;
-    }
-
-    public String getTime() {
-        LocalDateTime now = LocalDateTime.now();
-        ZoneId zoneId = ZoneId.of("Asia/Seoul");
-        ZonedDateTime zoneDateTime = now.atZone(zoneId);
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH");
-        String formattedDateTime = zoneDateTime.format(formatter);
-
-        return formattedDateTime;
-    }
 }

@@ -1,12 +1,12 @@
 package com.everyonegarden.weather.service.midterm;
 
-import com.everyonegarden.weather.dto.ApiWeatherAllDto;
 import com.everyonegarden.weather.dto.ApiWeatherMidAmDto;
 import com.everyonegarden.weather.dto.ApiWeatherMidPmDto;
 
-import com.everyonegarden.weather.dto.ApiWeatherResult;
+import com.everyonegarden.weather.dto.WeatherDto;
 import com.everyonegarden.weather.entity.Region;
 import com.everyonegarden.weather.repository.RegionRepository;
+import com.everyonegarden.weather.service.TodayTimer;
 import com.everyonegarden.weather.service.WeatherResponseService;
 import com.everyonegarden.weather.service.shortterm.reversegeo.ReverseGeoFetchService;
 import com.google.gson.JsonArray;
@@ -16,12 +16,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -35,7 +31,7 @@ public class WeatherWeekService {
 
     public final GetOneTwoDayService getOneTwoDayService;
 
-    public ResponseEntity<ApiWeatherResult> getWeekWeather(String lat, String lng) throws Exception {
+    public ResponseEntity<List<WeatherDto>> getWeekWeather(String lat, String lng) throws Exception {
 
 
         String regionName = reverseGeoFetchService.getRegionName(lat, lng);
@@ -48,32 +44,23 @@ public class WeatherWeekService {
         TodayTimer todayTimer = new TodayTimer();
         int timeformat = Integer.parseInt(todayTimer.getTime());
 
+        List<WeatherDto> result = new ArrayList<>();
+
         if(timeformat<=12) {
-            List<ApiWeatherMidPmDto> result = new ArrayList<>();
             JsonArray jsonItemList = weatherMidApiService.midWeather(region.getRegid());
             for (Object o : jsonItemList) {
                 JsonObject item = (JsonObject) o;
                 result.add(new ApiWeatherMidPmDto(item,skyOneTwo.get(0),skyOneTwo.get(1),regionName));
 
             }
-            Map<String, List<ApiWeatherMidPmDto>> groupedData= result.stream()
-                    .collect(Collectors.groupingBy(ApiWeatherMidPmDto::getRegionName));
-
-           return new ResponseEntity<>(weatherResponseService.getWeatherPmResult(groupedData), HttpStatus.OK);
         } else {
-            List<ApiWeatherMidAmDto> result = new ArrayList<>();
             JsonArray jsonItemList = weatherMidApiService.midWeather(region.getRegid());
             for (Object o : jsonItemList) {
                 JsonObject item = (JsonObject) o;
                 result.add(new ApiWeatherMidAmDto(item,skyOneTwo.get(0),skyOneTwo.get(1),regionName));
-
-
             }
-
-            Map<String, List<ApiWeatherMidAmDto>> groupedData= result.stream()
-                    .collect(Collectors.groupingBy(ApiWeatherMidAmDto::getRegionName));
-
-            return new ResponseEntity<>(weatherResponseService.getWeatherAmResult(groupedData), HttpStatus.OK);
         }
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }

@@ -3,6 +3,7 @@ package com.everyonegarden.weather.service.midterm;
 
 import com.everyonegarden.weather.entity.Region;
 import com.everyonegarden.weather.repository.RegionRepository;
+import com.everyonegarden.weather.service.TodayTimer;
 import com.everyonegarden.weather.service.WeatherResponseService;
 import com.everyonegarden.weather.service.shortterm.time.WeatherTimeApiService;
 import com.everyonegarden.weather.service.shortterm.reversegeo.ReverseGeoFetchService;
@@ -11,9 +12,7 @@ import com.google.gson.JsonObject;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 @Service
 @RequiredArgsConstructor

@@ -1,5 +1,6 @@
 package com.everyonegarden.weather.service.shortterm.time;
 
+import com.everyonegarden.weather.service.TodayTimer;
 import com.everyonegarden.weather.service.WeatherFetchService;
 
 import com.google.gson.JsonArray;
@@ -33,8 +34,10 @@ public class WeatherTimeApiService {
 
     public JsonArray shortWeather(String nx, String ny) throws Exception {
 
-        String baseDate = weatherFetchService.getTodayDate();
-        int index = Integer.parseInt(weatherFetchService.getTime());
+        TodayTimer todayTimer = new TodayTimer();
+
+        String baseDate = todayTimer.getDay();
+        int index = Integer.parseInt(todayTimer.getTime());
         String baseTime =time[index]; // 조회 시간  0200, 0500, 0800, 1100, 1400, 1700, 2000, 2300 (1일 8회)
         String type = "JSON";
 

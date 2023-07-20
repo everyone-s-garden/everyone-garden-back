@@ -1,5 +1,6 @@
 package com.everyonegarden.weather.service.shortterm.all;
 
+import com.everyonegarden.weather.service.TodayTimer;
 import com.everyonegarden.weather.service.WeatherFetchService;
 import com.google.gson.JsonArray;
 import lombok.RequiredArgsConstructor;
@@ -21,12 +22,15 @@ public class WeatherAllApiService {
 
     public JsonArray allWeather(String nx, String ny) throws Exception {
 
-        String baseDate = weatherFetchService.getTodayDate();
-        String baseTime =weatherFetchService.getTime();
+        TodayTimer todayTimer = new TodayTimer();
 
-        int presentTime = Integer.parseInt(baseTime)-1;
+
+        String baseDate = todayTimer.getDay();
+        String baseTime = todayTimer.getTime();
+
+        int presentTime = Integer.parseInt(baseTime)-2;
         if(presentTime<10) baseTime = "0"+ presentTime;
-        baseTime = baseTime+"00";
+        baseTime = presentTime+"00";
         String type = "JSON";
 
         StringBuilder urlBuilder = new StringBuilder(apiUrl);
