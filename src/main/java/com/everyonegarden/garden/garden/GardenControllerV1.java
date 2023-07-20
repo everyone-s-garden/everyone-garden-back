@@ -23,7 +23,8 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
-@RestController @RequestMapping("v1/garden")
+@RequestMapping("v1/garden")
+@RestController
 public class GardenControllerV1 {
 
     private final GardenService gardenService;
@@ -110,7 +111,7 @@ public class GardenControllerV1 {
     public List<GardenResponse> getRecentlyViewedGarden(@MemberId Long memberId,
                                                         @RequestParam(value = "page", required = false) Integer page,
                                                         @RequestParam(value = "size", required = false) Integer size) {
-        Pageable pageable = pageService.getPageable(page, size);
+        Pageable pageable = pageService.getPageableSortedDesc(page, size, "gardenViewId");
 
         return gardenViewService
                 .getRecentGardenView(memberId, pageable).stream()
@@ -122,7 +123,7 @@ public class GardenControllerV1 {
     public List<GardenResponse> getMyGarden(@MemberId Long memberId,
                                             @RequestParam(value = "page", required = false) Integer page,
                                             @RequestParam(value = "size", required = false) Integer size) {
-        Pageable pageable = pageService.getPageable(page, size);
+        Pageable pageable = pageService.getPageableSortedDesc(page, size, "gardenId");
 
         return gardenService.getGardenByMemberId(memberId, pageable);
     }

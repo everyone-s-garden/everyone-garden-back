@@ -11,7 +11,8 @@ import java.time.LocalDate;
 @Getter
 @NoArgsConstructor @AllArgsConstructor @Builder
 
-@Entity @Table
+@Table(name = "GARDEN_USING")
+@Entity
 public class GardenUsing {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -61,7 +62,6 @@ public class GardenUsing {
         }
 
         return this;
-
     }
 
 }

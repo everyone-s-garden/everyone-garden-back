@@ -1,6 +1,7 @@
 package com.everyonegarden.garden.garden;
 
 import com.everyonegarden.garden.gardenImage.GardenImage;
+import com.everyonegarden.garden.gardenLike.model.GardenLike;
 import com.everyonegarden.garden.gardenView.GardenView;
 import com.everyonegarden.member.entity.Member;
 import lombok.*;
@@ -15,10 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
+@NoArgsConstructor @AllArgsConstructor @Builder
 
 @EntityListeners(AuditingEntityListener.class)
 @Entity
@@ -72,6 +70,9 @@ public class Garden {
 
     @OneToMany(mappedBy = "garden", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<GardenView> gardenViews = new ArrayList<>();
+
+    @OneToMany(mappedBy = "garden", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<GardenLike> gardenLikes = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "member_id")

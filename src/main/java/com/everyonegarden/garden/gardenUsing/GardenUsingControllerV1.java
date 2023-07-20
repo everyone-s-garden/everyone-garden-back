@@ -15,7 +15,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
-@RestController @RequestMapping("v1/garden/using")
+@RequestMapping("v1/garden/using")
+@RestController
 public class GardenUsingControllerV1 {
 
     private final GardenUsingService gardenUsingService;

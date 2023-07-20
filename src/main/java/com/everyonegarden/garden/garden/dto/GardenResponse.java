@@ -34,6 +34,8 @@ public class GardenResponse {
 
     private GardenStatus status;
 
+    private Long userId;
+
     @DateTimeFormat(pattern = "yyyy.MM.dd")
     private LocalDate recruitStartDate;
     @DateTimeFormat(pattern = "yyyy.MM.dd")
@@ -56,6 +58,11 @@ public class GardenResponse {
     }
 
     public static GardenResponse of(Garden garden) {
+        Long userId = garden.getMember() == null ?
+                null
+                :
+                garden.getMember().getId();
+
         return GardenResponse.builder()
                 .id(garden.getGardenId())
 
@@ -89,6 +96,8 @@ public class GardenResponse {
                         .equipment(garden.getEquipment() != null && garden.getEquipment())
                         .build()
                 )
+
+                .userId(userId)
                 .build();
     }
 

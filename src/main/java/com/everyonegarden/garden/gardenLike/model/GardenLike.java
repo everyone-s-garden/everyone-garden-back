@@ -6,14 +6,17 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor @AllArgsConstructor @Builder
 
 @IdClass(GardenLikePk.class)
-@Entity @Table
+@Table(name = "GARDEN_LIKE")
+@Entity
 public class GardenLike {
 
     @Id
@@ -30,5 +33,8 @@ public class GardenLike {
     @ManyToOne
     @JoinColumn(name = "gardenId", insertable = false, updatable = false)
     private Garden garden;
+
+    @CreatedDate
+    private LocalDateTime createdDate;
 
 }

@@ -6,6 +6,7 @@ import com.everyonegarden.garden.gardenLike.model.GardenLike;
 import com.everyonegarden.garden.gardenLike.model.GardenLikeRepository;
 import com.everyonegarden.member.entity.Member;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -14,15 +15,14 @@ import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
-
 @Service
 public class GardenLikeService {
 
     private final GardenRepository gardenRepository;
     private final GardenLikeRepository gardenLikeRepository;
 
-    public List<GardenLike> getAllGardenLikeByMemberId(Long memberId) {
-        return gardenLikeRepository.findByMemberId(memberId);
+    public List<GardenLike> getAllGardenLikeByMemberId(Long memberId, Pageable pageable) {
+        return gardenLikeRepository.findByMemberId(memberId, pageable);
     }
 
     public boolean isGardenLikedByMember(Long memberId, Long gardenId) {

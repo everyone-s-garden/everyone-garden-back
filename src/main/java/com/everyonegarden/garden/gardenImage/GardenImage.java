@@ -10,7 +10,8 @@ import javax.persistence.*;
 @AllArgsConstructor @NoArgsConstructor @Builder
 @EqualsAndHashCode
 
-@Table @Entity
+@Table(name = "GARDEN_IMAGE")
+@Entity
 public class GardenImage {
 
     @Id

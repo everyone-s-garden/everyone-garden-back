@@ -16,7 +16,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor @AllArgsConstructor @Builder
 
 @EntityListeners(AuditingEntityListener.class)
-@Entity @Table
+@Table(name = "GARDEN_VIEW")
+@Entity
 public class GardenView {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

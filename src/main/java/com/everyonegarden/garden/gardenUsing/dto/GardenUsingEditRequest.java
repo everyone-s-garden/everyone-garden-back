@@ -17,9 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
+@NoArgsConstructor @AllArgsConstructor @Builder
 public class GardenUsingEditRequest {
 
     private String name;

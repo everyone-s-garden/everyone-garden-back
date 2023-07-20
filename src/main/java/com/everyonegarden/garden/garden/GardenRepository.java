@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
 public interface GardenRepository extends JpaRepository<Garden, Long> {
 
     @Query("select g from Garden g where g.address like %:query% or g.name like %:query%")
@@ -56,6 +55,7 @@ public interface GardenRepository extends JpaRepository<Garden, Long> {
     @Query("select g from Garden g where g.member.id = ?1")
     List<Garden> findByMemberId(Long MemberId, Pageable pageable);
 
+    @Query("select g from Garden g where g.gardenId = ?1")
     Garden findByGardenId(Long gardenId);
 
 }
