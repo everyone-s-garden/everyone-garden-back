@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+// Report에서 Setter 사용하고 있습니다. 삭제 금지!
 @Getter @Setter
 @NoArgsConstructor @AllArgsConstructor @Builder
 
