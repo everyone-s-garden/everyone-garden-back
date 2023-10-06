@@ -2,6 +2,7 @@ package com.everyonegarden.garden.gardenView;
 
 import com.everyonegarden.garden.garden.Garden;
 import com.everyonegarden.member.entity.Member;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -9,7 +10,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Getter
@@ -20,7 +20,8 @@ import java.time.LocalDateTime;
 @Entity
 public class GardenView {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long gardenViewId;
 
     @ManyToOne

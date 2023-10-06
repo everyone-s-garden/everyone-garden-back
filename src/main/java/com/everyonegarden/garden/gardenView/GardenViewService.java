@@ -5,9 +5,8 @@ import com.everyonegarden.member.entity.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.TransactionScoped;
-import javax.transaction.Transactional;
 import java.util.List;
 
 @RequiredArgsConstructor

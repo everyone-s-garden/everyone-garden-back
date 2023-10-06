@@ -1,8 +1,7 @@
 package com.everyonegarden.report.entity;
 
+import jakarta.persistence.*;
 import lombok.*;
-
-import javax.persistence.*;
 
 @Data
 @Entity
@@ -10,7 +9,6 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Report {
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,6 +23,5 @@ public class Report {
 
     @Column
     private String contents;
-
 
 }

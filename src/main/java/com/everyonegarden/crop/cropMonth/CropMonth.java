@@ -1,14 +1,13 @@
 package com.everyonegarden.crop.cropMonth;
 
 import com.everyonegarden.crop.Crop;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 
 @Getter
 @NoArgsConstructor @AllArgsConstructor @Builder
@@ -18,7 +17,8 @@ import javax.validation.constraints.Min;
 @Entity
 public class CropMonth {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "crop_month_id")
     private Long cropMonthId;
 

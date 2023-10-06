@@ -4,11 +4,13 @@ import com.everyonegarden.garden.garden.Garden;
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
-import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
-import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
+import org.springframework.batch.core.job.builder.JobBuilder;
+import org.springframework.batch.core.repository.JobRepository;
+import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.transaction.PlatformTransactionManager;
 
 import java.util.List;
 
@@ -17,31 +19,34 @@ import java.util.List;
 @Configuration
 public class MafraJob {
 
-    public static final String JOB_NAME = "mafraFetchJob";
+    private static final String JOB_NAME = "mafraFetchJob";
     private static final String STEP_NAME = "mafraFetchStep";
 
     private final MafraReader mafraReader;
     private final MafraProcessor mafraProcessor;
     private final MafraWriter mafraWriter;
-
-    private final JobBuilderFactory jobBuilderFactory;
-    private final StepBuilderFactory stepBuilderFactory;
+    private final JobRepository jobRepository;
+    private final PlatformTransactionManager transactionManager;
 
     @Bean
-    public Job job() {
-        return jobBuilderFactory.get(JOB_NAME)
-                .start(step())
+    public Job mafraFetchJob() {
+        return new JobBuilder(JOB_NAME,jobRepository)
+                .start(mafraFetchStep())
                 .build();
     }
 
     @Bean
-    public Step step() {
-        return stepBuilderFactory.get(STEP_NAME)
-                .<ApiMafraResponse, List<Garden>>chunk(2)
+    public Step mafraFetchStep() {
+        return new StepBuilder(STEP_NAME,jobRepository)
+                .<ApiMafraResponse, List<Garden>>chunk(2,transactionManager)
                 .reader(mafraReader)
                 .processor(mafraProcessor)
-                .writer((ItemWriter<? super List<Garden>>) mafraWriter)
+                .writer(mafraItemWriter())
                 .build();
     }
 
+    @Bean
+    public ItemWriter<List<Garden>> mafraItemWriter() {
+        return mafraWriter;
+    }
 }

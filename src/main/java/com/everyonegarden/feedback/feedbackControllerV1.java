@@ -6,12 +6,12 @@ import com.everyonegarden.feedback.dto.FeedbackAddRequest;
 import com.everyonegarden.feedback.dto.FeedbackResponse;
 import com.everyonegarden.feedback.image.FeedbackImage;
 import com.everyonegarden.feedback.image.FeedbackImageService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 

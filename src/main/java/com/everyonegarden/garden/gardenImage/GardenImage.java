@@ -1,10 +1,8 @@
 package com.everyonegarden.garden.gardenImage;
 
-
 import com.everyonegarden.garden.garden.Garden;
+import jakarta.persistence.*;
 import lombok.*;
-
-import javax.persistence.*;
 
 @Getter
 @AllArgsConstructor @NoArgsConstructor @Builder

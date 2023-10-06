@@ -1,20 +1,12 @@
 package com.everyonegarden.garden.gardenUsing.dto;
 
 import com.everyonegarden.common.DateService;
-import com.everyonegarden.common.exception.BadRequestException;
 import com.everyonegarden.garden.gardenUsing.GardenUsing;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import javax.validation.constraints.NotBlank;
-import java.time.DateTimeException;
-import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Getter
 @NoArgsConstructor @AllArgsConstructor @Builder

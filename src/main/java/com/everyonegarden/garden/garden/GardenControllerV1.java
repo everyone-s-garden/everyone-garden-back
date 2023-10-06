@@ -1,12 +1,13 @@
 package com.everyonegarden.garden.garden;
 
 import com.everyonegarden.common.PageService;
-import com.everyonegarden.common.exception.UnauthorizedException;
+import com.everyonegarden.global.exception.UnauthorizedException;
 import com.everyonegarden.common.memberId.MemberId;
-import com.everyonegarden.common.s3.S3Service;
+import com.everyonegarden.global.config.s3.S3Service;
 import com.everyonegarden.garden.garden.dto.*;
 import com.everyonegarden.garden.gardenLike.GardenLikeService;
 import com.everyonegarden.garden.gardenView.GardenViewService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.data.domain.Pageable;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 import java.util.UUID;
