@@ -1,4 +1,4 @@
-package com.everyonegarden.common.exception;
+package com.everyonegarden.global.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
