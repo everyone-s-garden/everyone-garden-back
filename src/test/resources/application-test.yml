@@ -1,0 +1,96 @@
+api:
+  mafra:
+    url: http://211.237.50.150:7080/openapi/sample/xml/Grid_20171122000000000552_1/1/5
+    secret: dd
+  weather:
+    url: http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst
+    secret: Wom3o6rUTrWsbJCTIyw5CZVEiXfr67Zl9u7L8d9XVbdaGqmssQdl2IjMkWSIDjZeP0JCUY%2BHi4sIrLoqqQVvrA%3D%3D
+  weatherAll:
+    url: http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst
+  weatherWeek:
+    url: http://apis.data.go.kr/1360000/MidFcstInfoService/getMidLandFcst
+  reverseGeo:
+    url: https://naveropenapi.apigw.ntruss.com/map-reversegeocode/v2/gc
+    id: wvt6ppx4pf
+    secret: TLrVEd9JRJrzIY8ZpXXCWBEDLwRNpr5xcevlj6lM
+
+aws:
+  s3:
+    bucket-name: everyone-garden-image
+server:
+  port: 8080
+  servlet:
+    context-path: /
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+  config:
+    activate:
+      on-profile: test
+spring:
+  h2:
+    console:
+      enabled: true
+  jpa:
+    hibernate:
+      ddl-auto: create
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+
+    properties:
+      hibernate:
+        format_sql: true #To beautify or pretty print the SQL
+        show_sql: true #show sql
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/every_test?serverTimezone=Asia/Seoul
+    username: root
+    password: 7351
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            clientId: 999513273898-9fa6iu0cm3jbeancg8f82mjs53trr355.apps.googleusercontent.com
+            clientSecret: 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
+            redirectUri: http://localhost:8080/login/oauth2/code/google
+            scope:
+              - email
+              - profile
+              - name
+              - openid
+          kakao:
+            client-id: 79b34d0643a36e279a14a5281e4d90dd
+            client-secret: DyYVeTmjemqauNn4OWNPgNyfXdnbFvc5
+            scope:
+              - name
+              - email
+            client-name: Kakao
+            authorization-grant-type: authorization_code
+            redirect-uri: http://localhost:8080/login/oauth2/code/kakao
+
+        provider:
+          kakao:
+            authorization-uri: https://kauth.kakao.com/oauth/authorize
+            token-uri: https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v2/user/me
+            user-name-attribute: id # ????? json? response ???? ????
+
+  app:
+    auth:
+      tokenSecret: 04ca023b39512e46d0c2cf4b48d5aac61d34302994c87ed4eff225dcf3b0a218739f3897051a057f9b846a69ea2927a587044164b7bae5e1306219d50b588cb1
+      tokenExpiry: 86400000
+
+logging:
+  level:
+    org.hibernate:
+      type.descriptor.sql: trace #show parameter binding
+      SQL: DEBUG
+    org.springframework: debug
+    org.springframework.web: debug
+
+app:
+  auth:
+    tokenSecret: 04ca023b39512e46d0c2cf4b48d5aac61d34302994c87ed4eff225dcf3b0a218739f3897051a057f9b846a69ea2927a587044164b7bae5e1306219d50b588cb1
+    tokenExpiry: 8640000
