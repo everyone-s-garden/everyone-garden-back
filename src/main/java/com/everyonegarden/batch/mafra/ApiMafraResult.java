@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+
 // 텃밭 분양 상세정보
 // 농림수산식품교육문화정보원
 

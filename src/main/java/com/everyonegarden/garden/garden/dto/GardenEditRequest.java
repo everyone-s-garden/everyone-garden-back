@@ -1,7 +1,7 @@
 package com.everyonegarden.garden.garden.dto;
 
 import com.everyonegarden.common.DateService;
-import com.everyonegarden.common.exception.BadRequestException;
+import com.everyonegarden.global.exception.BadRequestException;
 import com.everyonegarden.garden.garden.Garden;
 import com.everyonegarden.garden.garden.GardenStatus;
 import com.everyonegarden.garden.garden.GardenType;
@@ -11,7 +11,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 

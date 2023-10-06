@@ -1,7 +1,6 @@
 package com.everyonegarden.common.memberId;
 
-import com.everyonegarden.auth.CustomUser;
-import com.everyonegarden.common.exception.UnauthorizedException;
+import com.everyonegarden.auth.jwt.CustomUser;
 import org.springframework.core.MethodParameter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

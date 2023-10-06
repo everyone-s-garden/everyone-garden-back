@@ -1,9 +1,9 @@
 package com.everyonegarden.crop;
 
 import com.everyonegarden.crop.cropMonth.CropMonth;
+import jakarta.persistence.*;
 import lombok.*;
 
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +14,8 @@ import java.util.List;
 @Entity
 public class Crop {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="crop_id")
     private Long cropId;
 

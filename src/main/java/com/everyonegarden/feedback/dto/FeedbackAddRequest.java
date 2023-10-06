@@ -3,12 +3,12 @@ package com.everyonegarden.feedback.dto;
 import com.everyonegarden.feedback.Feedback;
 import com.everyonegarden.feedback.image.FeedbackImage;
 import com.everyonegarden.member.entity.Member;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotBlank;
 import java.util.List;
 import java.util.stream.Collectors;
 

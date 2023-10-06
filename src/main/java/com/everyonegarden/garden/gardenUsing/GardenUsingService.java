@@ -1,12 +1,12 @@
 package com.everyonegarden.garden.gardenUsing;
 
-import com.everyonegarden.common.exception.NotFoundException;
-import com.everyonegarden.common.exception.UnauthorizedException;
+import com.everyonegarden.global.exception.NotFoundException;
+import com.everyonegarden.global.exception.UnauthorizedException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 @RequiredArgsConstructor

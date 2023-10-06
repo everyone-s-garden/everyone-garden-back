@@ -2,13 +2,13 @@ package com.everyonegarden.garden.gardenLike.model;
 
 import com.everyonegarden.garden.garden.Garden;
 import com.everyonegarden.member.entity.Member;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 
-import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Getter

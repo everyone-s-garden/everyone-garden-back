@@ -4,13 +4,13 @@ import com.everyonegarden.garden.gardenImage.GardenImage;
 import com.everyonegarden.garden.gardenLike.model.GardenLike;
 import com.everyonegarden.garden.gardenView.GardenView;
 import com.everyonegarden.member.entity.Member;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;

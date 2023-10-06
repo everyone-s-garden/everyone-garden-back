@@ -1,12 +1,11 @@
 package com.everyonegarden.feedback.image;
 
 import com.everyonegarden.feedback.Feedback;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
 
 @Getter
 @NoArgsConstructor @AllArgsConstructor @Builder
@@ -15,7 +14,8 @@ import javax.persistence.*;
 @Entity
 public class FeedbackImage {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "uri")

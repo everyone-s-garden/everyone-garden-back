@@ -1,18 +1,18 @@
 package com.everyonegarden.garden.garden.dto;
 
 import com.everyonegarden.common.DateService;
-import com.everyonegarden.common.exception.BadRequestException;
+import com.everyonegarden.global.exception.BadRequestException;
 import com.everyonegarden.garden.garden.Garden;
 import com.everyonegarden.garden.garden.GardenStatus;
 import com.everyonegarden.garden.garden.GardenType;
 import com.everyonegarden.garden.gardenImage.GardenImage;
 import com.everyonegarden.member.entity.Member;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotBlank;
 import java.util.List;
 import java.util.stream.Collectors;
 

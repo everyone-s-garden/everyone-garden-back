@@ -4,12 +4,12 @@ import com.everyonegarden.common.PageService;
 import com.everyonegarden.common.memberId.MemberId;
 import com.everyonegarden.garden.gardenUsing.dto.GardenUsingAddRequest;
 import com.everyonegarden.garden.gardenUsing.dto.GardenUsingEditRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
