@@ -1,20 +1,22 @@
 package com.everyonegarden.auth.jwt;
 
-import lombok.RequiredArgsConstructor;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final AuthTokenProvider tokenProvider;
+
+    public JwtAuthenticationFilter(AuthTokenProvider tokenProvider) {
+        this.tokenProvider = tokenProvider;
+    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
@@ -22,17 +24,22 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                                     FilterChain filterChain) throws ServletException, IOException {
 
         final String AUTHORIZATION_HEADER = request.getHeader("Authorization");
-        if (AUTHORIZATION_HEADER == null || !AUTHORIZATION_HEADER.startsWith("Bearer ")) {
+
+        if (AUTHORIZATION_HEADER != null && AUTHORIZATION_HEADER.startsWith("Bearer ")) {
+            String tokenStr = JwtHeaderUtil.getAccessToken(request);
+            AuthToken token = tokenProvider.convertAuthToken(tokenStr);
+
+            if (token.isValidTokenClaims()) {
+                Authentication authentication = tokenProvider.getAuthentication(token);
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            }
+
             filterChain.doFilter(request, response);
             return;
         }
 
-        final String TOKEN_WITHOUT_PREFIX = AUTHORIZATION_HEADER.replace("Bearer ", "");
-        AuthToken token = tokenProvider.convertAuthToken(TOKEN_WITHOUT_PREFIX);
-        Authentication authentication = tokenProvider.getAuthentication(token);
+        filterChain.doFilter(request, response); //
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        filterChain.doFilter(request, response);
     }
 
 }

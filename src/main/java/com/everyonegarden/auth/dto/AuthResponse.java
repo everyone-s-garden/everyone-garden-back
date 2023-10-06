@@ -1,18 +1,24 @@
 package com.everyonegarden.auth.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class AuthResponse {
 
     private String appToken;
     private Boolean isNewMember;
     private Long userId;
     private String name;
+
+    @Builder
+    public AuthResponse(String appToken, Boolean isNewMember, Long userId, String name) {
+        this.appToken = appToken;
+        this.isNewMember = isNewMember;
+        this.userId = userId;
+        this.name = name;
+    }
+
 }

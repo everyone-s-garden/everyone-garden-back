@@ -1,6 +1,7 @@
 package com.everyonegarden.auth.jwt;
 
-import javax.servlet.http.HttpServletRequest;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 public class JwtHeaderUtil {
 
@@ -17,7 +18,6 @@ public class JwtHeaderUtil {
         }
 
         return httpHeaderAuthorizationString.substring(TOKEN_PREFIX.length());
-
     }
 
 }

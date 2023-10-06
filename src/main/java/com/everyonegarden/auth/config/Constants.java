@@ -21,7 +21,8 @@ public class Constants {
             "/v1/garden/private/by-coordinate/**",
             "/v1/garden/recent/**",
             "/v1/garden/**",
-            "/v1/location/**"
+            "/v1/location/**",
+
+            "/docs/*"
     };
 }
-
