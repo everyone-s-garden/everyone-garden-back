@@ -1,16 +1,14 @@
 package com.everyonegarden.auth.jwt;
 
-import com.everyonegarden.auth.CustomUser;
-import com.everyonegarden.auth.exception.TokenValidFailedException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.security.Keys;
-
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
-import org.springframework.beans.factory.annotation.Value;
 
 import java.security.Key;
 import java.util.Arrays;
@@ -22,8 +20,11 @@ import java.util.stream.Collectors;
 @Component
 public class AuthTokenProvider {
 
-    @Value("${app.auth.tokenExpiry}")
-    private String expiry;
+    @Value("${app.auth.accessTokenExpiry}")
+    private String accessTokenExpiry;
+
+    @Value("${app.auth.refreshTokenExpiry}")
+    private String refreshTokenExpiry;
 
     private final Key key;
     private static final String AUTHORITIES_KEY = "role";
@@ -32,22 +33,21 @@ public class AuthTokenProvider {
         this.key = Keys.hmacShaKeyFor(secretKey.getBytes());
     }
 
-    public AuthToken createToken(String id, String role, String expiry,Long memberId) {
-        Date expiryDate = getExpiryDate(expiry);
+    public AuthToken createAccessToken(String id, Long memberId) {
+        Date accessExpiryDate = getExpiryDate(accessTokenExpiry);
+
         return AuthToken.builder()
                 .socialId(id)
                 .memberId(memberId)
-
-                .role(role)
-                .expiry(expiryDate)
-
+                .role("ROLE_USER")
+                .expiry(accessExpiryDate)
                 .key(key)
-
                 .build();
     }
 
-    public AuthToken createUserAppToken(String id, Long memberId) {
-        return createToken(id, "ROLE_USER", expiry,memberId);
+    public AuthToken createRefreshToken() {
+        Date accessExpiryDate = getExpiryDate(refreshTokenExpiry);
+        return new AuthToken(accessExpiryDate, key);
     }
 
     public AuthToken convertAuthToken(String token) {
@@ -61,9 +61,6 @@ public class AuthTokenProvider {
     public Authentication getAuthentication(AuthToken authToken) {
 
         Claims claims = authToken.getTokenClaims();
-        if (claims == null) {
-            return null;
-        }
 
         List<SimpleGrantedAuthority> authorities = Arrays.stream(new String[]{claims.get(AUTHORITIES_KEY).toString()})
                 .map(SimpleGrantedAuthority::new)
@@ -78,6 +75,11 @@ public class AuthTokenProvider {
                 .build();
 
         return new UsernamePasswordAuthenticationToken(customUser, authToken, authorities);
+    }
+
+    public CustomUser getCustomUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return (CustomUser) authentication.getPrincipal();
     }
 
 }

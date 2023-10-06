@@ -18,18 +18,18 @@ import java.util.concurrent.TimeUnit;
 
 @Configuration
 @Slf4j
-public class WebClientConfig {  // Spring WebClient Configuration
+public class WebClientConfig {
 
     @Bean
     public WebClient webClient() {
 
         ExchangeStrategies exchangeStrategies = ExchangeStrategies.builder()
-                .codecs(configurer -> configurer.defaultCodecs().maxInMemorySize(1024*1024*50)) // 50MB
-                .build(); // Spring WebFlux에서는 codec처리를 위한 in-memory buffer를 256KB로 설정되어 있음 -> 이 값을 늘리기 위한 설정
+                .codecs(configurer -> configurer.defaultCodecs().maxInMemorySize(1024*1024*50))
+                .build();
         exchangeStrategies
                 .messageWriters().stream()
                 .filter(LoggingCodecSupport.class::isInstance)
-                .forEach(writer -> ((LoggingCodecSupport)writer).setEnableLoggingRequestDetails(true)); // 로그 상세 정보 확인
+                .forEach(writer -> ((LoggingCodecSupport)writer).setEnableLoggingRequestDetails(true));
 
         return WebClient.builder()
                 .clientConnector(
@@ -42,14 +42,14 @@ public class WebClientConfig {  // Spring WebClient Configuration
                                 )
                         ))
                 .exchangeStrategies(exchangeStrategies)
-                .filter(ExchangeFilterFunction.ofRequestProcessor( // client filters - request log 설정
+                .filter(ExchangeFilterFunction.ofRequestProcessor(
                         clientRequest -> {
                             log.debug("Request: {} {}", clientRequest.method(), clientRequest.url());
                             clientRequest.headers().forEach((name, values) -> values.forEach(value -> log.debug("{} : {}", name, value)));
                             return Mono.just(clientRequest);
                         }
                 ))
-                .filter(ExchangeFilterFunction.ofResponseProcessor( // client filters - response log 설정
+                .filter(ExchangeFilterFunction.ofResponseProcessor(
                         clientResponse -> {
                             clientResponse.headers().asHttpHeaders().forEach((name, values) -> values.forEach(value -> log.debug("{} : {}", name, value)));
                             return Mono.just(clientResponse);
@@ -58,4 +58,5 @@ public class WebClientConfig {  // Spring WebClient Configuration
                 .defaultHeader("user-agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.87 Safari/537.3")
                 .build();
     }
+
 }
