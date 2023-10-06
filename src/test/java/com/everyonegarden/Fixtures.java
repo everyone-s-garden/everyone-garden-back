@@ -1,5 +1,6 @@
 package com.everyonegarden;
 
+import com.everyonegarden.member.entity.Member;
 import com.everyonegarden.region.entity.Region;
 import com.everyonegarden.weather.infra.dto.*;
 import com.everyonegarden.weather.service.dto.RegionWeatherFindRequest;
