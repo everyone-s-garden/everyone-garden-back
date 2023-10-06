@@ -20,17 +20,17 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
-public class WeatherWeekService {
+public class WeatherService {
 
     private final WeatherApiFetcher weatherApiFetcher;
     private final FirstAndSecondDayWeatherProvider firstAndSecondDayWeatherProvider;
     private final TodayTimer todayTimer;
     private final WeatherDtoMapper weatherDtoMapper;
 
-    public WeatherWeekService(WeatherApiFetcher weatherApiFetcher,
-                              FirstAndSecondDayWeatherProvider firstAndSecondDayWeatherProvider,
-                              TodayTimer todayTimer,
-                              WeatherDtoMapper weatherDtoMapper) {
+    public WeatherService(WeatherApiFetcher weatherApiFetcher,
+                          FirstAndSecondDayWeatherProvider firstAndSecondDayWeatherProvider,
+                          TodayTimer todayTimer,
+                          WeatherDtoMapper weatherDtoMapper) {
         this.weatherApiFetcher = weatherApiFetcher;
         this.firstAndSecondDayWeatherProvider = firstAndSecondDayWeatherProvider;
         this.todayTimer = todayTimer;
