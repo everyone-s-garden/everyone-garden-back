@@ -1,4 +1,4 @@
-package com.everyonegarden.common.config;
+package com.everyonegarden.global.config;
 
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
