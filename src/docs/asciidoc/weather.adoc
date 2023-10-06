@@ -1,0 +1,28 @@
+ifndef::snippets[]
+:snippets: build/generated-snippets
+endif::[]
+= Weather API
+:toc: left
+:toclevels: 2
+:sectlinks:
+
+== 지역 설정 후 시간별 예보
+=== 요청
+include::{snippets}/weather-region-request/http-request.adoc[]
+=== 응답
+include::{snippets}/weather-region-request/http-response.adoc[]
+include::{snippets}/weather-region-request/response-fields.adoc[]
+
+== 지역 설정 후 주간별 예보
+=== 요청
+include::{snippets}/weather-week-request/http-request.adoc[]
+=== 응답
+include::{snippets}/weather-week-request/http-response.adoc[]
+include::{snippets}/weather-week-request/response-fields.adoc[]
+
+== 지역 설정 전 랜덤한 지역 예보
+=== 요청
+include::{snippets}/weather-all-request/http-request.adoc[]
+=== 응답
+include::{snippets}/weather-all-request/http-response.adoc[]
+include::{snippets}/weather-all-request/response-fields.adoc[]
