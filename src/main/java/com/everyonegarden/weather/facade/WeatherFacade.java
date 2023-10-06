@@ -7,7 +7,7 @@ import com.everyonegarden.weather.service.dto.AllRegionWeatherRequests;
 import com.everyonegarden.weather.infra.dto.WeatherMidResponse;
 import com.everyonegarden.weather.facade.mapper.WeatherFacadeMapper;
 import com.everyonegarden.weather.service.dto.RegionWeatherFindRequest;
-import com.everyonegarden.weather.service.WeatherWeekService;
+import com.everyonegarden.weather.service.WeatherService;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -17,31 +17,31 @@ public class WeatherFacade {
 
     private final RegionService regionService;
     private final WeatherFacadeMapper weatherFacadeMapper;
-    private final WeatherWeekService weatherWeekService;
+    private final WeatherService weatherService;
 
     public WeatherFacade(RegionService regionService,
                          WeatherFacadeMapper weatherFacadeMapper,
-                         WeatherWeekService weatherWeekService) {
+                         WeatherService weatherService) {
         this.regionService = regionService;
         this.weatherFacadeMapper = weatherFacadeMapper;
-        this.weatherWeekService = weatherWeekService;
+        this.weatherService = weatherService;
     }
 
     public WeatherApiResult getAllRegionWeather() {
 
         AllRegionWeatherRequests allRegionWeatherRequests = weatherFacadeMapper.toAllRegionWeatherRequests(regionService.findAllBy());
-        return weatherWeekService.getAllRegionWeather(allRegionWeatherRequests);
+        return weatherService.getAllRegionWeather(allRegionWeatherRequests);
     }
 
     public List<WeatherTimeApiResponse> getRegionWeather(String lng, String lat) {
         RegionWeatherFindRequest regionWeatherFindRequest = weatherFacadeMapper.toRegionWeatherFindRequest(regionService.findRegion(lng, lat));
 
-        return weatherWeekService.getRegionWeather(regionWeatherFindRequest);
+        return weatherService.getRegionWeather(regionWeatherFindRequest);
     }
 
     public List<WeatherMidResponse> getWeekWeather(String lng, String lat) {
         RegionWeatherFindRequest regionWeatherFindRequest = weatherFacadeMapper.toRegionWeatherFindRequest(regionService.findRegion(lng, lat));
 
-        return weatherWeekService.getWeekWeather(regionWeatherFindRequest);
+        return weatherService.getWeekWeather(regionWeatherFindRequest);
     }
 }
