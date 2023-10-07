@@ -1,48 +1,32 @@
 package com.everyonegarden.report.service;
 
-
-import com.everyonegarden.garden.garden.Garden;
-import com.everyonegarden.garden.garden.GardenRepository;
-import com.everyonegarden.report.dto.ReportRequestDto;
-import com.everyonegarden.report.entity.Report;
+import com.everyonegarden.global.error.ErrorCode;
+import com.everyonegarden.report.exception.DuplicatedReportException;
 import com.everyonegarden.report.repository.ReportRepository;
-import lombok.RequiredArgsConstructor;
+import com.everyonegarden.report.service.dto.ReportRegisterRequest;
+import com.everyonegarden.report.service.mapper.ReportMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 public class ReportService {
 
 
     private final ReportRepository reportRepository;
-    private final GardenRepository gardenRepository;
-    private final PostScoreService writerScoreService;
+    private final ReportMapper reportMapper;
 
-    public String registerReport(Long reporterId, ReportRequestDto reportRequestDto){
-
-        Long postId = reportRequestDto.getPostId();
-        Optional<Report> report = reportRepository.findByPostIdAndReporterId(postId,reporterId);
-
-        //게시글에 대한 신고가 없는 경우
-        if(report.isEmpty()){
-            Report newReport = Report.builder()
-                    .postId(postId)
-                    .reporterId(reporterId)
-                    .build();
-            //저장
-            reportRepository.save(newReport);
-            Garden garden = gardenRepository.findByGardenId(postId);
-            // 작성자 찾아서 점수 누적하고 영구정지 여부 만들기
-            writerScoreService.sumReportScore(newReport,garden,reportRequestDto);
-
-            return "신고가 완료되었습니다.";
-        }
-
-        return "중복된 접수입니다.";
+    public ReportService(ReportRepository reportRepository, ReportMapper reportMapper) {
+        this.reportRepository = reportRepository;
+        this.reportMapper = reportMapper;
     }
 
+    @Transactional
+    public void registerReport(Long reporterId, ReportRegisterRequest request) {
+        reportRepository.findByPostIdAndReporterId(request.postId(), reporterId).orElseThrow(() -> new DuplicatedReportException(ErrorCode.DUPLICATED_REPORT));
+
+        reportRepository.save(reportMapper.toReport(reporterId, request));
+    }
 
 }
 
