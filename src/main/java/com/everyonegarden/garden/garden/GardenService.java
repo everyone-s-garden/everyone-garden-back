@@ -161,4 +161,12 @@ public class GardenService {
         gardenRepository.deleteById(gardenToDelete.getGardenId());
     }
 
+    @Transactional
+    public void sumReportScore(Long postId, int reportedScore) {
+        Garden gardenToReport = gardenRepository.findById(postId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "신고하시려는 텃밭이 없어요"));
+
+         gardenToReport.registerReport(reportedScore);
+    }
+
 }

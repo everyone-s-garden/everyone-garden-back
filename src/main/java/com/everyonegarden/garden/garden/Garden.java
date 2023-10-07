@@ -15,7 +15,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-// Report에서 Setter 사용하고 있습니다. 삭제 금지!
 @Getter @Setter
 @NoArgsConstructor @AllArgsConstructor @Builder
 
@@ -23,6 +22,8 @@ import java.util.List;
 @Entity
 @Table(name = "garden")
 public class Garden {
+
+    private final int DELETED_MAX_SCORE = 25;
 
     @Column(name = "id")
     @Id
@@ -111,6 +112,17 @@ public class Garden {
 
     public void removeImage(GardenImage image) {
         this.images.remove(image);
+    }
+
+    public void changeDelete() {
+        deleted = true;
+    }
+
+    public void registerReport(int score) {
+        reportedScore += score;
+        if (reportedScore > DELETED_MAX_SCORE) {
+            changeDelete();
+        }
     }
 
 }
