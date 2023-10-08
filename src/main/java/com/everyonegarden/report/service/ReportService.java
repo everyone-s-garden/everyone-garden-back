@@ -23,7 +23,9 @@ public class ReportService {
 
     @Transactional
     public void registerReport(Long reporterId, ReportRegisterRequest request) {
-        reportRepository.findByPostIdAndReporterId(request.postId(), reporterId).orElseThrow(() -> new DuplicatedReportException(ErrorCode.DUPLICATED_REPORT));
+        if (reportRepository.findByPostIdAndReporterId(request.postId(), reporterId).isPresent()) {
+            throw new DuplicatedReportException(ErrorCode.DUPLICATED_REPORT);
+        }
 
         reportRepository.save(reportMapper.toReport(reporterId, request));
     }
