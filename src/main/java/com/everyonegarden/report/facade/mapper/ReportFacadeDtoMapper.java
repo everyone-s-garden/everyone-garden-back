@@ -1,6 +1,5 @@
 package com.everyonegarden.report.facade.mapper;
 
-import com.everyonegarden.report.controller.dto.ReportRegisterApiRequest;
 import com.everyonegarden.report.controller.dto.ReportRegisterApiResponse;
 import com.everyonegarden.report.facade.dto.ReportRegisterFacadeRequest;
 import com.everyonegarden.report.service.dto.ReportRegisterRequest;
