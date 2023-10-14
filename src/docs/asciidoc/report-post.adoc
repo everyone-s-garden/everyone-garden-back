@@ -6,7 +6,7 @@ endif::[]
 :toclevels: 2
 :sectlinks:
 
-== 지역 설정 후 시간별 예보
+== 게시글 신고
 === 요청
 include::{snippets}/report-post/http-request.adoc[]
 include::{snippets}/report-post/request-fields.adoc[]
