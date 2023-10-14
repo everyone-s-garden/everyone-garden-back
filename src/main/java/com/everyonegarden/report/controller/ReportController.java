@@ -11,6 +11,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.net.URI;
 
 @Slf4j
 @RestController
@@ -33,7 +36,14 @@ public class ReportController {
     public ResponseEntity<ReportRegisterApiResponse> reportPost(@MemberId Long reporterId,
                                                                 @RequestBody @Valid ReportRegisterApiRequest reportRegisterApiRequest) {
         ReportRegisterFacadeRequest reportRegisterFacadeRequest = reportApiMapper.toReportRegisterFacadeRequest(reportRegisterApiRequest);
-        return ResponseEntity.ok(reportFacade.registerReport(reporterId, reportRegisterFacadeRequest));
+
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(reportRegisterApiRequest.postId())
+                .toUri();
+
+        return ResponseEntity.created(location).body(reportFacade.registerReport(reporterId, reportRegisterFacadeRequest));
     }
 
 }
