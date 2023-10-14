@@ -1,9 +1,6 @@
 package com.everyonegarden.location.repository;
 
-import com.everyonegarden.garden.garden.Garden;
-import com.everyonegarden.location.Location;
-import com.everyonegarden.location.dto.LocationResponse;
-import org.springframework.data.domain.Pageable;
+import com.everyonegarden.location.model.Location;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -14,8 +11,7 @@ import java.util.List;
 @Repository
 public interface LocationRepository extends JpaRepository<Location, Long> {
 
-    @Query(value = "SELECT location FROM Location location " +
-            "WHERE location.fullAddress LIKE %:address% ")
-    List<Location> findAllLocation(@Param("address") String address, Pageable pageable);
+    @Query(value = "SELECT * FROM location WHERE MATCH(location.fullAddress) AGAINST(:address IN NATURAL LANGUAGE MODE ) LIMIT :pageSize OFFSET :pageNumber", nativeQuery = true)
+    List<Location> findAllLocation(@Param("address") String address, @Param("pageSize") int pageSize, @Param("pageNumber") int pageNumber);
 
 }
