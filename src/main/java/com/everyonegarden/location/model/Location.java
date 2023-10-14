@@ -1,4 +1,4 @@
-package com.everyonegarden.location;
+package com.everyonegarden.location.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -35,4 +35,6 @@ public class Location {
         if (level4 != null) levelCombined.append(level4).append(" ");
         return levelCombined.toString();
     }
+
 }
+
