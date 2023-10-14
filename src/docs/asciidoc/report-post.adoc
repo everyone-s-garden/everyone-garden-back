@@ -1,0 +1,16 @@
+ifndef::snippets[]
+:snippets: build/generated-snippets
+endif::[]
+= Report API
+:toc: left
+:toclevels: 2
+:sectlinks:
+
+== 지역 설정 후 시간별 예보
+=== 요청
+include::{snippets}/report-post/http-request.adoc[]
+include::{snippets}/report-post/request-fields.adoc[]
+=== 응답
+include::{snippets}/report-post/http-response.adoc[]
+include::{snippets}/report-post/response-fields.adoc[]
+

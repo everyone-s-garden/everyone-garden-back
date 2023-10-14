@@ -1,4 +1,4 @@
-package com.everyonegarden;
+package com.everyonegarden.testutil;
 
 import com.everyonegarden.garden.garden.Garden;
 import com.everyonegarden.garden.garden.GardenStatus;
@@ -9,7 +9,10 @@ import com.everyonegarden.member.entity.Name;
 import com.everyonegarden.member.entity.RoleType;
 import com.everyonegarden.member.enunerate.MemberProvider;
 import com.everyonegarden.region.entity.Region;
+import com.everyonegarden.report.controller.dto.ReportRegisterApiRequest;
+import com.everyonegarden.report.controller.dto.ReportRegisterApiResponse;
 import com.everyonegarden.report.entity.ReportItem;
+import com.everyonegarden.report.facade.dto.ReportRegisterFacadeRequest;
 import com.everyonegarden.report.service.dto.ReportRegisterRequest;
 import com.everyonegarden.weather.infra.dto.*;
 import com.everyonegarden.weather.service.dto.RegionWeatherFindRequest;
@@ -186,6 +189,26 @@ public class Fixtures {
                 "",
                 postId
         );
+    }
+
+    public static ReportRegisterFacadeRequest reportRegisterFacadeRequest() {
+        return new ReportRegisterFacadeRequest(
+                ReportItem.FAKED_SALE,
+                "",
+                1L
+        );
+    }
+
+    public static ReportRegisterApiRequest reportRegisterApiRequest() {
+        return new ReportRegisterApiRequest(
+                ReportItem.FAKED_SALE.name(),
+                "",
+                1L
+        );
+    }
+
+    public static ReportRegisterApiResponse reportRegisterApiResponse() {
+        return new ReportRegisterApiResponse(true);
     }
 
 }
