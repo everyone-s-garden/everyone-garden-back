@@ -1,6 +1,6 @@
 package com.everyonegarden.weather.controller;
 
-import com.everyonegarden.Fixtures;
+import com.everyonegarden.testutil.Fixtures;
 import com.everyonegarden.weather.facade.WeatherFacade;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

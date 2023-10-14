@@ -1,6 +1,6 @@
 package com.everyonegarden.region.service;
 
-import com.everyonegarden.Fixtures;
+import com.everyonegarden.testutil.Fixtures;
 import com.everyonegarden.region.entity.Region;
 import com.everyonegarden.region.repository.RegionRepository;
 

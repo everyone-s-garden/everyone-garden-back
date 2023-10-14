@@ -1,6 +1,6 @@
 package com.everyonegarden.report.service;
 
-import com.everyonegarden.Fixtures;
+import com.everyonegarden.testutil.Fixtures;
 import com.everyonegarden.garden.garden.Garden;
 import com.everyonegarden.garden.garden.GardenRepository;
 import com.everyonegarden.member.entity.Member;
