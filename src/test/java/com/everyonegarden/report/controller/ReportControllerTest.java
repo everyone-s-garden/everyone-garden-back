@@ -9,6 +9,7 @@ import com.everyonegarden.testutil.Fixtures;
 import com.everyonegarden.testutil.WithMockCustomOAuth2LoginUser;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -20,6 +21,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.RestDocumentationExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
@@ -47,6 +49,7 @@ class ReportControllerTest {
     private ReportApiMapper reportApiMapper;
 
     @Test
+    @DisplayName("게시글 신고에 대한 요청을 보내면 신고 완료 상태를 반환한다.")
     void reportPost() throws Exception {
         ReportRegisterApiRequest request = Fixtures.reportRegisterApiRequest();
         ReportRegisterApiResponse response = Fixtures.reportRegisterApiResponse();
@@ -73,6 +76,52 @@ class ReportControllerTest {
         verify(reportApiMapper, times(1)).toReportRegisterFacadeRequest(request);
         verify(reportFacade, times(1)).registerReport(eq(request.postId()), any(ReportRegisterFacadeRequest.class));
     }
+
+    @Test
+    @DisplayName("존재하지 않은 ReportItem에 대해서 요청을 하면 4xx 에러를 반환한다.")
+    void invalidRequest_notExistedReportItem_return5XXError() throws Exception {
+        // given
+        ReportRegisterApiRequest invalidRequest = Fixtures.reportRegisterNotExistedReportItemApiRequest();
+
+        // when
+        ResultActions result = mockMvc.perform(post("/v1/report")
+                .contentType("application/json")
+                .content(asJsonString(invalidRequest)));
+
+        // then
+        result.andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    @DisplayName("빈 공백의 ReportItem에 대해서 요청을 하면 4xx 에러를 반환한다.")
+    void invalidRequest_blankReportItem_return5XXError() throws Exception {
+        // given
+        ReportRegisterApiRequest invalidRequest = Fixtures.reportRegisterBlankReportItemApiRequest();
+
+        // when
+        ResultActions result = mockMvc.perform(post("/v1/report")
+                .contentType("application/json")
+                .content(asJsonString(invalidRequest)));
+
+        // then
+        result.andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    @DisplayName("빈 공백의 ReportItem에 대해서 요청을 하면 4xx 에러를 반환한다.")
+    void invalidRequest_nullReportItem_return5XXError() throws Exception {
+        // given
+        ReportRegisterApiRequest invalidRequest = Fixtures.reportRegisterNullReportItemApiRequest();
+
+        // when
+        ResultActions result = mockMvc.perform(post("/v1/report")
+                .contentType("application/json")
+                .content(asJsonString(invalidRequest)));
+
+        // then
+        result.andExpect(status().is4xxClientError());
+    }
+
     private static String asJsonString(final Object obj) {
         try {
             return new ObjectMapper().writeValueAsString(obj);
