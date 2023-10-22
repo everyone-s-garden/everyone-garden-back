@@ -1,19 +1,21 @@
 package com.everyonegarden.location.service;
 
+import com.everyonegarden.location.model.Location;
 import com.everyonegarden.location.repository.LocationRepository;
-
 import com.everyonegarden.location.service.dto.LocationSearchRequest;
 import com.everyonegarden.location.service.dto.LocationSearchResponses;
 import com.everyonegarden.location.service.mapper.LocationDtoMapper;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class LocationService {
 
-    private static final Pageable pageable = PageRequest.of(0, 5);
+    private static final int PAGE_SIZE = 5;
+    private static final int PAGE_NUMBER = 0;
     private final LocationRepository locationRepository;
     private final LocationDtoMapper locationDtoMapper;
 
@@ -24,10 +26,13 @@ public class LocationService {
 
     @Transactional(readOnly = true)
     public LocationSearchResponses autoCompleteLocation(LocationSearchRequest request) {
+        List<Location> allLocation = locationRepository.findAllLocation(
+                request.address()
+                ,PAGE_SIZE
+                ,PAGE_NUMBER );
+
         return locationDtoMapper.toLocationSearchResponses(
-                locationRepository.findAllLocation(
-                        request.address()
-                        , pageable));
+                allLocation);
     }
 
 }
