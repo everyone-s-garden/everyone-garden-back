@@ -1,33 +1,40 @@
 package com.everyonegarden.location.controller;
 
+import com.everyonegarden.location.controller.dto.LocationSearchApiRequest;
+import com.everyonegarden.location.controller.dto.LocationSearchApiResponses;
+import com.everyonegarden.location.controller.mapper.LocationDtoApiMapper;
+import com.everyonegarden.location.service.LocationService;
 
-import com.everyonegarden.common.dto.ApiResponse;
-import com.everyonegarden.location.dto.LocationResponse;
-import com.everyonegarden.location.service.AutoCompleteService;
-import lombok.RequiredArgsConstructor;
+import com.everyonegarden.location.service.dto.LocationSearchResponses;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 @Slf4j
-@RequiredArgsConstructor
 @RestController
 public class LocationController {
 
-    private final AutoCompleteService autoCompleteService;
-    private final Pageable pageable = PageRequest.of(0, 5);
+    private final LocationService locationService;
+    private final LocationDtoApiMapper locationDtoApiMapper;
 
-    @GetMapping(value = "/v1/location")
-    public List<LocationResponse> LocationRequest(@RequestParam String address) {
-        String blankRemovedAddress = address.replace(" ","");
-
-        return autoCompleteService.autoCompleteLocation(blankRemovedAddress,pageable);
+    public LocationController(LocationService locationService, LocationDtoApiMapper locationDtoApiMapper) {
+        this.locationService = locationService;
+        this.locationDtoApiMapper = locationDtoApiMapper;
     }
+
+    @GetMapping(
+            value = "/v1/location",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public ResponseEntity<LocationSearchApiResponses> LocationRequest(@RequestParam @Valid LocationSearchApiRequest request) {
+        LocationSearchResponses locationSearchResponses = locationService.autoCompleteLocation(locationDtoApiMapper.toLocationSearchRequest(request));
+
+        return ResponseEntity.ok().body(locationDtoApiMapper.toLocationSearchApiResponses(locationSearchResponses));
+    }
+
 }
